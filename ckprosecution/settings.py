@@ -11,12 +11,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'ckprosecution',                      # Or path to database file if using sqlite3.
+        'USER': 'root',                      # Not used with sqlite3.
+        'PASSWORD': 'admin',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -24,7 +24,7 @@ DATABASES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -78,7 +78,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '&amp;x-liya6!9$7$5+@)7*kzrhqyzs7)2^07i7sk#9@z!9i9w-ak!'
+SECRET_KEY = 'jgzmqsok8h)#alx_ztc6n-ehxleuc&amp;t!uh_&amp;o7j^$8!p19*tzj'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -115,11 +115,30 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'userena',
+	'guardian',
+	'easy_thumbnails',
+	'accounts',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+ANONYMOUS_USER_ID = -1
+
+LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
