@@ -1,12 +1,16 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.decorators import login_required
+
+from userena import views
+
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+	(r'^accounts/signup/', login_required(views.signup)),
 	(r'^accounts/', include('userena.urls')),
-
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),
     # url(r'^ckprosecution/', include('ckprosecution.foo.urls')),
