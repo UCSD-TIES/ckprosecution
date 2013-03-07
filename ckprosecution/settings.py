@@ -11,7 +11,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-  'default':  dj_database_url.config()
+  'default':  dj_database_url.config(default='postgres://postgres:postgres@localhost/ckprosecution')
 }
 
 # Local time zone for this installation. Choices can be found here:
