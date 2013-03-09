@@ -8,3 +8,4 @@ django-userena==1.1.2
 easy-thumbnails==1.2
 psycopg2==2.4.6
 wsgiref==0.1.2
+GChartWrapper==0.9
