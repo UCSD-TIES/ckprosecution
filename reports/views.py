@@ -35,12 +35,12 @@ def compute_statistics(request):
 	total_reports = Report.objects.all().count()
 	location_stats = []
 	creature_stats = []
-	for location in Reports.objects.all().values(location).distinct():
-		percentage = (Report.objects.filter(location=location).count / total_reports) * 100
+	for location in Report.objects.all().values(location).distinct():
+		percentage = (Report.objects.filter(location=location).count() / total_reports) * 100
 		location_stats.append((location, percentage))
 
-	for creature in Reports.objects.all().values(creature).distinct():
-		percentage = (Report.objects.filter(creature=creature).count / total_reports) * 100
+	for creature in Report.objects.all().values(creature).distinct():
+		percentage = (Report.objects.filter(creature=creature).count() / total_reports) * 100
 		creature_stats.append((creature, percentage))
 
 	return render_to_response('reports/statistics.html', {

@@ -14,7 +14,3 @@ class Report(models.Model):
 	fine = models.IntegerField(blank = True, default = False, max_length=11)
 	#not sure how to add variable amounts of links to articles to a model
 	update_date = models.DateField(blank = True, null = True)
-	
-	
-	
-	

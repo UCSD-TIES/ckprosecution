@@ -1,6 +1,6 @@
-from django.forms import Modelform
+from django.forms import ModelForm
 from reports.models import Report
 
-class ReportForm(Modelform):
+class ReportForm(ModelForm):
 	class Meta:
 		model = Report
