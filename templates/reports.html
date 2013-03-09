@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load utiltags %}
+
+{% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
+
+{% block htmlhead %}
+<script type="text/javascript" src="{{ media_url }}/coastkeeper/JS/jquery.js?version=20120318"></script>
+<script type="text/javascript" src="{{ media_url }}/coastkeeper/JS/json2.js"></script>
+<script type="text/javascript" src="{{ media_url }}/coastkeeper/JS/util.js?version=20100628"></script>
+<script type="text/javascript" src="{{ media_url }}/coastkeeper/JS/expense{{display_type}}.js?version=20130110"></script>
+<style>
+.button { margin: 4px 10px; }
+.line { border-bottom: 1px solid black; }
+.close { float: right; }
+.notice { color: #F4811F; padding-top: 25px; }
+.newlook {background-color:white;}
+.actions {margin-left:10px;}
+.actions { margin-bottom: 15px; }
+.title {margin-left: 10px;margin-top: 25px;margin-bottom:25px; font-size:2em;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="title">
+	San Francisco Reports
+</div>
+{% block actions %}
+<div class="actions">
+		<a href="#create_report" role="button" data-target="#create_report" data-toggle="modal" class="btn btn-primary"><i class="icon-plus-sign icon-large"></i>&nbsp&nbspNew Report</a>
+		<a href="#" id="search_button" class="btn"><i class="icon-search"></i> Search</a>
+		<a href="#" id="search_button" class="btn"><i class="icon-remove-sign"></i> Delete</a>
+		<a href="#" id="search_button" class="btn"><i class="icon-folder-open-alt"></i> Move</a>
+		<a href="#" id="search_button" class="btn"><i class="icon-exchange"></i> Copy</a>
+		<a href="#" id="search_button" class="btn"><i class="icon-tag"></i> Tag</a>
+</div>
+{% endblock %}
+
+<div class="reporttable">
+	<table class="table" id="expenselist">
+		<thead>
+			<tr>
+				<th id="star"   width="1%" style="text-align: center;"><input class="selection" id="select_all_none" type="checkbox"></th>
+				<th id="date"   width="11%">Date</th>
+				<th id="category"   >Category</th>
+				<th id="time" >Time</th>
+				<th id="Location" width="5%">Location</th>
+				<th id="notes"  width="35%">Notes</th>
+				<th id="tags"   width="20%">Tags</th>
+				<th width="10%">Links</th>
+			</tr>
+		</thead>
+		<tbody id="table_body">
+	    </tbody>
+	</table>
+</div>
+
+
+<div id="create_report" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Create New Report</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form-inline">
+			<div class="pull-left">
+				<ol>
+					<li><label class="control-label" for="category"><strong>Category:</strong></label>&nbsp;&nbsp;<select class="" id=""></select></li>
+					<li><label class="control-label" for="amount"><strong>Amount:</strong></label>&nbsp;&nbsp;<input type="text" class="" id="" placeholder=""></li>
+				</ol>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<a href="#" class="btn btn-primary" id="invoice_create">Create Report</a>
+	</div>
+</div>
+
+<script>
+{% block main_javascript %}
+
+$('#create_report').modal({backdrop:false});
+$('#create_report').modal('hide');
+
+{% endblock %}
+</script>
+
+{% endblock %}
