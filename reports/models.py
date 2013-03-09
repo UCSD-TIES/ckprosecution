@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Reports(models.Model):
+class Report(models.Model):
 	crime_date = models.DateField(blank = True, null = True)
 	resolve_days = models.IntegerField(blank = True, max_length=11)
 	jail_time = models.BooleanField(default = False)

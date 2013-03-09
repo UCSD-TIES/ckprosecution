@@ -27,7 +27,7 @@ def update_report(request, report_id):
 	return render_to_response('##')
 
 def delete_report(request, report_id):
-	delete = Reports.objects.get(pk=report_id).delete()
+	delete = Report.objects.get(pk=report_id).delete()
 
 	return render_to_response('##')
 
@@ -36,11 +36,11 @@ def compute_statistics(request):
 	location_stats = []
 	creature_stats = []
 	for location in Reports.objects.all().values(location).distinct():
-		percentage = (Reports.objects.filter(location=location).count / total_reports) * 100
+		percentage = (Report.objects.filter(location=location).count / total_reports) * 100
 		location_stats.append((location, percentage))
 
 	for creature in Reports.objects.all().values(creature).distinct():
-		percentage = (Reports.objects.filter(creature=creature).count / total_reports) * 100
+		percentage = (Report.objects.filter(creature=creature).count / total_reports) * 100
 		creature_stats.append((creature, percentage))
 
 	return render_to_response('reports/statistics.html', {
@@ -49,5 +49,9 @@ def compute_statistics(request):
         },
         context_instance=RequestContext(request)
     )
+	
+	
 
 		
+
+	
