@@ -4,6 +4,12 @@
 
 {% block content %}
 
+{%if location_graph%}
+<center>
+<img src = {{location_graph}}>
+</center>
+{%endif%}
+
 {%if creature_graph%}
 <center>
 <img src = {{creature_graph}}>

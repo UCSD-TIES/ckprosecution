@@ -34,12 +34,26 @@ def delete_report(request, report_id):
 
 def compute_statistics(request):
 	total_reports = Report.objects.all().count()
-	location_stats = []
+
+    ##Type of Location affected by All Violations ##
+	location_stats_label = ""
+	location_stats_data = []
 	
 	for location in Report.objects.all().distinct('location').values('location'):
-		percentage = (Report.objects.filter(location=location).count() / total_reports) * 100
-		location_stats.append((location, percentage))
+		c_string = '' + str(location).lstrip("{'location': u'").rstrip("'}")
+		percentage = (float(Report.objects.filter(location=c_string).count()) / total_reports) * 100
+		location_stats_label+= str(c_string) + " " + str(round(percentage, 2)) + "%|"
+		location_stats_data.append(percentage)
+    
+	location_graph = Pie(location_stats_data)
+	location_graph.title('Type of Location Affected by All Violations')
+	location_graph.size(600,300)
+	location_graph.label(location_stats_label.rstrip("|"))
+	location_graph.color('0000aa')
+    
+	#End of graphs
 
+    
 	##Type of Creatures affected by All Violations ##
 	creature_stats_label = ""
 	creature_stats_data = []
@@ -65,8 +79,4 @@ def compute_statistics(request):
         context_instance=RequestContext(request)
     )
 	
-	
-
-		
-
 	
