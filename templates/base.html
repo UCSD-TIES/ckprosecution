@@ -69,7 +69,13 @@ a.hovered{border-bottom:2px solid white;}
 		<a href="/expenses/" class="border-right">San Diego</a>
 		<a href="/expenses/" class="border-right">San Francisco</a>
 		<a href="/expenses/">+ Create New Folder</a>
-		<span class="right"><input type="text" class="input-medium search-query" placeholder="Search reports"></span>
+		<span class="right">
+			<form action="/search/" method="get">
+				{% csrf_token %}
+				<input id="id_q" name="q" type="text" class="input-medium search-query" placeholder="Search reports">
+				<button type="submit" value="Submit" class="btn">Search</button>
+			</form>
+		</span>
 	</div>
 </div>
 <div class="container expense-sheet">

@@ -5,9 +5,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.core.context_processors import csrf
+from django.views.decorators.csrf import requires_csrf_token
 
 from reports.models import Report
 from reports.forms import ReportForm
+from reports.search import *
 
 from GChartWrapper import *
 
@@ -77,5 +80,23 @@ def compute_statistics(request):
         },
         context_instance=RequestContext(request)
     )
+
+@requires_csrf_token	
+def search(request):
+	print 'hello'
+	query_string = ''
+	found_entries = None
+	if ('q' in request.GET) and request.GET['q'].strip():
+		print 'hello WORLD'
+		query_string = request.GET['q']
+		print 'hello'
+		#currently manually need to input the model fields to search through
+		entry_query = get_query(query_string, ['crime_date', 'resolve_days','jail_time','num_involved','creature',
+								'location','trial_location','violation_description', 'mpa','fine','update_date'])
+	
+		found_entries = Report.objects.filter(entry_query).order_by('location')
+
+	return render_to_response('search/search.html',{ 'query_string': query_string, 'found_entries': found_entries },
+							context_instance=RequestContext(request))
 	
 	

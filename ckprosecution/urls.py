@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
-
+from ckprosecution import settings
+from reports import *
 from userena import views
 
 
@@ -11,7 +12,8 @@ from userena import views
 urlpatterns = patterns('',
 	(r'^accounts/signup/', login_required(views.signup)),
 	(r'^accounts/', include('userena.urls')),
-	(r'^reports/', include('reports.urls'))
+	(r'^reports/', include('reports.urls')),
+	(r'^search/$','reports.views.search')
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),
     # url(r'^ckprosecution/', include('ckprosecution.foo.urls')),
