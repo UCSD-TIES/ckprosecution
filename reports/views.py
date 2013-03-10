@@ -73,7 +73,7 @@ def compute_statistics(request):
 	#End of graphs
 		
 	return render_to_response('reports/statistics.html', {
-        'location_stats': location_stats,
+        'location_graph': location_graph,
         'creature_graph': creature_graph
         },
         context_instance=RequestContext(request)
