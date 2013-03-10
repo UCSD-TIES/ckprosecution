@@ -1,3 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}Statistics{% endblock %}
+
+{% block content %}
+
+{%if creature_graph%}
+<center>
+<img src = {{creature_graph}}>
+</center>
+{%endif%}
+{% endblock %}

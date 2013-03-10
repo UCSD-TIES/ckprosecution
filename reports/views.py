@@ -6,9 +6,10 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
-#This import model is incorrect but I don't think the model should be plural
 from reports.models import Report
 from reports.forms import ReportForm
+
+from GChartWrapper import *
 
 
 def create_report(request):
@@ -34,18 +35,32 @@ def delete_report(request, report_id):
 def compute_statistics(request):
 	total_reports = Report.objects.all().count()
 	location_stats = []
-	creature_stats = []
+	
 	for location in Report.objects.all().distinct('location').values('location'):
 		percentage = (Report.objects.filter(location=location).count() / total_reports) * 100
 		location_stats.append((location, percentage))
 
+	##Type of Creatures affected by All Violations ##
+	creature_stats_label = ""
+	creature_stats_data = []
+	
 	for creature in Report.objects.all().distinct('creature').values('creature'):
-		percentage = (Report.objects.filter(creature=creature).count() / total_reports) * 100
-		creature_stats.append((creature, percentage))
-
+		c_string = '' + str(creature).lstrip("{'creature': u'").rstrip("'}")
+		percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
+		creature_stats_label+= str(c_string) + " " + str(round(percentage, 2)) + "%|"
+		creature_stats_data.append(percentage)
+		
+	creature_graph = Pie(creature_stats_data)
+	creature_graph.title('Type of Creatures Affected by All Violations')
+	creature_graph.size(600,300)
+	creature_graph.label(creature_stats_label.rstrip("|"))
+	creature_graph.color('0000aa')
+		
+	#End of graphs
+		
 	return render_to_response('reports/statistics.html', {
         'location_stats': location_stats,
-        'creature_stats': creature_stats
+        'creature_graph': creature_graph
         },
         context_instance=RequestContext(request)
     )
