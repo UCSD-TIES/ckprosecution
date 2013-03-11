@@ -6,21 +6,21 @@ from userena import views
 
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^accounts/signup/', login_required(views.signup)),
 	(r'^accounts/', include('userena.urls')),
 	(r'^reports/', include('reports.urls')),
-	(r'^search/$','reports.views.search')
+	(r'^search/$','reports.views.search'),
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),
     # url(r'^ckprosecution/', include('ckprosecution.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls))
 )
