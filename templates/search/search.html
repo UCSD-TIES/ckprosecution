@@ -1,84 +1,8 @@
-  <!DOCTYPE HTML>
+{% extends "base.html" %}
 
-<html>
-<head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<META NAME="Title" CONTENT="Coastkeeper: Report Database and Analytics">
-	<title>{% block title %}Coastkeeper: Report Database and Analytics{% endblock %}</title>
-	{% block htmlhead %}{% endblock %}
-	<link href="{{ media_url }}/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<script type="text/javascript" src="{{ media_url }}/bootstrap/js/bootstrap.min.js"></script>
-	<link href="{{ media_url }}/fontawesome/css/font-awesome.min.css" rel="stylesheet">
-<style>
-.header-top { background-color: white; height: 90px; line-height: 90px; color: white;}
-.header-mid { background-color: #1E528B; color: white; font-size: 20px; height: 50px; line-height: 50px; }
-.header-mid a, .header-mid a:visited { text-decoration: none; color: white; height: 50px; }
-.right { float: right; text-align: right; }
-.text-right { text-align: right; }
-.area  { padding-right: 20px; padding-bottom:13px; padding-top:13px; display:inline;}
-.navi:hover {border-bottom:2px solid white;}
-.header-bottom { background-color: #ddd; margin-bottom: 20px; height: 35px; line-height: 35px;}
-.active { border-bottom: 3px solid #EDAE8F; height: 50px;}
-.logout{font-size:1.2em; border-right:1px solid white; padding-right:5px;}
-a.logout{color:white;}
-a.hovered{border-bottom:2px solid white;}
-.settings{font-size:.8em;}
-.settings:hover{text-decoration:underline;}
-.border-right{border-right:1px solid #BCBCBC; margin-right:7px; padding-right:7px;}
-.margin {margin-right:10px;}
-.name{font-size:1.3em;}
-.welcome{padding-right:10px;}
-.expense-sheet{box-shadow: 8px 8px 8px #BCBCBC; border:1px solid #CCC; background-color:white;}
-</style>
+{% block title %}Results{% endblock %}
 
-</head>
-
-<body>
-
-<div class="header-top">
-	<div class="container">
-		<div class="row">
-			<div class="span3"> <a href="starting page"><img src="{{ media_url }}/coastkeeper/imgs/logo.gif" border="0"/></a> </div>
-			<div class="offset1 span8 text-right">
-				<span class="logout"><a href="/accounts/logout/" style="color:black">Log Out</a></span>
-			</div>
-
-		</div>
-	</div>
-</div>
-<div class="header-mid">
-	<div class="container">
-		<div class="area">
-			<a href="/reports/" class="navi">Reports</a>
-		</div>
-		<div class="area">
-			<a href="/reports/statistics" class="navi">Statistics</a>
-		</div>
-		<div class="area">
-			<a href="/users/" class="navi">Users</a>
-		</div>
-		<div class="right">
-			<a href="/settings/" class="settings"><i class="icon-cog"></i> Settings</a>
-		</div>
-	</div>
-</div>
-
-<div class="header-bottom">
-	<div class="container">
-		<a href="/expenses/" class="border-right">All</a>
-		<a href="/expenses/" class="border-right">San Diego</a>
-		<a href="/expenses/" class="border-right">San Francisco</a>
-		<a href="/expenses/">+ Create New Folder</a>
-		<span class="right">
-			<form action="/search/" method="get">
-				{% csrf_token %}
-				<input id="id_q" name="q" type="text" class="input-medium search-query" placeholder="Search reports">
-				<button type="submit" value="Submit" class="btn">Search</button>
-			</form>
-		</span>
-	</div>
-</div>
-<div class="container expense-sheet">
+{% block content %}
 
 <div class="span9">
 		<table id="myTable" class ="tablesorter table-striped"><!--class="table table-striped"-->  
@@ -118,19 +42,4 @@ a.hovered{border-bottom:2px solid white;}
 </div>
 
 
-{% block headermid %}{% endblock %}
-{% block contentdiv %}{% endblock %}
-{% block content %}{% endblock %}
-
-</div>
-
-
-<script>
-	$('body').css('background-image', "url({{ media_url }}/coastkeeper/imgs/furley_bg.png)");
-	$('.area').hover(function(){$(this).find("a").toggleClass("hovered");});
-	$('.area').click(function(){window.location=$(this).find("a").attr("href"); return false;});
-</script>
-
-</body>
-
-</html>
+{% endblock %}
