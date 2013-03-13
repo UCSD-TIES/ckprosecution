@@ -38,9 +38,11 @@ a.hovered{border-bottom:2px solid white;}
 <div class="header-top">
 	<div class="container">
 		<div class="row">
-			<div class="span3"> <a href="starting page"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a> </div>
+			<div class="span3"> <a href="/accounts/signin/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a> </div>
 			<div class="offset1 span8 text-right">
-				<span class="logout"><a href="/accounts/logout/" style="color:black">Log Out</a></span>
+				{% if user.is_authenticated %}
+				<span class="logout"><a href="/accounts/signout/" style="color:black">Log Out</a></span>
+				{% endif %}
 			</div>
 
 		</div>
@@ -48,6 +50,7 @@ a.hovered{border-bottom:2px solid white;}
 </div>
 <div class="header-mid">
 	<div class="container">
+		{% if user.is_authenticated %}
 		<div class="area">
 			<a href="/reports/reports" class="navi">Reports</a>
 		</div>
@@ -60,11 +63,13 @@ a.hovered{border-bottom:2px solid white;}
 		<div class="right">
 			<a href="/admin/" class="settings"><i class="icon-cog"></i> Admin</a>
 		</div>
+		{% endif %}
 	</div>
 </div>
 
 <div class="header-bottom">
 	<div class="container">
+		{% if user.is_authenticated %}
 		<span class="right">
 			<form action="/search/" method="get">
 				{% csrf_token %}
@@ -72,6 +77,7 @@ a.hovered{border-bottom:2px solid white;}
 				<button type="submit" value="Submit" class="btn">Search</button>
 			</form>
 		</span>
+		{% endif %}
 	</div>
 </div>
 <div class="container expense-sheet">

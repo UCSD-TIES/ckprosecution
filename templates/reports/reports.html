@@ -114,7 +114,7 @@ $('#create_error').modal({backdrop:false});
 		<h3>Success!</h3>
 	</div>
 	<div class="modal-body">
-		Successfully created Report.
+		Successfully created/updated Report.
 	</div>
 	<div class="modal-footer">
 		<a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
@@ -123,6 +123,29 @@ $('#create_error').modal({backdrop:false});
 <script type="text/javascript">
 $('#create_success').modal({backdrop:false});
 </script>
+{% endif %}
+
+{% if edit_report %}
+<div id="create_report" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Edit Report</h3>
+	</div>
+	<div class="modal-body">
+		<form action="" class="form-inline" method="POST">{%csrf_token%}
+			<div class="pull-left">
+					<table class="createtable">
+					{{form.as_table}}
+					</table>
+					<input id="invis" type="submit" value="Submit">
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<a href="#" class="btn btn-primary" id="create_submit">Update Report</a>
+	</div>
+</div>
 {% endif %}
 
 <script type="text/javascript">
@@ -138,3 +161,4 @@ $('#create_report').modal('hide');
 </script>
 
 {% endblock %}
+		

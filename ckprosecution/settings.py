@@ -55,6 +55,8 @@ MEDIA_URL = ''
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = '/home/royce/Projects/coastkeeper/ckprosecution/www'
 
+USERENA_REDIRECT_ON_SIGNOUT = '/accounts/signin'
+
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
