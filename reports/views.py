@@ -91,17 +91,27 @@ from reports.forms import ReportForm
 def view_reports(request):
 	formset = ReportForm()
 	if request.method == 'POST':
-		form = ReportForm(request.POST)
-		if form.is_valid():
-			new_report= form.save()
-			return render_to_response('reports/reports.html',{"success": "success","form": formset,"reports": Report.objects.all(),},
-				context_instance=RequestContext(request))
-		else:
-			return render_to_response('reports/reports.html',{"error": form.errors,"form": formset, "reports": Report.objects.all(),},
-				context_instance=RequestContext(request))
+		if request.POST.get('report'):
+			report = get_object_or_404(Report, pk=request.POST.get('report'))
+			form = ReportForm(request.POST, instance=report)
+			if form.is_valid():
+				report=form.save()
+				report.save()
+				return render_to_response('reports/reports.html',{"success": "success","form": formset,"reports": Report.objects.all(),},
+					context_instance=RequestContext(request))	
+		else:	
+			form = ReportForm(request.POST)
+			if form.is_valid():
+				new_report= form.save()
+				return render_to_response('reports/reports.html',{"success": "success","form": formset,"reports": Report.objects.all(),},
+					context_instance=RequestContext(request))
+			else:
+				return render_to_response('reports/reports.html',{"error": form.errors,"form": formset, "reports": Report.objects.all(),},
+					context_instance=RequestContext(request))
 	else:
 		return render_to_response('reports/reports.html',{"form": formset, "reports": Report.objects.all(),},
 							context_instance=RequestContext(request))
+
 @login_required
 @requires_csrf_token
 def search(request):
