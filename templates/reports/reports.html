@@ -3,11 +3,10 @@
 {% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
 
 {% block htmlhead %}
-<script type="text/javascript" src="static/coastkeeper/JS/jquery.js?version=20120318"></script>
-<script type="text/javascript" src="static/coastkeeper/JS/json2.js"></script>
-<script type="text/javascript" src="static/coastkeeper/JS/util.js?version=20100628"></script>
-<script type="text/javascript" src="static/coastkeeper/JS/expense{{display_type}}.js?version=20130110"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.js?version=20120318"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
 <style>
+.createtable {text-align:left;}
 .button { margin: 4px 10px; }
 .line { border-bottom: 1px solid black; }
 .close { float: right; }
@@ -34,25 +33,44 @@
 </div>
 {% endblock %}
 
+
+
 <div class="reporttable">
 	<table class="table" id="expenselist">
 		<thead>
 			<tr>
-				<th id="star"   width="1%" style="text-align: center;"><input class="selection" id="select_all_none" type="checkbox"></th>
-				<th id="date"   width="11%">Date</th>
-				<th id="category"   >Category</th>
-				<th id="time" >Time</th>
-				<th id="Location" width="5%">Location</th>
-				<th id="notes"  width="35%">Notes</th>
-				<th id="tags"   width="20%">Tags</th>
-				<th width="10%">Links</th>
+	            <th>Crime Data</th>  
+	            <th>Days to Resolve</th>  
+	            <th>Jail</th>  
+				<th>Number Involved</th>
+				<th>Creature</th>
+				<th>Location</th>
+				<th>Trial Location</th>
+				<th>Description</th>
+				<th>MPA Involved</th>
+				<th>Fine</th>
+				<th>Update Date</th>
 			</tr>
 		</thead>
 		<tbody id="table_body">
+		{% for item in reports %}
+			<tr id="{{ item.id }}">
+				<td>{{ item.crime_date }}</td>
+				<td>{{ item.resolve_days }}</td>
+				<td>{{ item.jail_time }}</td>
+				<td>{{ item.num_involved }}</td>
+				<td>{{ item.creature }}</td>
+				<td>{{ item.location }}</td>
+				<td>{{ item.trial_location }}</td>
+				<td>{{ item.violation_description }}</td>
+				<td>{{ item.mpa }}</td>
+				<td>{{ item.fine }}</td>
+				<td>{{ item.update_date }}</td>
+			</tr>
+		{% endfor %}
 	    </tbody>
 	</table>
 </div>
-
 
 <div id="create_report" class="modal hide fade">
 	<div class="modal-header">
@@ -60,25 +78,35 @@
 		<h3>Create New Report</h3>
 	</div>
 	<div class="modal-body">
-		<form class="form-inline">
+		<form action="" class="form-inline" method="POST">{%csrf_token%}
 			<div class="pull-left">
-				<ol>
-					<li><label class="control-label" for="category"><strong>Category:</strong></label>&nbsp;&nbsp;<select class="" id=""></select></li>
-					<li><label class="control-label" for="amount"><strong>Amount:</strong></label>&nbsp;&nbsp;<input type="text" class="" id="" placeholder=""></li>
-				</ol>
+					<table class="createtable">
+					{{form.as_table}}
+					</table>
+					<input type="submit" value="Submit">
 			</div>
 		</form>
 	</div>
 	<div class="modal-footer">
 		<a href="#" class="btn" data-dismiss="modal">Close</a>
-		<a href="#" class="btn btn-primary" id="invoice_create">Create Report</a>
+		<a href="#" class="btn btn-primary" id="create_submit">Create Report</a>
 	</div>
 </div>
 
 <script>
 {% block main_javascript %}
 
+{% if error %}
+alert('{{ error }}');
+{% endif %}
+
+{% if success %}
+alert('Success!');
+{% endif %}
+
+
 $('#create_report').modal({backdrop:false});
+$('#create_submit').click(function(){$('#invis').submit();});
 $('#create_report').modal('hide');
 
 {% endblock %}

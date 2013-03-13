@@ -81,6 +81,24 @@ def compute_statistics(request):
         context_instance=RequestContext(request)
     )
 
+from reports.forms import ReportForm
+
+
+def view_reports(request):
+	formset = ReportForm()
+	if request.method == 'POST':
+		form = ReportForm(request.POST)
+		if form.is_valid():
+			new_report= form.save()
+			return render_to_response('reports/reports.html',{"success": "success","form": formset,"reports": Report.objects.all(),},
+				context_instance=RequestContext(request))
+		else:
+			return render_to_response('reports/reports.html',{"error": form.errors,"form": formset, "reports": Report.objects.all(),},
+				context_instance=RequestContext(request))
+	else:
+		return render_to_response('reports/reports.html',{"form": formset, "reports": Report.objects.all(),},
+							context_instance=RequestContext(request))
+
 @requires_csrf_token	
 def search(request):
 	print 'hello'
@@ -93,7 +111,6 @@ def search(request):
 		#currently manually need to input the model fields to search through
 		entry_query = get_query(query_string, ['crime_date', 'resolve_days','jail_time','num_involved','creature',
 								'location','trial_location','violation_description', 'mpa','fine','update_date'])
-	
 		found_entries = Report.objects.filter(entry_query).order_by('location')
 
 	return render_to_response('search/search.html',{ 'query_string': query_string, 'found_entries': found_entries },

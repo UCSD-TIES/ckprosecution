@@ -11,7 +11,7 @@ from django.views.decorators.csrf import requires_csrf_token
 
 def landing(request):
 		
-	return render_to_response('reports.html', {
+	return render_to_response('base.html', {
         },
         context_instance=RequestContext(request)
     )
