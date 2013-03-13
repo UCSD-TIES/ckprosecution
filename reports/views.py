@@ -1,4 +1,5 @@
 import os
+from django.contrib.auth.decorators import login_required
 from django.utils import simplejson
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden, HttpResponseServerError
 from django.template import RequestContext
@@ -14,14 +15,15 @@ from reports.search import *
 
 from GChartWrapper import *
 
-
+@login_required
 def create_report(request):
 	form = ReportForm(request.POST or None)
 	if form.is_valid():
-		report = form.save()
+		#report = form.save()
 		report.save()
 	return render_to_response('##')
 
+@login_required
 def update_report(request, report_id):
 	report = get_object_or_404(Report, pk=report_id)
 	form = ReportForm(request.POST or None, instance=report)
@@ -30,11 +32,13 @@ def update_report(request, report_id):
 		report.save()
 	return render_to_response('##')
 
+@login_required
 def delete_report(request, report_id):
 	delete = Report.objects.get(pk=report_id).delete()
 
 	return render_to_response('##')
 
+@login_required
 def compute_statistics(request):
 	total_reports = Report.objects.all().count()
 	
@@ -83,7 +87,7 @@ def compute_statistics(request):
 
 from reports.forms import ReportForm
 
-
+@login_required
 def view_reports(request):
 	formset = ReportForm()
 	if request.method == 'POST':
@@ -98,8 +102,8 @@ def view_reports(request):
 	else:
 		return render_to_response('reports/reports.html',{"form": formset, "reports": Report.objects.all(),},
 							context_instance=RequestContext(request))
-
-@requires_csrf_token	
+@login_required
+@requires_csrf_token
 def search(request):
 	print 'hello'
 	query_string = ''
