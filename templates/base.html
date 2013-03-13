@@ -6,9 +6,9 @@
 	<META NAME="Title" CONTENT="Coastkeeper: Report Database and Analytics">
 	<title>{% block title %}Coastkeeper: Report Database and Analytics{% endblock %}</title>
 	{% block htmlhead %}{% endblock %}
-	<link href="{{ media_url }}/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<script type="text/javascript" src="{{ media_url }}/bootstrap/js/bootstrap.min.js"></script>
-	<link href="{{ media_url }}/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
+	<link href="static/fontawesome/css/font-awesome.min.css" rel="stylesheet">
 <style>
 .header-top { background-color: white; height: 90px; line-height: 90px; color: white;}
 .header-mid { background-color: #1E528B; color: white; font-size: 20px; height: 50px; line-height: 50px; }
@@ -38,7 +38,7 @@ a.hovered{border-bottom:2px solid white;}
 <div class="header-top">
 	<div class="container">
 		<div class="row">
-			<div class="span3"> <a href="starting page"><img src="{{ media_url }}/coastkeeper/imgs/logo.gif" border="0"/></a> </div>
+			<div class="span3"> <a href="starting page"><img src="static/coastkeeper/imgs/logo.gif" border="0"/></a> </div>
 			<div class="offset1 span8 text-right">
 				<span class="logout"><a href="/accounts/logout/" style="color:black">Log Out</a></span>
 			</div>
@@ -88,7 +88,7 @@ a.hovered{border-bottom:2px solid white;}
 
 
 <script>
-	$('body').css('background-image', "url({{ media_url }}/coastkeeper/imgs/furley_bg.png)");
+	$('body').css('background-image', "url(static/coastkeeper/imgs/furley_bg.png)");
 	$('.area').hover(function(){$(this).find("a").toggleClass("hovered");});
 	$('.area').click(function(){window.location=$(this).find("a").attr("href"); return false;});
 </script>
