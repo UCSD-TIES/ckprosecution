@@ -111,11 +111,6 @@ def view_reports(request):
 	else:
 		return render_to_response('reports/reports.html',{"form": formset, "reports": Report.objects.all(),},
 							context_instance=RequestContext(request))
-<<<<<<< HEAD
-
-=======
-							
->>>>>>> 0572d7766340c89eb9382d5e77227664d349e310
 @login_required
 @requires_csrf_token
 def search(request):
