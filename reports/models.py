@@ -11,6 +11,6 @@ class Report(models.Model):
 	trial_location = models.CharField(blank = True, max_length=45) #city where crime was tried
 	violation_description = models.CharField(blank = True, max_length=100)
 	fine = models.IntegerField(blank = True, max_length=11)
-	update_date = models.DateField(blank = True, null = True)
+	update_date = models.DateField(auto_now=True)
 	jail_time = models.BooleanField(default = False)
 	mpa = models.BooleanField(default = False)
