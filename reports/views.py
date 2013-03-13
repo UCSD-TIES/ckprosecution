@@ -99,6 +99,9 @@ def view_reports(request):
 				report.save()
 				return render_to_response('reports/reports.html',{"success": "success","form": formset,"reports": Report.objects.all(),},
 					context_instance=RequestContext(request))	
+			else:
+				return render_to_response('reports/reports.html',{"error": form.errors,"form": formset, "reports": Report.objects.all(),},
+					context_instance=RequestContext(request))
 		else:	
 			form = ReportForm(request.POST)
 			if form.is_valid():
