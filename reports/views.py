@@ -102,16 +102,15 @@ def view_reports(request):
 	else:
 		return render_to_response('reports/reports.html',{"form": formset, "reports": Report.objects.all(),},
 							context_instance=RequestContext(request))
+							
 @login_required
 @requires_csrf_token
 def search(request):
-	print 'hello'
 	query_string = ''
 	found_entries = None
+	#q from button in html
 	if ('q' in request.GET) and request.GET['q'].strip():
-		print 'hello WORLD'
 		query_string = request.GET['q']
-		print 'hello'
 		#currently manually need to input the model fields to search through
 		entry_query = get_query(query_string, ['crime_date', 'resolve_days','jail_time','num_involved','creature',
 								'location','trial_location','violation_description', 'mpa','fine','update_date'])
