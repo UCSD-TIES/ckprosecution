@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
+
+{% block htmlhead %}
+<script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.js?version=20120318"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
+<style>
+.createtable {text-align:left;}
+.button { margin: 4px 10px; }
+.line { border-bottom: 1px solid black; }
+.close { float: right; }
+.notice { color: #F4811F; padding-top: 25px; }
+.newlook {background-color:white;}
+.actions {margin-left:10px;}
+.actions { margin-bottom: 15px; }
+.title {margin-left: 10px;margin-top: 25px;margin-bottom:25px; font-size:2em;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="title">
+	Reports
+</div>
+{% block actions %}
+<div class="actions">
+		<a href="#create_report" role="button" data-target="#create_report" data-toggle="modal" class="btn btn-primary"><i class="icon-plus-sign icon-large"></i>&nbsp&nbspNew Report</a>
+</div>
+{% endblock %}
+
+
+
+<div class="reporttable">
+	<table class="table" id="expenselist">
+		<thead>
+			<tr>
+	            <th>Crime Data</th>  
+	            <th>Days to Resolve</th>   
+				<th>Number Involved</th>
+				<th>Creature</th>
+				<th>Location</th>
+				<th>Trial Location</th>
+				<th>Description</th>
+				<th>Fine</th>
+				<th>Update Date</th>
+	            <th>Jail</th> 
+				<th>MPA Involved</th>
+			</tr>
+		</thead>
+		<tbody id="table_body">
+		{% for item in reports %}
+			<tr id="{{ item.id }}">
+				<td>{{ item.crime_date }}</td>
+				<td>{{ item.resolve_days }}</td>
+				<td>{{ item.num_involved }}</td>
+				<td>{{ item.creature }}</td>
+				<td>{{ item.location }}</td>
+				<td>{{ item.trial_location }}</td>
+				<td>{{ item.violation_description }}</td>
+				<td>{{ item.fine }}</td>
+				<td>{{ item.update_date }}</td>
+				<td>{{ item.jail_time }}</td>
+				<td>{{ item.mpa }}</td>
+			</tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+</div>
+
+<div id="create_report" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Create New Report</h3>
+	</div>
+	<div class="modal-body">
+		<form action="" class="form-inline" method="POST">{%csrf_token%}
+			<div class="pull-left">
+					<table class="createtable">
+					{{form.as_table}}
+					</table>
+			</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<button type="submit" class="btn btn-primary">Create Report</button>
+		</form>
+	</div>
+</div>
+
+
+{% if error %}
+<div id="create_error" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Error!</h3>
+	</div>
+	<div class="modal-body">
+		{{ error }}
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
+	</div>
+</div>
+<script type="text/javascript">
+$('#create_error').modal({backdrop:false});
+</script>
+{% endif %}
+
+{% if success %}
+<div id="create_success" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Success!</h3>
+	</div>
+	<div class="modal-body">
+		Successfully created/updated Report.
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
+	</div>
+</div>
+<script type="text/javascript">
+$('#create_success').modal({backdrop:false});
+</script>
+{% endif %}
+
+<div id="edit_report" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Edit Report</h3>
+	</div>
+	<div class="modal-body">
+		<form action="" class="form-inline" method="POST">{% csrf_token %}
+		<div class="pull-left">
+				<table class="edittable" style ="text-align:left">
+				<tbody><tr><th><label for="id_crime_date">Crime date:</label></th><td><input id="id_crime_date" name="crime_date" type="text"></td></tr>
+					<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input id="id_resolve_days" name="resolve_days" type="text"></td></tr>
+					<tr><th><label for="id_num_involved">Num involved:</label></th><td><input id="id_num_involved" name="num_involved" type="text"></td></tr>
+					<tr><th><label for="id_creature">Creature:</label></th><td><input id="id_creature" maxlength="45" name="creature" type="text"></td></tr>
+					<tr><th><label for="id_location">Location:</label></th><td><input id="id_location" maxlength="45" name="location" type="text"></td></tr>
+					<tr><th><label for="id_trial_location">Trial location:</label></th><td><input id="id_trial_location" maxlength="45" name="trial_location" type="text"></td></tr>
+					<tr><th><label for="id_violation_description">Violation description:</label></th><td><input id="id_violation_description" maxlength="100" name="violation_description" type="text"></td></tr>
+					<tr><th><label for="id_fine">Fine:</label></th><td><input id="id_fine" name="fine" type="text"></td></tr>
+					<tr><th><label for="id_update_date">Update date:</label></th><td><input id="id_update_date" name="update_date" type="text"></td></tr>
+					<tr><th><label for="id_jail_time">Jail time:</label></th><td><input id="id_jail_time" name="jail_time" type="checkbox"></td></tr>
+					<tr><th><label for="id_mpa">Mpa:</label></th><td><input id="id_mpa" name="mpa" type="checkbox"></td></tr>
+					<tr style="display:none"><th><label for="id_report">Mpa:</label></th><td><input id="id_report" name="report" type="text"></td></tr>
+				</tbody></table>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<button type="submit" class="btn btn-primary">Update Report</button>
+		</form>	
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+{% block main_javascript %}
+
+$('.table tr').click(function(){
+	$(this);
+	$('#edit_report').modal({backdrop:false});
+	$('.edittable input#id_report').val($(this).attr('id'));
+	$('.edittable input#id_crime_date').val($($(this).find('td')[0]).text());
+	$('.edittable input#id_resolve_days').val($($(this).find('td')[1]).text());
+	$('.edittable input#id_num_involved').val($($(this).find('td')[2]).text());
+	$('.edittable input#id_creature').val($($(this).find('td')[3]).text());
+	$('.edittable input#id_location').val($($(this).find('td')[4]).text());
+	$('.edittable input#id_trial_location').val($($(this).find('td')[5]).text());
+	$('.edittable input#id_violation_description').val($($(this).find('td')[6]).text());
+	$('.edittable input#id_fine').val($($(this).find('td')[7]).text());
+	$('.edittable input#id_update_date').val($($(this).find('td')[8]).text());
+	if($($(this).find('td')[9]).text() == 'True')
+	{
+		$(".edittable input#id_jail_time").attr('checked', true);
+	}
+	else
+	{
+		$(".edittable input#id_jail_time").attr('checked', false);
+	}
+	$('.edittable input#id_jail_time').val($($(this).find('td')[0]).text());
+	$('.edittable input#id_mpa').val($($(this).find('td')[0]).text());
+});
+
+
+
+
+
+$('#create_report').modal({backdrop:false});
+$('#create_submit').click(function(){$('#invis').submit();});
+$('#create_report').modal('hide');
+
+{% endblock %}
+</script>
+
+{% endblock %}
+		

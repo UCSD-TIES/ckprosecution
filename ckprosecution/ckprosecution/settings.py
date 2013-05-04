@@ -1,13 +1,6 @@
 # Django settings for ckprosecution project.
 import dj_database_url
 
-import os
-
-def project(*args):
-    path = os.path.join(os.path.dirname(__file__), "../")
-    file_path = os.path.realpath(path)
-    return os.path.join(file_path, *args)
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -55,17 +48,11 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = ''
 
-import os
-def project(*args):
-    path = os.path.join(os.path.dirname(__file__), "../")
-    file_path = os.path.realpath(path)
-    return os.path.join(file_path, *args)
-
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/www'
+STATIC_ROOT = '/home/devang/workspace/ckprosecution/www'
 
 USERENA_REDIRECT_ON_SIGNOUT = '/accounts/signin'
 
@@ -75,7 +62,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    project('static/'),
+    "/home/devang/workspace/ckprosecution/static",
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
