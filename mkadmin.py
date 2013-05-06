@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from ckprosecution.accounts.models import UserProfile
+from accounts.models import UserProfile
 
 user, created = User.objects.get_or_create(username="admin")
 if created:
