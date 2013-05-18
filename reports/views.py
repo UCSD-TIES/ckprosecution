@@ -50,11 +50,12 @@ def compute_statistics(request):
 	for resolve_days in Report.objects.all().distinct('resolve_days').values('resolve_days'):
 		c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}")
 		percentage = (float(Report.objects.filter(resolve_days=c_string).count()) / total_reports)*100
-		days_stats_label += str(c_string) + " " + str(round(percentage, 2)) + "%|"
+		days_stats_label += str(c_string) + "|"
 		days_stats_data.append(percentage)
 
 	days_graph = VerticalBarStack(days_stats_data)
 	days_graph.title('Resolve Days Graph')
+	days_graph.bar(200,50,200)
 	days_graph.size(600,300)
 	days_graph.label(days_stats_label.rstrip("|"))
 	days_graph.color('0000aa')
