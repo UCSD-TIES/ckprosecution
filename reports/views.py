@@ -42,12 +42,27 @@ def delete_report(request, report_id):
 def compute_statistics(request):
 	total_reports = Report.objects.all().count()
 	
-	# Start of Graphs
-	
-    ## Total Violations by Location ##
+	# Start of Graph
+        
+	## Resolve days graph ##
+	days_stats_label = ""
+	days_stats_data = []
+	for resolve_days in Report.objects.all().distinct('resolve_days').values('resolve_days'):
+		c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}")
+		percentage = (float(Report.objects.filter(resolve_days=c_string).count()) / total_reports)*100
+		days_stats_label += str(c_string) + " " + str(round(percentage, 2)) + "%|"
+		days_stats_data.append(percentage)
+
+	days_graph = VerticalBarStack(days_stats_data)
+	days_graph.title('Resolve Days Graph')
+	days_graph.size(600,300)
+	days_graph.label(days_stats_label.rstrip("|"))
+	days_graph.color('0000aa')
+
+	## Location of Violations##
 	location_stats_label = ""
 	location_stats_data = []
-	
+
 	for location in Report.objects.all().distinct('location').values('location'):
 		c_string = '' + str(location).lstrip("{'location': u'").rstrip("'}")
 		percentage = (float(Report.objects.filter(location=c_string).count()) / total_reports) * 100
@@ -55,7 +70,7 @@ def compute_statistics(request):
 		location_stats_data.append(percentage)
     
 	location_graph = Pie(location_stats_data)
-	location_graph.title('Total Violations by Location')
+	location_graph.title('Total Violations by Location XXXXX')
 	location_graph.size(600,300)
 	location_graph.label(location_stats_label.rstrip("|"))
 	location_graph.color('0000aa')
@@ -80,7 +95,8 @@ def compute_statistics(request):
 		
 	return render_to_response('reports/statistics.html', {
         'location_graph': location_graph,
-        'creature_graph': creature_graph
+        'creature_graph': creature_graph,
+        'days_graph': days_graph
         },
         context_instance=RequestContext(request)
     )
