@@ -19,7 +19,6 @@ MANAGERS = ADMINS
 
 DATABASES = {
   'default': {
-<<<<<<< HEAD
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'dcfvtd3047sb5l',
     'HOST': 'ec2-54-243-229-75.compute-1.amazonaws.com',
@@ -27,7 +26,6 @@ DATABASES = {
     'USER': 'njfkcrpvscszvt',
     'PASSWORD': 'q1dvXTbaXEubHp5S7Z-8v57TW7'
   }
->>>>>>> 5d98707737dd762fe700fd9b97855abc5c4c37e6
 }
 
 # Local time zone for this installation. Choices can be found here:
