@@ -82,7 +82,7 @@
 						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td></tr>
 						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td></tr>
 						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td></font></tr>
-						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><font color=red id="tcd_font"></font></tr>
+						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><td><font color=red id="tcd_font"></font></td></tr>
 						<tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td></tr>
 						<tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td></tr>
 						<tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td></tr>
@@ -90,7 +90,6 @@
 						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
 					</table>
 					<b id="temp"></b>
-					<b id="temp2"></b>
 					<script>
 						$(document).ready(function(){
 							$('#id_location').keyup(function() {
