@@ -90,7 +90,8 @@
 						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
 					</table>
 					<b id="temp"></b><br />
-					<b id="temp2"></b>
+					<b id="temp2"></b><br />
+					<b id="temp3"></b>
 			</div>
 	</div>
 	<div class="modal-footer">
@@ -105,10 +106,13 @@ $(document).ready(function(){
 		$('#temp').html($('input[id=id_location2]').val());
 		$('#temp2').html($('#loc').html());
 		if($('input[id=id_location2]').val() == 'San Diego'){
+			$('#temp3').html('Cond 1');
 			$('#loc').html('Correct');
 		} else if(('input[id=id_location2]').val() == ''){
+			$('#temp3').html('Cond 2');
 			$('#loc').html('Nothing');
 		} else {
+			$('#temp3').html('Cond 3');
 			$('#loc').html('San Diego only.');
 		}
 	});
