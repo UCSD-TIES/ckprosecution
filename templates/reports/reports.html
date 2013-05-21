@@ -82,27 +82,15 @@
 						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td></tr>
 						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td></tr>
 						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td></font></tr>
-						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><td><font color=red id="tcd_font"></font></td></tr>
+						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location2" maxlength="45" /></td><td><font color=red id="tcd_font"></font></td></tr>
 						<tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td></tr>
 						<tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td></tr>
 						<tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td></tr>
 						<tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td></tr>
 						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
 					</table>
-					<b id="temp"></b>
-					<script>
-						$(document).ready(function(){
-							$('#id_location').keyup(function() {
-								if($('input[id=id_location]').val() == 'San Diego'){
-									$('#tcd_font').html('Correct');
-								} else if(('input[id=id_location]').val() == ''){
-									$('#tcd_font').html('');
-								} else {
-									$('#tcd_font').html('San Diego only.');
-								}
-							});
-						});
-					</script>
+					<b id="temp">hi</b>
+					<b id="temp2"></b>
 			</div>
 	</div>
 	<div class="modal-footer">
@@ -111,7 +99,20 @@
 		</form>
 	</div>
 </div>
-
+<script>
+$(document).ready(function(){
+	$('#id_location2').keyup(function() {
+		$('#temp2').html($('input[id=id_location2]').val());
+		if($('input[id=id_location2]').val() == 'San Diego'){
+			$('#tcd_font').html('Correct');
+		} else if(('input[id=id_location2]').val() == ''){
+			$('#tcd_font').html('');
+		} else {
+			$('#tcd_font').html('San Diego only.');
+		}
+	});
+});
+</script>
 
 {% if error %}
 <div id="create_error" class="modal hide fade">
