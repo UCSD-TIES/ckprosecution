@@ -89,14 +89,21 @@
 						<tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td></tr>
 						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
 					</table>
+					<b id="temp"></b>
+					<b id="temp"></b>
 					<script>
 						$(document).ready(function(){
+							$('#temp').html("Maybe");
 							$('#id_location').on('change', function() {
-								if(this.value != 'San Diego') {
-									$('#tcd').html("Wrong");
+								var text = $('input[id=id_location]'.val();
+								if(text != 'San Diego') {
+									$('#tcd').html('Wrong');
+								} else {
+									$('#tcd').html('Right');
 								}
 							});
 						});
+						$(
 					</script>
 			</div>
 	</div>
