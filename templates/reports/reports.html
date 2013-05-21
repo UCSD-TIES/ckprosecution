@@ -78,19 +78,19 @@
 			<div class="pull-left">
 					<table class="createtable">
 					<!-- {{form.as_table}} -->
-						<tr><th><label for="id_crime_date">Crime date:</label></th><td><input name="crime_date" type="text" id="id_crime_date" /></td><td><b> Yo What up i got a big </b></td></tr>
-						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td><td>clock</td></tr>
-						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td><td><font> yaaaa</font></td></tr>
-						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td><td><font color="red">red font</font></td></tr>
-						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location2" maxlength="45" /></td><td id="tcd_font"></td></tr>
+						<tr><th><label for="id_crime_date">Crime date:</label></th><td><input name="crime_date" type="text" id="id_crime_date" /></td><td></tr>
+						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td></tr>
+						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td></tr>
+						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td><td><font color="red" id="loc2">red font</font></td></tr>
+						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location2" maxlength="45" /></td><td><font color="red" id="loc">Red Font<font></td></tr>
 						<tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td></tr>
 						<tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td></tr>
 						<tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td></tr>
 						<tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td></tr>
 						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
 					</table>
-					<b id="temp">hi</b>
-					<b id="temp2"></b>
+					<b id="temp2"></b><br />
+					<b id="temp"></b>
 			</div>
 	</div>
 	<div class="modal-footer">
@@ -102,13 +102,15 @@
 <script>
 $(document).ready(function(){
 	$('#id_location2').keyup(function() {
+	    $('#loc2').html('Testing stuff');
 		$('#temp2').html($('input[id=id_location2]').val());
+		$('#temp').html($('#loc').html() + ', ' + $('#loc').text()
 		if($('input[id=id_location2]').val() == 'San Diego'){
-			$('#tcd_font').html('Correct');
+			$('#loc').html('Correct');
 		} else if(('input[id=id_location2]').val() == ''){
-			$('#tcd_font').html('');
+			$('#loc').html('');
 		} else {
-			$('#tcd_font').html('San Diego only.');
+			$('#loc').html('San Diego only.');
 		}
 	});
 });
