@@ -79,19 +79,17 @@
 					<table class="createtable">
 					<!-- {{form.as_table}} -->
 						<tr><th><label for="id_crime_date">Crime date:</label></th><td><input name="crime_date" type="text" id="id_crime_date" /></td><td><font color="red" id="crime_date"></font></td></tr>
-						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td></tr>
-						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td></tr>
-						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td></tr>
-						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location2" maxlength="45" /></td><td><font color="red" id="loc">Red Font</font></td></tr>
-						<tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td></tr>
-						<tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td></tr>
-						<tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td></tr>
-						<tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td></tr>
-						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
+						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td><td><font color="red" id="resolve_days"></font></td></tr>
+						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td><td><font color="red" id="num_involved"></font></td></tr>
+						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td><td><font color="red" id="creature"></font></td></tr>
+						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><td><font color="red" id="loc"></font></td></tr>
+						<tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td><td><font color="red" id="trial_location"></font></td></tr>
+						<tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td><td><font color="red" id="violation_description"></font></td></tr>
+						<tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td><td><font color="red" id="fine"></font></td></tr>
+						<tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td><td><font color="red" id="jail_time"></font></td></tr>
+						<tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td><td><font color="red" id="mpa"></font></td></tr>
 					</table>
 					<b id="temp"></b><br />
-					<b id="temp2"></b><br />
-					<b id="temp3"></b>
 			</div>
 	</div>
 	<div class="modal-footer">
@@ -102,13 +100,12 @@
 </div>
 <script>
 $(document).ready(function(){
-	$('#id_location2').keyup(function() {
-		$('#temp').html($('input[id=id_location2]').val());
-		$('#temp2').html($('#loc').html());
+	$('#id_location').keyup(function() {
+		$('#temp').html($('input[id=id_location]').val());
 		var reg = new RegExp('/[\-]?[0-9]{1,3}([\.][0-9]{1,3})?[\,\s?][\-]?[0-9]{1,3}([\.][0-9]{1,3})?/');
-		if(reg.test($('input[id=id_location2]').val())){
+		if(reg.test($('input[id=id_location]').val())){
 			$('#loc').html('Correct');
-		} else if($('input[id=id_location2]').val() == ''){
+		} else if($('input[id=id_location]').val() == ''){
 			$('#loc').html('');
 		} else {
 			$('#loc').html('GPS Coordinates (ex 123.456, -189.012)');
