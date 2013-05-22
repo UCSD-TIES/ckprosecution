@@ -98,8 +98,17 @@
 </div>
 <script>
 $(document).ready(function(){
+	$('#id_creature').keyup(function() {
+		var reg = /^([a-zA-Z]\s?)+$/;
+		if( ($('input[id=id_creature]').val()).match(reg) ){
+			$('#creature').html('Correct');
+		} else if($('input[id=id_creature]').val() == ''){
+			$('#creature').html('');
+		} else {
+			$('#creature').html('Enter Description');
+		}	
 	$('#id_location').keyup(function() {
-		var reg = '^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$';
+		var reg = '/^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/';
 		if( ($('input[id=id_location]').val()).match(reg) ){
 			$('#location').html('Correct');
 		} else if($('input[id=id_location]').val() == ''){
@@ -109,7 +118,7 @@ $(document).ready(function(){
 		}
 	});
 	$('#id_trial_location').keyup(function() {
-		var reg2 = /^([a-zA-Z]\s?)+$/;
+		var reg = /^([a-zA-Z]\s?)+$/;
 		if( ($('input[id=id_trial_location]').val()).match(reg2) ){
 			$('#trial_location').html('Correct');
 		} else if($('input[id=id_trial_location]').val() == ''){
@@ -117,6 +126,24 @@ $(document).ready(function(){
 		} else {
 			$('#trial_location').html('Enter Date.');
 		}
+	$('#id_violation_description').keyup(function() {
+		var reg = /^.*$/;
+		if( ($('input[id=id_violation_description]').val()).match(reg) ){
+			$('#violation_description').html('Correct');
+		} else if($('input[id=id_violation_description]').val() == ''){
+			$('#violation_description').html('');
+		} else {
+			$('#violation_description').html('Enter Description');
+		}
+	$('#id_fine').keyup(function() {
+		var reg = /^\d+$/;
+		if( ($('input[id=id_fine]').val()).match(reg) ){
+			$('#fine').html('Correct');
+		} else if($('input[id=id_fine]').val() == ''){
+			$('#fine').html('');
+		} else {
+			$('#fine').html('Enter Fine Amount');
+		}	
 	});
 });
 </script>
