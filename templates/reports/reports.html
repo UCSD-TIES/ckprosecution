@@ -127,7 +127,6 @@ $(document).ready(function(){
 			$('#crime_date').attr('color','red');
 			$('#crime_date').html('Format: YYYY-MM-DD');
 		}
-		$('input').change();
 	});
 	$('#id_resolve_days').keyup(function() {
 		var reg = /^[0-9]+$/;
@@ -141,7 +140,6 @@ $(document).ready(function(){
 			$('#resolve_days').attr('color','red');
 			$('#resolve_days').html('Enter Number');
 		}
-		$('input').change();
 	});	
 	$('#id_num_involved').keyup(function() {
 		var reg = /^[0-9]+$/;
@@ -155,7 +153,6 @@ $(document).ready(function(){
 			$('#num_involved').attr('color','red');
 			$('#num_involved').html('Enter Number');
 		}
-		$('input').change();
 	});	
 	$('#id_creature').keyup(function() {
 		var reg = /^([a-zA-Z]\s?)+$/;
@@ -169,7 +166,6 @@ $(document).ready(function(){
 			$('#creature').attr('color','red');
 			$('#creature').html('Enter Creature');
 		}
-		$('input').change();
 	});		
 	$('#id_location').keyup(function() {
 		var reg1 = /^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/;
@@ -183,7 +179,6 @@ $(document).ready(function(){
 			$('#location').attr('color','red');
 			$('#location').html('GPS Coordinates (ex 123.456, -189.012)');
 		}
-		$('input').change();
 	});
 	$('#id_trial_location').keyup(function() {
 		var reg2 = /^([a-zA-Z]\s?)+$/;
@@ -197,7 +192,6 @@ $(document).ready(function(){
 			$('#trial_location').attr('color','red');
 			$('#trial_location').html('Enter Date.');
 		}
-		$('input').change();
 	});	
 	$('#id_violation_description').keyup(function() {
 		var reg3 = /^.*$/;
@@ -211,7 +205,6 @@ $(document).ready(function(){
 			$('#violation_description').attr('color','red');
 			$('#violation_description').html('Enter Description');
 		}
-		$('input').change();
 	});	
 	$('#id_fine').keyup(function() {
 		var reg4 = /^\d+(\.[\d]{2})?$/;
@@ -225,7 +218,6 @@ $(document).ready(function(){
 			$('#fine').attr('color','red');
 			$('#fine').html('Enter Fine Amount');
 		}	
-		$('input').change();
 	});
 });
 </script>
