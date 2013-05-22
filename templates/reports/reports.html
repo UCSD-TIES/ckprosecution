@@ -109,7 +109,7 @@ $(document).ready(function(){
 		$('#id_fine').keyup();
 		var submittable = true;
 		if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green') 
-			submittable = true;
+			submittable = false;
 		if(submittable)
 			$('#create_button').removeAttr("disabled", "disabled");
 		else
@@ -130,12 +130,12 @@ $(document).ready(function(){
 	});
 	$('#id_resolve_days').keyup(function() {
 		var reg = /^[0-9]+$/;
-		if( ($('input[id=id_resolve_days]').val()).match(reg) ){
-			$('#resolve_days').attr('color','green');
-			$('#resolve_days').html('Correct');
-		} else if($('input[id=resolve_days]').val() == ''){
+		if($('input[id=resolve_days]').val() == ''){
 			$('#resolve_days').attr('color','red');
 			$('#resolve_days').html('');
+		} else if( ($('input[id=id_resolve_days]').val()).match(reg) ){
+			$('#resolve_days').attr('color','green');
+			$('#resolve_days').html('Correct');
 		} else {
 			$('#resolve_days').attr('color','red');
 			$('#resolve_days').html('Enter Number');
@@ -207,7 +207,7 @@ $(document).ready(function(){
 		}
 	});	
 	$('#id_fine').keyup(function() {
-		var reg4 = /^\d+(\.[\d]{2})?$/;
+		var reg4 = /^\d+$/;
 		if( ($('input[id=id_fine]').val()).match(reg4) ){
 			$('#fine').attr('color','green');
 			$('#fine').html('Correct');
