@@ -92,20 +92,26 @@
 	</div>
 	<div class="modal-footer">
 		<a href="#" class="btn" data-dismiss="modal">Close</a>
-		<button type="submit" class="btn btn-primary" disabled="disabled" id="create_button">Create Report</button>
+		<button type="submit" class="btn btn-primary" id="create_button">Create Report</button>
 		</form>
 	</div>
 </div>
 <script>
 $(document).ready(function(){
-	var submittable = true;
-	alert($('#crime_date').attr('color'));
-	if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green')
-		submittable = false;
-	if(submittable)
-		$('#create_button').removeAttr('disabled', 'disabled');
-	else
-		$('#create_button').attr('disabled', 'disabled');
+	$('#create_button').submit(function() {
+		$('#id_crime_date').keyup();
+		$('#id_resolve_days').keyup();
+		$('#id_num_involved').keyup();
+		$('#id_creature').keyup();
+		$('#id_location').keyup();
+		$('#id_trial_location').keyup();
+		$('#id_violation_description').keyup();
+		$('#id_fine').keyup();
+		var submittable = true;
+		if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green')
+			submittable = false;
+		return submittable;
+	});
 	$('#id_crime_date').keyup(function() {
 		var reg = /^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/;
 		if( ($('input[id=id_crime_date]').val()).match(reg) ){
