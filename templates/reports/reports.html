@@ -110,7 +110,7 @@ $(document).ready(function(){
 		var submittable = true;
 		if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green')
 			submittable = false;
-		return false;
+		return submittable;
 	});
 	$('#id_crime_date').keyup(function() {
 		var reg = /^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/;
@@ -126,7 +126,7 @@ $(document).ready(function(){
 		}
 	});
 	$('#id_resolve_days').keyup(function() {
-		var reg = /^\d+$/;
+		var reg = /^+$/;
 		if( ($('input[id=id_resolve_days]').val()).match(reg) ){
 			$('#resolve_days').attr('color','green');
 			$('#resolve_days').html('Correct');
@@ -139,7 +139,7 @@ $(document).ready(function(){
 		}
 	});	
 	$('#id_num_involved').keyup(function() {
-		var reg = /^\d+$/;
+		var reg = /^[0-9]+$/;
 		if( ($('input[id=id_num_involved]').val()).match(reg) ){
 			$('#num_involved').attr('color','green');
 			$('#num_involved').html('Correct');
