@@ -110,7 +110,6 @@ $(document).ready(function(){
 		var submittable = true;
 		if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green') 
 			submittable = false;
-		alert(submittable);
 		if(submittable)
 			$('#create_button').removeAttr("disabled", "disabled");
 		else
