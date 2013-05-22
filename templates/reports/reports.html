@@ -105,7 +105,7 @@ $(document).ready(function(){
 		$('#create_button').removeAttr('disabled', 'disabled');
 	else
 		$('#create_button').attr('disabled', 'disabled');
-	$('#id_crime_date').keydown(function() {
+	$('#id_crime_date').on('change', function() {
 		var reg = /^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/;
 		if( ($('input[id=id_crime_date]').val()).match(reg) ){
 			$('#crime_date').attr('color','green');
@@ -118,7 +118,7 @@ $(document).ready(function(){
 			$('#crime_date').html('Format: YYYY-MM-DD');
 		}
 	});
-	$('#id_resolve_days').keyup(function() {
+	$('#id_resolve_days').on('change', function() {
 		var reg = /^\d+$/;
 		if( ($('input[id=id_resolve_days]').val()).match(reg) ){
 			$('#resolve_days').attr('color','green');
