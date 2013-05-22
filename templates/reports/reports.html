@@ -82,7 +82,7 @@
 						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td><td><font color="red" id="resolve_days"></font></td></tr>
 						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td><td><font color="red" id="num_involved"></font></td></tr>
 						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td><td><font color="red" id="creature"></font></td></tr>
-						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><td><font color="red" id="loc"></font></td></tr>
+						<tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><td><font color="red" id="location"></font></td></tr>
 						<tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td><td><font color="red" id="trial_location"></font></td></tr>
 						<tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td><td><font color="red" id="violation_description"></font></td></tr>
 						<tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td><td><font color="red" id="fine"></font></td></tr>
@@ -104,17 +104,17 @@ $(document).ready(function(){
 		$('#temp').html($('input[id=id_location]').val());
 		var reg = '/[\-]?[0-9]{1,3}([\.][0-9]{1,3})?[\,\s?][\-]?[0-9]{1,3}([\.][0-9]{1,3})?/';
 		if(reg.test($('input[id=id_location]').val())){
-			$('#loc').html('Correct');
+			$('#location').html('Correct');
 		} else if($('input[id=id_location]').val() == ''){
-			$('#loc').html('');
+			$('#location').html('');
 		} else {
-			$('#loc').html('GPS Coordinates (ex 123.456, -189.012)');
+			$('#location').html('GPS Coordinates (ex 123.456, -189.012)');
 		}
 	});
 	$('#id_crime_date').keyup(function() {
 		$('#temp').html($('input[id=id_crime_date]').val());
 		var reg = /^[a-zA-Z]+/;
-		if(reg.test($('input[id=id_crime_date]').val())){
+		if(reg.exec($('input[id=id_crime_date]').val())){
 			$('#crime_date').html('Correct');
 		} else if($('input[id=id_crime_date]').val() == ''){
 			$('#crime_date').html('');
