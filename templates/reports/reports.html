@@ -98,7 +98,7 @@
 </div>
 <script>
 $(document).ready(function(){
-	$('input').change(function() {
+	$('input').keyup(function() {
 		$('#id_crime_date').keyup();
 		$('#id_resolve_days').keyup();
 		$('#id_num_involved').keyup();
@@ -122,7 +122,7 @@ $(document).ready(function(){
 			$('#crime_date').html('Correct');
 		} else if($('input[id=crime_date]').val() == ''){
 			$('#crime_date').attr('color','red');
-			$('#crime_date').html('');
+			$('#crime_date').html(' ');
 		} else {
 			$('#crime_date').attr('color','red');
 			$('#crime_date').html('Format: YYYY-MM-DD');
@@ -195,12 +195,12 @@ $(document).ready(function(){
 	});	
 	$('#id_violation_description').keyup(function() {
 		var reg3 = /^.*$/;
-		if( ($('input[id=id_violation_description]').val()).match(reg3) ){
-			$('#violation_description').attr('color','green');
-			$('#violation_description').html('Correct');
-		} else if($('input[id=id_violation_description]').val() == ''){
+		if($('input[id=id_violation_description]').val() == ''){
 			$('#violation_description').attr('color','red');
 			$('#violation_description').html('');
+		} else if( ($('input[id=id_violation_description]').val()).match(reg3) ){
+			$('#violation_description').attr('color','green');
+			$('#violation_description').html('Correct');
 		} else {
 			$('#violation_description').attr('color','red');
 			$('#violation_description').html('Enter Description');
