@@ -135,7 +135,7 @@ $(document).ready(function(){
 			$('#resolve_days').html('');
 		} else if( ($('input[id=id_resolve_days]').val()).match(reg) ){
 			$('#resolve_days').attr('color','green');
-			$('#resolve_days').html('Correct');
+			$('#resolve_days').html('<b>&#10004;</b>');
 		} else {
 			$('#resolve_days').attr('color','red');
 			$('#resolve_days').html('<b>Enter Number</b>');
@@ -145,7 +145,7 @@ $(document).ready(function(){
 		var reg = /^[0-9]+$/;
 		if( ($('input[id=id_num_involved]').val()).match(reg) ){
 			$('#num_involved').attr('color','green');
-			$('#num_involved').html('Correct');
+			$('#num_involved').html('<b>&#10004;</b>');
 		} else if($('input[id=id_num_involved]').val() == ''){
 			$('#num_involved').attr('color','red');
 			$('#num_involved').html('');
@@ -158,7 +158,7 @@ $(document).ready(function(){
 		var reg = /^([a-zA-Z]\s?)+$/;
 		if( ($('input[id=id_creature]').val()).match(reg) ){
 			$('#creature').attr('color','green');
-			$('#creature').html('Correct');
+			$('#creature').html('<b>&#10004;</b>');
 		} else if($('input[id=id_creature]').val() == ''){
 			$('#creature').attr('color','red');
 			$('#creature').html('');
@@ -171,7 +171,7 @@ $(document).ready(function(){
 		var reg1 = /^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/;
 		if( ($('input[id=id_location]').val()).match(reg1) ){
 			$('#location').attr('color','green');
-			$('#location').html('Correct');
+			$('#location').html('<b>&#10004;</b>');
 		} else if($('input[id=id_location]').val() == ''){
 			$('#location').attr('color','red');
 			$('#location').html('');
@@ -184,7 +184,7 @@ $(document).ready(function(){
 		var reg2 = /^([a-zA-Z]\s?)+$/;
 		if( ($('input[id=id_trial_location]').val()).match(reg2) ){
 			$('#trial_location').attr('color','green');
-			$('#trial_location').html('Correct');
+			$('#trial_location').html('<b>&#10004;</b>');
 		} else if($('input[id=id_trial_location]').val() == ''){
 			$('#trial_location').attr('color','red');
 			$('#trial_location').html('');
@@ -200,7 +200,7 @@ $(document).ready(function(){
 			$('#violation_description').html('');
 		} else if( ($('input[id=id_violation_description]').val()).match(reg3) ){
 			$('#violation_description').attr('color','green');
-			$('#violation_description').html('Correct');
+			$('#violation_description').html('<b>&#10004;</b>');
 		} else {
 			$('#violation_description').attr('color','red');
 			$('#violation_description').html('<b>Enter Description</b>');
@@ -210,7 +210,7 @@ $(document).ready(function(){
 		var reg4 = /^\d+$/;
 		if( ($('input[id=id_fine]').val()).match(reg4) ){
 			$('#fine').attr('color','green');
-			$('#fine').html('Correct');
+			$('#fine').html('<b>&#10004;</b>');
 		} else if($('input[id=id_fine]').val() == ''){
 			$('#fine').attr('color','red');
 			$('#fine').html('');
