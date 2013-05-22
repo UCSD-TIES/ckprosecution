@@ -104,7 +104,7 @@ $(document).ready(function(){
 	$('#id_location').keyup(function() {
 		$('#temp').html($('input[id=id_location]').val());
 		var reg = '/[\-]?[0-9]{1,3}([\.][0-9]{1,3})?[\,\s?][\-]?[0-9]{1,3}([\.][0-9]{1,3})?/';
-		if(reg.test($('input[id=id_location]').val())){
+		if( ($('input[id=id_location]').val()).match(reg) ){
 			$('#location').html('Correct');
 		} else if($('input[id=id_location]').val() == ''){
 			$('#location').html('?');
@@ -114,8 +114,8 @@ $(document).ready(function(){
 	});
 	$('#id_crime_date').keyup(function() {
 		$('#temp').html($('input[id=id_crime_date]').val());
-		var reg = /^[a-zA-Z]+/;
-		if(reg.exec($('input[id=id_crime_date]').val())){
+		var reg2 = /^[a-zA-Z]+/;
+		if( ($('input[id=id_crime_date]').val()).match(reg2) ){
 			$('#crime_date').html('Correct');
 		} else if($('input[id=id_crime_date]').val() == ''){
 			$('#crime_date').html('');
