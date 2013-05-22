@@ -130,7 +130,7 @@ $(document).ready(function(){
 		}
 	});
 	$('#id_resolve_days').keyup(function() {
-		var reg = /^+$/;
+		var reg = /^[0-9]+$/;
 		if( ($('input[id=id_resolve_days]').val()).match(reg) ){
 			$('#resolve_days').attr('color','green');
 			$('#resolve_days').html('Correct');
