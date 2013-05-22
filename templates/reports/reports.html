@@ -99,24 +99,23 @@
 <script>
 $(document).ready(function(){
 	$('#id_location').keyup(function() {
-		var reg = '/^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/';
+		var reg = '^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$';
 		if( ($('input[id=id_location]').val()).match(reg) ){
 			$('#location').html('Correct');
 		} else if($('input[id=id_location]').val() == ''){
-			$('#location').html('?');
+			$('#location').html('');
 		} else {
 			$('#location').html('GPS Coordinates (ex 123.456, -189.012)');
 		}
 	});
-	$('#id_crime_date').keyup(function() {
-		$('#temp').html($('input[id=id_crime_date]').val());
-		var reg2 = /^[a-zA-Z]+$/;
-		if( ($('input[id=id_crime_date]').val()).match(reg2) ){
-			$('#crime_date').html('Correct');
-		} else if($('input[id=id_crime_date]').val() == ''){
-			$('#crime_date').html('');
+	$('#id_trial_location').keyup(function() {
+		var reg2 = /^([a-zA-Z]\s?)+$/;
+		if( ($('input[id=id_trial_location]').val()).match(reg2) ){
+			$('#trial_location').html('Correct');
+		} else if($('input[id=id_trial_location]').val() == ''){
+			$('#trial_location').html('');
 		} else {
-			$('#crime_date').html('Enter Date.');
+			$('#trial_location').html('Enter Date.');
 		}
 	});
 });
