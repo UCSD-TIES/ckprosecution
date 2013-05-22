@@ -100,13 +100,14 @@
 </div>
 <script>
 $(document).ready(function(){
+	$('#location').html('Hiii');
 	$('#id_location').keyup(function() {
 		$('#temp').html($('input[id=id_location]').val());
 		var reg = '/[\-]?[0-9]{1,3}([\.][0-9]{1,3})?[\,\s?][\-]?[0-9]{1,3}([\.][0-9]{1,3})?/';
 		if(reg.test($('input[id=id_location]').val())){
 			$('#location').html('Correct');
 		} else if($('input[id=id_location]').val() == ''){
-			$('#location').html('');
+			$('#location').html('?');
 		} else {
 			$('#location').html('GPS Coordinates (ex 123.456, -189.012)');
 		}
@@ -119,7 +120,7 @@ $(document).ready(function(){
 		} else if($('input[id=id_crime_date]').val() == ''){
 			$('#crime_date').html('');
 		} else {
-			$('#crime_date').html('San Diego only.');
+			$('#crime_date').html('Enter Date.');
 		}
 	});
 });
