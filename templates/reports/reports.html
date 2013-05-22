@@ -78,7 +78,7 @@
 			<div class="pull-left">
 					<table class="createtable">
 					<!-- {{form.as_table}} -->
-						<tr><th><label for="id_crime_date">Crime date:</label></th><td><input name="crime_date" type="text" id="id_crime_date" /></td><td></tr>
+						<tr><th><label for="id_crime_date">Crime date:</label></th><td><input name="crime_date" type="text" id="id_crime_date" /></td><td><font color="red" id="crime_date"></font></td></tr>
 						<tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td></tr>
 						<tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td></tr>
 						<tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td></tr>
@@ -105,15 +105,24 @@ $(document).ready(function(){
 	$('#id_location2').keyup(function() {
 		$('#temp').html($('input[id=id_location2]').val());
 		$('#temp2').html($('#loc').html());
-		if($('input[id=id_location2]').val() == 'San Diego'){
-			$('#temp3').html('Cond 1');
+		var reg = new RegExp('[\-]?[0-9]{1,3}([\.][0-9]{1,3})?');
+		if(reg.test($('input[id=id_location2]').val())){
 			$('#loc').html('Correct');
 		} else if($('input[id=id_location2]').val() == ''){
-			$('#temp3').html('Cond 2');
-			$('#loc').html('Nothing');
+			$('#loc').html('');
 		} else {
-			$('#temp3').html('Cond 3');
-			$('#loc').html('San Diego only.');
+			$('#loc').html('GPS Coordinates (ex 123.456, -189.012)');
+		}
+	});
+	$('#id_crime_date').keyup(function() {
+		$('#temp').html($('input[id=id_crime_date]').val());
+		var reg = new RegExp('[a-zA-z]{1,32}');
+		if(reg.test($('input[id=id_crime_date]').val())){
+			$('#crime_date').html('Correct');
+		} else if($('input[id=id_crime_date]').val() == ''){
+			$('#crime_date').html('');
+		} else {
+			$('#crime_date').html('San Diego only.');
 		}
 	});
 });
