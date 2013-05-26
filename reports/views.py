@@ -164,9 +164,9 @@ def search(request):
                                 'mpa',
                                 'fine',
                                 'update_date'])
-        found_entries = Report.objects.filter(entry_query).order_by('location')
+        found_entries = Report.objects.filter(entry_query).order_by('crime_date')
 
-    return render_to_response('reports/search.html',{
+    return render_to_response('reports/results.html',{
                               'query_string': query_string, 
                               'found_entries': found_entries },
                               context_instance=RequestContext(request))
@@ -182,8 +182,20 @@ def date_filter(request):
         start_date = request.GET['start_date']
     if('end_date' in request.GET):
         end_date = request.GET['end_date']
-    found_entires = Report.objects.filter(crime_date__range=[start_date,end_date])
+    found_entires = Report.objects.filter(crime_date__range=[start_date,end_date]).order_by('crime_date')
 
-    return render_to_response('reports/search.html',{
+    return render_to_response('reports/results.html',{
                               'found_entries': found_entires },
+                              context_instance=RequestContext(request))
+
+@login_required
+def rank(request,rank_by,reverse):
+    if(reverse == 'true'):
+        rank_by = '-'+rank_by
+        result = Report.objects.all().order_by(rank_by)
+    else:
+        result = Report.objects.all().order_by(rank_by)
+
+    return render_to_response('reports/reports.html',{
+                              'reports': result },
                               context_instance=RequestContext(request))
