@@ -175,13 +175,17 @@ def search(request):
 @requires_csrf_token
 #TODO:Need date validation to prevent entering the error page
 def date_filter(request):
-    start_date = ''
-    end_date = ''
+    start_date = None
+    end_date = None
     found_entries = None
     if('start_date' in request.GET):
         start_date = request.GET['start_date']
     if('end_date' in request.GET):
         end_date = request.GET['end_date']
+    if(start_date == None):
+        start_date == '0001-01-01'
+    if(end_date == None):
+        end_date == '9999-12-31'
     found_entires = Report.objects.filter(crime_date__range=[start_date,end_date]).order_by('crime_date')
 
     return render_to_response('reports/results.html',{
