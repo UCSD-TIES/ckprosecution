@@ -88,11 +88,12 @@
                 <span class="left">
                     <form action="/reports/filter_by_date/" method="get" class="form-inline">
                         {% csrf_token %}
-                        <label>Start Date</label>
+                        <label>From</label>
                         <input id="id_start_date" name="start_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
-                        <label>End Date</label>
+                        <label>To</label>
                         <input id="id_end_date" name="end_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
                         <button type="submit" value="Submit" class="btn btn-info">Filter by Date</button>
+                    </form>
                 </span>
             {% endif %}
         </div>
