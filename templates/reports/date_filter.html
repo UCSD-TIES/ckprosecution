@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Filtered Results{% endblock %}
+
+{% block content %}
+
+    <div class="reporttable">
+        <table class="table" id="expenselist">
+            <thead>
+                <tr>
+                    <th>Crime Date</th>  
+                    <th>Days to Resolve</th>  
+                    <th>Jail</th>  
+                    <th>Number Involved</th>
+                    <th>Creature</th>
+                    <th>Location</th>
+                    <th>Trial Location</th>
+                    <th>Description</th>
+                    <th>MPA Involved</th>
+                    <th>Fine</th>
+                    <th>Update Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="table_body">
+                {% for item in found_entries %}
+                    <tr id="{{ item.id }}">
+                        <td>{{ item.crime_date }}</td>
+                        <td>{{ item.resolve_days }}</td>
+                        <td>{{ item.jail_time }}</td>
+                        <td>{{ item.num_involved }}</td>
+                        <td>{{ item.creature }}</td>
+                        <td>{{ item.location }}</td>
+                        <td>{{ item.trial_location }}</td>
+                        <td>{{ item.violation_description }}</td>
+                        <td>{{ item.mpa }}</td>
+                        <td>{{ item.fine }}</td>
+                        <td>{{ item.update_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

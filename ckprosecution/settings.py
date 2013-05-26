@@ -103,7 +103,7 @@ SECRET_KEY = 'jgzmqsok8h)#alx_ztc6n-ehxleuc&amp;t!uh_&amp;o7j^$8!p19*tzj'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,15 +135,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'userena',
-	'guardian',
-	'easy_thumbnails',
-	'accounts',
-	'south',
-	'reports',
-	'GChartWrapper.charts',
-        'django.contrib.admin',
-        'django.contrib.admindocs'
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    'accounts',
+    'south',
+    'reports',
+    'GChartWrapper.charts',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
 )
 
 AUTHENTICATION_BACKENDS = (

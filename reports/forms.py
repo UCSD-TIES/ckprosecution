@@ -2,5 +2,5 @@ from django.forms import ModelForm
 from reports.models import Report
 
 class ReportForm(ModelForm):
-	class Meta:
-		model = Report
+    class Meta:
+        model = Report

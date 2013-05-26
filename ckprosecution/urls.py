@@ -10,10 +10,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	(r'^accounts/signup/', login_required(views.signup)),
-	(r'^accounts/', include('userena.urls')),
-	(r'^reports/', include('reports.urls')),
-	(r'^search/$','reports.views.search'),
+    (r'^accounts/signup/', login_required(views.signup)),
+    (r'^accounts/', include('userena.urls')),
+    (r'^reports/', include('reports.urls')),
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),
     # url(r'^ckprosecution/', include('ckprosecution.foo.urls')),
