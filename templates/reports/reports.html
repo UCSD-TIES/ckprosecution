@@ -147,6 +147,7 @@
                     $('#crime_date').attr('color','red');
                     $('#crime_date').html('<b>YYYY-MM-DD</b>');
                 }
+                $('input').change();
             });
             $('#id_resolve_days').keyup(function() {
                 reg = /^[0-9]+$/;
@@ -159,6 +160,7 @@
                     $('#resolve_days').attr('color','red');
                     $('#resolve_days').html('<b>Enter Number</b>');
                 }
+                $('input').change();
             });	
             $('#id_num_involved').keyup(function() {
                 reg = /^[0-9]+$/;
@@ -171,6 +173,7 @@
                     $('#num_involved').attr('color','red');
                     $('#num_involved').html('<b>Enter Number</b>');
                 }
+                $('input').change();
             });	
             $('#id_creature').keyup(function() {
                 reg = /^([a-zA-Z]\s?)+$/;
@@ -183,6 +186,7 @@
                     $('#creature').attr('color','red');
                     $('#creature').html('<b>Enter Creature</b>');
                 }
+                $('input').change();
             });		
             $('#id_location').keyup(function() {
                 reg = /^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/;
@@ -195,6 +199,7 @@
                     $('#location').attr('color','red');
                     $('#location').html('<b>Coordinates \n(ex 123.456, -189.012)</b>');
                 }
+                $('input').change();
             });
             $('#id_trial_location').keyup(function() {
                 reg = /^([a-zA-Z]\s?)+$/;
@@ -207,6 +212,7 @@
                     $('#trial_location').attr('color','red');
                     $('#trial_location').html('<b>Enter Location<b>');
                 }
+                $('input').change();
             });	
             $('#id_violation_description').keyup(function() {
                 reg = /^.*$/;
@@ -219,6 +225,7 @@
                     $('#violation_description').attr('color','red');
                     $('#violation_description').html('<b>Enter Description</b>');
                 }
+                $('input').change();
             });	
             $('#id_fine').keyup(function() {
                 reg = /^\d+$/;
@@ -230,7 +237,8 @@
                 } else {
                     $('#fine').attr('color','red');
                     $('#fine').html('<b>Enter Fine Amount<b>');
-                }	
+                }
+                $('input').change();	
             });
         });
     </script>
