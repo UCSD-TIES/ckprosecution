@@ -216,6 +216,7 @@ def detail(request,report_id):
                               'report': Report.objects.get(pk=report_id) },
                               context_instance=RequestContext(request))
 
+@login_required
 def delete_report(request,report_id):
     Report.objects.get(pk=report_id).delete()
     return render_to_response('reports/reports.html',{
