@@ -40,25 +40,62 @@ def delete_report(request, report_id):
 @login_required
 def compute_statistics(request):
     total_reports = Report.objects.all().count()
-    
+
+
     # Start of Graph
     
     ## Resolve days graph ##
     days_stats_label = ""
+    count_stats_label = ""
     days_stats_data = []
     for resolve_days in Report.objects.all().distinct('resolve_days').values('resolve_days'):
-        c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}")
-        percentage = (float(Report.objects.filter(resolve_days=c_string).count()) / total_reports)*100
+        c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}") 
+        count = float(Report.objects.filter(resolve_days=c_string).count())
+        count_stats_label += str(Report.objects.filter(resolve_days=c_string).count())
         days_stats_label += str(c_string) + "|"
-        days_stats_data.append(percentage)
-
+        days_stats_data.append(count)      
+    roof = max(list(map(int, count_stats_label)))   
     days_graph = VerticalBarStack(days_stats_data)
-    days_graph.title('Resolve Days Graph')
-    days_graph.bar(200,50,200)
+    days_graph.title('Frequency of Resolve Days')
+    days_graph.bar(500/days_stats_label.count("|"),100/days_stats_label.count("|"),0)
     days_graph.size(600,300)
+    days_graph.axes.type('xyx')
+    {}
+    days_graph.axes.range(1,0,roof,1)
+    days_graph.axes.label(2,'Number of Days to Resolve')
+    days_graph.axes.position(2, 50)
+    ##days_graph.axes.label(1,'Occurrence')
+    days_graph.scale(0,roof)
     days_graph.label(days_stats_label.rstrip("|"))
     days_graph.color('0000aa')
-
+    
+    ##Date Graph
+    ## code to replace place-holder when report format for crime_date is fixed
+    ## need to extract just the year from the data
+    ## Date Line Graph##
+    ##date_stats_label = ""
+    ##count_stats_label = ""
+    ##date_stats_data = []
+    ##for crime_date in Report.objects.all().distinct('crime_date').values('crime_date'):
+      ##c_string = '' + str(crime_date).lstrip("{'update_date': u'").rstrip("'{}}")
+      ##count = float(Report.objects.filter(crime_date=c_string).count())
+      ##count_stats_label += str(Report.objects.filer(resolve_Days=c_string).count())
+      ##date_stats_label += str(c_string) + "|"
+      ##date_stats_data.append(count)
+  ##roof = max(list(map(int, count_stats_label)))
+  ##date_graph = Line(date_stats_data)
+    date_graph = Line([0,4,2,9,1,2])
+    date_graph.title('Violations by Year')
+    date_graph.size(600,300)
+    date_graph.axes.type('xyx')
+    {}
+    ##date_graph.label(date_stats_label).rstrip("|")
+    date_graph.axes.range(1,0,9,1)
+    date_graph.axes.label(2,'Year')
+    date_graph.axes.position(2,50)
+    date_graph.scale(0,9)
+    date_graph.label(2008,2009,2010,2011,2012,2013)
+    date_graph.color('0000aa')
     ## Location of Violations##
     location_stats_label = ""
     location_stats_data = []
@@ -94,7 +131,7 @@ def compute_statistics(request):
     #End of graphs
 		
     return render_to_response('reports/statistics.html', {
-                              'location_graph': location_graph,
+                              'date_graph': date_graph,
                               'creature_graph': creature_graph,
                               'days_graph': days_graph},
                               context_instance=RequestContext(request))
