@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Report Detail{% endblock %}
+
+{% block htmlhead %}
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.js?version=20120318"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/formValidation.js"></script>
+    <style>
+        .createtable {text-align:left;}
+        .button { margin: 4px 10px; }
+        .line { border-bottom: 1px solid black; }
+        .close { float: right; }
+        .notice { color: #F4811F; padding-top: 25px; }
+        .newlook {background-color:white;}
+        .actions {margin-left:10px;}
+        .actions { margin-bottom: 15px; }
+        .title {margin-left: 10px;margin-top: 25px;margin-bottom:25px; font-size:2em;}
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form class="form-inline">
+        <div class="pull-left">
+            <table class="table">
+                <tr><th>Crime date:</th><td>{{ report.crime_date }}</td></tr>
+                <tr><th>Resolve days:</th><td>{{ report.resolve_days }}</td></tr>
+                <tr><th>Num involved:</th><td>{{ report.num_involved }}</td></tr>
+                <tr><th>Creature:</th><td>{{ report.creature }}</td></tr>
+                <tr><th>Location:</th><td>{{ report.location }}</td></tr>
+                <tr><th>Trial location:</th><td>{{ report.trial_location }}</td></tr>
+                <tr><th>Fine:</th><td>{{ report.fine }}</td></tr>
+                <tr><th>Jail time:</th><td>{{ report.jail_time }}</td></tr>
+                <tr><th>Mpa:</th><td>{{ report.mpa }}</td></tr>
+                <tr><th>Violation description:</th><td>{{ report.violation_description }}</td></tr>
+                <tr><th>Update date:</th><td>{{ report.update_date }}</td></tr>
+            </table>
+            <a href="/reports/reports" class="btn">Back</a>
+            {% if user.is_authenticated %}
+                <a href="#delete_report" data-target="#delete_report" data-toggle="modal" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
+    </form>
+
+    <div id="delete_report" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden=true">&times;</button>
+            <h3>Warning!</h3>
+        </div>
+        <div class="modal-body">
+            <form action="{% url delete report_id=report.id %}" class="form-inline" method="DELETE">
+            Are you sure you want to delete this report? This action cannot be undone.
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <button type="submit" class="btn btn-danger">Confirm</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
