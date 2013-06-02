@@ -17,8 +17,8 @@
                     <th>Fine</th>
                     <th>Jail</th>
                     <th>MPA</th>
-                    <th>Description</th>
                     <th>Update Date</th>
+                    <th> </th>
                 </tr>
             </thead>
 
@@ -34,8 +34,8 @@
                         <td>{{ item.fine }}</td>
                         <td>{{ item.jail_time }}</td>
                         <td>{{ item.mpa }}</td>
-                        <td>Details</td>
                         <td>{{ item.update_date }}</td>
+                        <td><a href="{% url detail report_id=item.id %}">Details</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

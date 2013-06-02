@@ -20,14 +20,38 @@
 {% endblock %}
 
 {% block content %}
+    <div class="header-bottom">
+        <div class="container">
+            <span class="right">
+                <form action="/reports/search/" method="get">
+                    {% csrf_token %}
+                    <input name="q" type="text" class="input-medium search-query" placeholder="Search reports">
+                    <button type="submit" value="Submit" class="btn">Search</button>
+                </form>
+            </span>
+            <span class="left">
+                <form action="/reports/filter_by_date/" method="get" class="form-inline">
+                    {% csrf_token %}
+                    <label>From</label>
+                    <input name="start_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
+                    <label>To</label>
+                    <input name="end_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
+                    <button type="submit" value="Submit" class="btn btn-info">Filter by Date</button>
+                </form>
+            </span>
+        </div>
+    </div>
+
     <div class="title">
         Reports
     </div>
 
     {% block actions %}
+    {% if user.is_authenticated %}
         <div class="actions">
-            <a href="#create_report" role="button" data-target="#create_report" data-toggle="modal" class="btn btn-primary"><i class="icon-plus-sign icon-large"></i>&nbsp&nbspNew Report</a>
+            <a href="#create_report" data-target="#create_report" data-toggle="modal" class="btn btn-primary"><i class="icon-plus-sign icon-large"></i>&nbsp&nbspNew Report</a>
         </div>
+    {% endif %}
     {% endblock %}
 
     <div class="reporttable">
@@ -43,8 +67,8 @@
                     <th>Fine<a href="{% url rank rank_by='fine' reverse='true' %}"><i class="icon-arrow-up"></i></a><a href="{% url rank rank_by='fine' reverse='false' %}"><i class="icon-arrow-down"></i></a></th>
                     <th>Jail<a href="{% url rank rank_by='jail_time' reverse='true' %}"><i class="icon-arrow-up"></i></a><a href="{% url rank rank_by='jail_time' reverse='false' %}"><i class="icon-arrow-down"></i></a></th>
                     <th>MPA<a href="{% url rank rank_by='mpa' reverse='true' %}"><i class="icon-arrow-up"></i></a><a href="{% url rank rank_by='mpa' reverse='false' %}"><i class="icon-arrow-down"></i></a></th>
-                    <th>Description</th>
                     <th>Update Date<a href="{% url rank rank_by='update_date' reverse='true' %}"><i class="icon-arrow-up"></i></a><a href="{% url rank rank_by='update_date' reverse='false' %}"><i class="icon-arrow-down"></i></a></th>
+                    <th> </th>
                 </tr>
             </thead>
             <tbody id="table_body">
@@ -59,10 +83,9 @@
                         <td>{{ item.fine }}</td>
                         <td>{{ item.jail_time }}</td>
                         <td>{{ item.mpa }}</td>
-                        <td><a href="#show_report" data-target="#show_report" data-toggle="modal">Details</a></td>
                         <td>{{ item.update_date }}</td>
+                        <td><a href="{% url detail report_id=item.id %}">Details</a></td>
                     </tr>
-                    <!--item.violation_description-->
 		{% endfor %}
 	    </tbody>
 	</table>
@@ -92,36 +115,6 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Close</a>
-            <button type="submit" class="btn btn-primary" disabled="disabled" id="create_button">Create Report</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="show_report" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Report Details</h3>
-        </div>
-        <div class="modal-body">
-            <form action="" class="form-inline">
-                <div class="pull-left">
-                    <table class="createtable">
-                        <tr><th><label for="id_crime_date">Crime date:</label></th><td>{{ object_instance.crime_date }}</td></tr>
-                        <tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td></tr>
-                        <tr><th><label for="id_num_involved">Num involved:</label></th><td><input name="num_involved" type="text" id="id_num_involved" /></td></tr>
-                        <tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td></tr>
-                        <tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td></tr>
-                        <tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td></tr>
-                        <tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td></tr>
-                        <tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td></tr>
-                        <tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td></tr>
-                        <tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td></tr>
-                    </table>
-                </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
-            <a href="#edit_report" role="button" data-target="#edit_report" data-toggle="modal" class="btn btn-primary">Edit Report</a>
             <button type="submit" class="btn btn-primary" disabled="disabled" id="create_button">Create Report</button>
             </form>
         </div>
@@ -243,25 +236,6 @@
         });
     </script>
 
-    {% if error %}
-        <div id="create_error" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>Error!</h3>
-            </div>
-            <div class="modal-body">
-                {{ error }}
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
-            </div>
-        </div>
-
-        <script type="text/javascript">
-            $('#create_error').modal({backdrop:false});
-        </script>
-    {% endif %}
-
     {% if success %}
         <div id="create_success" class="modal hide fade">
             <div class="modal-header">
@@ -269,7 +243,7 @@
                 <h3>Success!</h3>
             </div>
             <div class="modal-body">
-                Successfully created/updated Report.
+                Successfully created Report.
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
@@ -314,7 +288,7 @@
         </div>
     </div>
 
-<!--    <script type="text/javascript">
+<!--<script type="text/javascript">
 
         {% block main_javascript %}
 

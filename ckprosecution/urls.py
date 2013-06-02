@@ -10,6 +10,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    (r'^home/','ckprosecution.views.home'),
     (r'^accounts/signup/', login_required(views.signup)),
     (r'^accounts/', include('userena.urls')),
     (r'^reports/', include('reports.urls')),

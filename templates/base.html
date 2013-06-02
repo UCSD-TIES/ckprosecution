@@ -32,24 +32,20 @@
         .welcome{padding-right:10px;}
         .expense-sheet{box-shadow: 8px 8px 8px #BCBCBC; border:1px solid #CCC; background-color:white;}
     </style>
-
 </head>
 
 <body>
-
     <div class="header-top">
         <div class="container">
             <div class="row">
                 <div class="span3">
-                    {% if user.is_authenticated %}
-                        <a href="/reports/reports/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a>
-                    {% else %}
-                        <a href="/accounts/signin/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a>
-                    {% endif %}
+                    <a href="/home/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a>
                 </div>
                 <div class="offset1 span8 text-right">
                     {% if user.is_authenticated %}
-                        <span class="logout"><a href="/accounts/signout/" style="color:black">Log Out</a></span>
+                        <span class="logout"><a href="/accounts/signout/" class="btn btn-info"><i class="icon-user"></i>&nbsp&nbspLog Out</a></span>
+                    {% else %}
+                        <span class="login"><a href="/accounts/signin/" class="btn btn-info"><i class="icon-user"></i>&nbsp&nbspLog In</a></span>
                     {% endif %}
                 </div>
             </div>
@@ -58,43 +54,19 @@
 
     <div class="header-mid">
         <div class="container">
+            <div class="area">
+                <a href="/reports/reports" class="navi">Reports</a>
+            </div>
+            <div class="area">
+                <a href="/reports/statistics" class="navi">Statistics</a>
+            </div>
             {% if user.is_authenticated %}
                 <div class="area">
-                        <a href="/reports/reports" class="navi">Reports</a>
-                </div>
-                <div class="area">
-                        <a href="/reports/statistics" class="navi">Statistics</a>
-                </div>
-                <div class="area">
-                        <a href="/accounts/" class="navi">Users</a>
+                    <a href="/accounts/" class="navi">Users</a>
                 </div>
                 <div class="right">
-                        <a href="/admin/" class="settings"><i class="icon-cog"></i> Admin</a>
+                    <a href="/admin/" class="settings"><i class="icon-cog"></i> Admin</a>
                 </div>
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="header-bottom">
-        <div class="container">
-            {% if user.is_authenticated %}
-                <span class="right">
-                    <form action="/reports/search/" method="get">
-                        {% csrf_token %}
-                        <input id="id_q" name="q" type="text" class="input-medium search-query" placeholder="Search reports">
-                        <button type="submit" value="Submit" class="btn">Search</button>
-                    </form>
-                </span>
-                <span class="left">
-                    <form action="/reports/filter_by_date/" method="get" class="form-inline">
-                        {% csrf_token %}
-                        <label>From</label>
-                        <input id="id_start_date" name="start_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
-                        <label>To</label>
-                        <input id="id_end_date" name="end_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
-                        <button type="submit" value="Submit" class="btn btn-info">Filter by Date</button>
-                    </form>
-                </span>
             {% endif %}
         </div>
     </div>
