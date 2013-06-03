@@ -39,7 +39,7 @@
         <div class="container">
             <div class="row">
                 <div class="span3">
-                    <a href="/home/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a>
+                    <a href="/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a>
                 </div>
                 <div class="offset1 span8 text-right">
                     {% if user.is_authenticated %}
@@ -70,6 +70,8 @@
             {% endif %}
         </div>
     </div>
+    
+    {% block header %}{% endblock %}
 
     <div class="container expense-sheet">
         {% block headermid %}{% endblock %}

@@ -10,10 +10,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^home/','ckprosecution.views.home'),
-    (r'^accounts/signup/', login_required(views.signup)),
-    (r'^accounts/', include('userena.urls')),
-    (r'^reports/', include('reports.urls')),
+    url(r'^accounts/signup/', login_required(views.signup)),
+    url(r'^accounts/', include('userena.urls')),
+    url(r'^reports/', include('reports.urls')),
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),
     # url(r'^ckprosecution/', include('ckprosecution.foo.urls')),
@@ -23,5 +22,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    (r'^$','accounts.views.landing'),
+    url(r'^$','ckprosecution.views.home')
 )

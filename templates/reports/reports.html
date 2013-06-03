@@ -19,14 +19,14 @@
     </style>
 {% endblock %}
 
-{% block content %}
+{% block header %}
     <div class="header-bottom">
         <div class="container">
             <span class="right">
                 <form action="/reports/search/" method="get">
                     {% csrf_token %}
                     <input name="q" type="text" class="input-medium search-query" placeholder="Search reports">
-                    <button type="submit" value="Submit" class="btn">Search</button>
+                    <button type="submit" value="Submit" class="btn btn-info"><i class="icon-search"></i>&nbsp&nbspSearch</button>
                 </form>
             </span>
             <span class="left">
@@ -36,12 +36,14 @@
                     <input name="start_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
                     <label>To</label>
                     <input name="end_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
-                    <button type="submit" value="Submit" class="btn btn-info">Filter by Date</button>
+                    <button type="submit" value="Submit" class="btn btn-info"><i class="icon-filter"></i>&nbsp&nbspFilter by Date</button>
                 </form>
             </span>
         </div>
     </div>
+{% endblock %}
 
+{% block content %}
     <div class="title">
         Reports
     </div>
