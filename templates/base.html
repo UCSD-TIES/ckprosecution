@@ -54,13 +54,13 @@
 
     <div class="header-mid">
         <div class="container">
-            <div class="area">
-                <a href="/reports/reports" class="navi">Reports</a>
-            </div>
-            <div class="area">
-                <a href="/reports/statistics" class="navi">Statistics</a>
-            </div>
             {% if user.is_authenticated %}
+                <div class="area">
+                    <a href="/reports/reports" class="navi">Reports</a>
+                </div>
+                <div class="area">
+                    <a href="/reports/statistics" class="navi">Statistics</a>
+                </div>
                 <div class="area">
                     <a href="/accounts/" class="navi">Users</a>
                 </div>
