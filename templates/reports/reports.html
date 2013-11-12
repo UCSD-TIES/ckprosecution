@@ -32,10 +32,11 @@
             <span class="left">
                 <form action="/reports/filter_by_date/" method="get" class="form-inline">
                     {% csrf_token %}
+                    <!-- IE and Firefox not supported -->
                     <label>From</label>
-                    <input name="start_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
+                    <input name="start_date" type="date">
                     <label>To</label>
-                    <input name="end_date" type="text" class="input-medium search-query" placeholder="YYYY-MM-DD">
+                    <input name="end_date" type="date">
                     <button type="submit" value="Submit" class="btn btn-info"><i class="icon-filter"></i>&nbsp&nbspFilter by Date</button>
                 </form>
             </span>

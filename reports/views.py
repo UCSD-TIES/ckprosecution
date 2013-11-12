@@ -186,7 +186,6 @@ def search(request):
 
 @login_required
 @requires_csrf_token
-#TODO:Need date validation to prevent entering the error page
 def date_filter(request):
     start_date = ''
     end_date = ''
@@ -195,11 +194,7 @@ def date_filter(request):
         start_date = request.GET['start_date']
     if('end_date' in request.GET):
         end_date = request.GET['end_date']
-    try:
-        found_entires = Report.objects.filter(crime_date__range=[start_date,end_date]).order_by('crime_date')
-    except:
-        found_entires = Report.objects.filter(crime_date__range=['0001-01-01','9999-12-31']).order_by('crime_date')
-
+    found_entires = Report.objects.filter(crime_date__range=[start_date,end_date]).order_by('crime_date')
     return render_to_response('reports/results.html',{
                               'found_entries': found_entires },
                               context_instance=RequestContext(request))
