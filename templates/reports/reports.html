@@ -109,7 +109,7 @@
                         <tr><th><label for="id_creature">Creature:</label></th><td><input name="creature" type="text" id="id_creature" maxlength="45" /></td><td><font color="red" id="creature"></font></td></tr>
                         <tr><th><label for="id_location">Location:</label></th><td><input name="location" type="text" id="id_location" maxlength="45" /></td><td><font color="red" id="location"></font></td></tr>
                         <tr><th><label for="id_trial_location">Trial location:</label></th><td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td><td><font color="red" id="trial_location"></font></td></tr>
-                        <tr><th><label for="id_violation_description">Violation description:</label></th><td><input name="violation_description" type="text" id="id_violation_description" maxlength="100" /></td><td><font color="red" id="violation_description"></font></td></tr>
+                        <tr><th><label for="id_violation_description">Violation description:</label></th><td><textarea name="violation_description" id="id_violation_description" rows=5/></textarea></td><td><font color="red" id="violation_description"></font></td></tr>
                         <tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td><td><font color="red" id="fine"></font></td></tr>
                         <tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td><td><font color="red" id="jail_time"></font></td></tr>
                         <tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td><td><font color="red" id="mpa"></font></td></tr>
@@ -212,9 +212,9 @@
             });	
             $('#id_violation_description').keyup(function() {
                 reg = /^.*$/;
-                if(!$('input[id=id_violation_description]').val()){
+                if(!$('textarea[id=id_violation_description]').val()){
                     $('#violation_description').empty();
-                } else if( ($('input[id=id_violation_description]').val()).match(reg) ){
+                } else if( ($('textarea[id=id_violation_description]').val()).match(reg) ){
                     $('#violation_description').attr('color','green');
                     $('#violation_description').html('<b>&#10004;</b>');
                 } else {
@@ -274,7 +274,7 @@
                             <tr><th><label for="id_creature">Creature:</label></th><td><input id="id_creature" maxlength="45" name="creature" type="text"></td></tr>
                             <tr><th><label for="id_location">Location:</label></th><td><input id="id_location" maxlength="45" name="location" type="text"></td></tr>
                             <tr><th><label for="id_trial_location">Trial location:</label></th><td><input id="id_trial_location" maxlength="45" name="trial_location" type="text"></td></tr>
-                            <tr><th><label for="id_violation_description">Violation description:</label></th><td><input id="id_violation_description" maxlength="100" name="violation_description" type="text"></td></tr>
+                            <tr><th><label for="id_violation_description">Violation description:</label></th><td><textarea id="id_violation_description" name="violation_description" type="text"></td></tr>
                             <tr><th><label for="id_fine">Fine:</label></th><td><input id="id_fine" name="fine" type="text"></td></tr>
                             <tr><th><label for="id_update_date">Update date:</label></th><td><input id="id_update_date" name="update_date" type="text"></td></tr>
                             <tr><th><label for="id_jail_time">Jail time:</label></th><td><input id="id_jail_time" name="jail_time" type="checkbox"></td></tr>
