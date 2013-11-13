@@ -3,9 +3,10 @@
 {% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
 
 {% block htmlhead %}
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.js?version=20120318"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css" />
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/formValidation.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker.js"></script> 
+    
     <style>
         .createtable {text-align:left;}
         .button { margin: 4px 10px; }
@@ -34,9 +35,9 @@
                     {% csrf_token %}
                     <!-- IE and Firefox not supported -->
                     <label>From</label>
-                    <input name="start_date" type="date">
+                    <input name="start_date" type="text" id="datepicker_start">
                     <label>To</label>
-                    <input name="end_date" type="date">
+                    <input name="end_date" type="text" id="datepicker_end">
                     <button type="submit" value="Submit" class="btn btn-info"><i class="icon-filter"></i>&nbsp&nbspFilter by Date</button>
                 </form>
             </span>
@@ -125,7 +126,8 @@
 
     <script>
         $(document).ready(function(){
-        	var reg;
+            $( "#datepicker_start, #datepicker_end" ).datepicker({format: "yyyy-mm-dd"});
+            var reg;
             $('input').change(function() {
                 if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green') 
                     $('#create_button').attr("disabled", "disabled");
