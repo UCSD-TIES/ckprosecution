@@ -33,7 +33,6 @@
             <span class="left">
                 <form action="/reports/filter_by_date/" method="get" class="form-inline">
                     {% csrf_token %}
-                    <!-- IE and Firefox not supported -->
                     <label>From</label>
                     <input name="start_date" type="text" id="datepicker_start">
                     <label>To</label>
@@ -126,7 +125,7 @@
 
     <script>
         $(document).ready(function(){
-            $( "#datepicker_start, #datepicker_end" ).datepicker({format: "yyyy-mm-dd"});
+            $( "#datepicker_start, #datepicker_end, #id_crime_date" ).datepicker({format: "yyyy-mm-dd"});
             var reg;
             $('input').change(function() {
                 if($('#crime_date').attr('color') != 'green' || $('#resolve_days').attr('color') != 'green' || $('#num_involved').attr('color') != 'green' || $('#creature').attr('color') != 'green' || $('#location').attr('color') != 'green' || $('#trial_location').attr('color') != 'green' || $('#violation_description').attr('color') != 'green' || $('#fine').attr('color') != 'green') 
