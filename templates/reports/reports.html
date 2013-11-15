@@ -3,9 +3,9 @@
 {% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
 
 {% block htmlhead %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker3.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css" />
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker3.js"></script> 
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker.js"></script> 
     
     <style>
         .createtable {text-align:left;}
@@ -16,43 +16,37 @@
         .newlook {background-color:white;}
         .actions {margin-left:10px;}
         .actions { margin-bottom: 15px; }
-        .title {margin-left: 10px;margin-top: 25px;margin-bottom:25px; font-size:2em;}
+        .title {margin-left: 10px;margin-top: 25px;margin-bottom:0px; font-size:2em;}
     </style>
 {% endblock %}
 
-{% block header %}
-    <div class="header-bottom">
-        <div class="container">
-            <span class="right">
-                <form action="/reports/search/" method="get">
-                    {% csrf_token %}
-                    <input name="q" type="text" class="input-medium search-query" placeholder="Search reports">
-                    <button type="submit" value="Submit" class="btn btn-info"><i class="icon-search"></i>&nbsp&nbspSearch</button>
-                </form>
-            </span>
-            <span class="left">
-                <form action="/reports/filter_by_date/" method="get" class="form-inline">
-                    {% csrf_token %}
-                    <label>From</label>
-                    <input name="start_date" type="text" id="datepicker_start">
-                    <label>To</label>
-                    <input name="end_date" type="text" id="datepicker_end">
-                    <button type="submit" value="Submit" class="btn btn-info"><i class="icon-filter"></i>&nbsp&nbspFilter by Date</button>
-                </form>
-            </span>
-        </div>
-    </div>
-{% endblock %}
-
 {% block content %}
-    <div class="title">
-        Reports
+    <div class="navbar">
+        <span class="title">Reports</span>
+        <button data-target="#create_report" data-toggle="modal" class="btn btn-primary"><i class="icon-plus-sign icon-large"></i>&nbsp&nbspNew Report</button>
     </div>
 
     {% block actions %}
     {% if user.is_authenticated %}
-        <div class="actions">
-            <a href="#create_report" data-target="#create_report" data-toggle="modal" class="btn btn-primary"><i class="icon-plus-sign icon-large"></i>&nbsp&nbspNew Report</a>
+        <div class="navbar">
+            <form action="/reports/filter_by_date/" method="get" class="navbar-form navbar-left">
+                {% csrf_token %}
+                <div class="form-group">
+                <input name="start_date" type="text" id="datepicker_start" placeholder="From">
+                </div>
+                <div class="form-group">
+                <input name="end_date" type="text" id="datepicker_end" placeholder="To">
+                </div>
+                <button type="submit" value="Submit" class="navbar-btn btn btn-primary"><i class="icon-filter"></i>&nbsp&nbspFilter by Date</button>
+            </form>
+
+            <form action="/reports/search/" method="get" class="navbar-form">
+                {% csrf_token %}
+                <div class="form-group">
+                <input name="q" type="text" class="input-medium search-query" placeholder="Search reports">
+                </div>
+                <button type="submit" value="Submit" class="navbar-btn btn btn-primary"><i class="icon-search"></i>&nbsp&nbspSearch</button>
+            </form>
         </div>
     {% endif %}
     {% endblock %}
@@ -94,14 +88,15 @@
 	</table>
     </div>
 
-    <div id="create_report" class="modal hide fade">
+    <div id="create_report" class="modal fade">
+    <div class="modal-dialog">
+    <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Create New Report</h3>
         </div>
         <div class="modal-body">
             <form action="" class="form-inline" method="POST">{%csrf_token%}
-                <div class="pull-left">
                     <table class="createtable">
                         <tr><th><label for="id_crime_date">Crime date:</label></th><td><input name="crime_date" type="text" id="id_crime_date" /></td><td><font color="red" id="crime_date"></font></td></tr>
                         <tr><th><label for="id_resolve_days">Resolve days:</label></th><td><input name="resolve_days" type="text" id="id_resolve_days" /></td><td><font color="red" id="resolve_days"></font></td></tr>
@@ -112,15 +107,17 @@
                         <tr><th><label for="id_violation_description">Violation description:</label></th><td><textarea name="violation_description" id="id_violation_description" rows=5/></textarea></td><td><font color="red" id="violation_description"></font></td></tr>
                         <tr><th><label for="id_fine">Fine:</label></th><td><input name="fine" type="text" id="id_fine" /></td><td><font color="red" id="fine"></font></td></tr>
                         <tr><th><label for="id_jail_time">Jail time:</label></th><td><input name="jail_time" type="checkbox" id="id_jail_time" /></td><td><font color="red" id="jail_time"></font></td></tr>
-                        <tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td><td><font color="red" id="mpa"></font></td></tr>
+                        <tr><th><label for="id_mpa">Mpa:</label></th><td><input name="mpa" type="checkbox" id="id_mpa" /></td><td><font color="red" id="mpa"></font></td></tr>  
                     </table>
-                </div>
+            
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
             <button type="submit" class="btn btn-primary" disabled="disabled" id="create_button">Create Report</button>
+            <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </form>
         </div>
+    </div>
+    </div>
     </div>
 
     <script>
@@ -133,7 +130,7 @@
                 else
                     $('#create_button').removeAttr("disabled", "disabled");
             });
-            $('#id_crime_date').keyup(function() {
+            $('#id_crime_date').change(function() {
                 reg = /^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/;
                 if(!$('input[id=id_crime_date]').val()){
                     $('#crime_date').empty();
