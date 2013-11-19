@@ -19,7 +19,7 @@ def compute_statistics(request):
     total_reports = Report.objects.all().count()
 
     # Start of Graph
-    
+
     ## Resolve days graph ##
     days_stats_label = ""
     count_stats_label = ""
@@ -29,8 +29,8 @@ def compute_statistics(request):
         count = float(Report.objects.filter(resolve_days=c_string).count())
         count_stats_label += str(Report.objects.filter(resolve_days=c_string).count())
         days_stats_label += str(c_string) + "|"
-        days_stats_data.append(count)      
-    roof = max(list(map(int, count_stats_label)))   
+        days_stats_data.append(count)
+    roof = max(list(map(int, count_stats_label)))
     days_graph = VerticalBarStack(days_stats_data)
     days_graph.title('Frequency of Resolve Days')
     days_graph.bar(500/days_stats_label.count("|"),100/days_stats_label.count("|"),0)
@@ -44,7 +44,7 @@ def compute_statistics(request):
     days_graph.scale(0,roof)
     days_graph.label(days_stats_label.rstrip("|"))
     days_graph.color('0000aa')
-    
+
     ##Date Graph
     ## code to replace place-holder when report format for crime_date is fixed
     ## need to extract just the year from the data
@@ -91,21 +91,21 @@ def compute_statistics(request):
     ## Creatures Affected by Violations ##
     creature_stats_label = ""
     creature_stats_data = []
-    
+
     for creature in Report.objects.all().distinct('creature').values('creature'):
         c_string = '' + str(creature).lstrip("{'creature': u'").rstrip("'}")
         percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
         creature_stats_label+= str(c_string) + " " + str(round(percentage, 2)) + "%|"
         creature_stats_data.append(percentage)
-            
+
     creature_graph = Pie(creature_stats_data)
     creature_graph.title('Creatures Affected by Violations')
     creature_graph.size(600,300)
     creature_graph.label(creature_stats_label.rstrip("|"))
     creature_graph.color('0000aa')
-            
+
     #End of graphs
-		
+
     return render_to_response('reports/statistics.html', {
                               'date_graph': date_graph,
                               'creature_graph': creature_graph,
@@ -128,14 +128,14 @@ def view_reports(request):
                                           'success': "success",
                                           'form': formset,
                                           'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))	
+                                          context_instance=RequestContext(request))
             else:
                 return render_to_response('reports/reports.html',{
                                           'error': form.errors,
-                                          'form': formset, 
+                                          'form': formset,
                                           'reports': Report.objects.all()},
                                           context_instance=RequestContext(request))
-        else:	
+        else:
             form = ReportForm(request.POST)
             if form.is_valid():
                 new_report= form.save()
@@ -147,12 +147,12 @@ def view_reports(request):
             else:
                 return render_to_response('reports/reports.html',{
                                           'error': form.errors,
-                                          'form': formset, 
+                                          'form': formset,
                                           'reports': Report.objects.all()},
                                           context_instance=RequestContext(request))
     else:
         return render_to_response('reports/reports.html',{
-                                  'form': formset, 
+                                  'form': formset,
                                   'reports': Report.objects.all()},
                                   context_instance=RequestContext(request))
 
@@ -166,26 +166,25 @@ def search(request):
         query_string = request.GET['q']
         #currently manually need to input the model fields to search through
         entry_query = get_query(query_string,[
-                                'crime_date', 
+                                'crime_date',
                                 'resolve_days',
                                 'jail_time',
                                 'num_involved',
                                 'creature',
                                 'location',
                                 'trial_location',
-                                'violation_description', 
+                                'violation_description',
                                 'mpa',
                                 'fine',
                                 'update_date'])
         found_entries = Report.objects.filter(entry_query).order_by('crime_date')
 
     return render_to_response('reports/results.html',{
-                              'query_string': query_string, 
+                              'query_string': query_string,
                               'found_entries': found_entries },
                               context_instance=RequestContext(request))
 
 @login_required
-@requires_csrf_token
 def date_filter(request):
     start_date = ''
     end_date = ''

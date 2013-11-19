@@ -11,7 +11,7 @@
     <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
     <link href="{{ STATIC_URL }}fontawesome/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <style>
         .header-top { background-color: white; height: 90px; line-height: 90px; color: white;}
         .header-mid { background-color: #1E528B; color: white; font-size: 20px; height: 50px; line-height: 50px; }
@@ -49,7 +49,7 @@
                     <span class="login btn btn-info"><a href="/accounts/signin/">Log In</a></span>
                 {% endif %}
             </div>
-                
+
                 {% if user.is_authenticated %}
                 <div class="area">
                     <a href="/reports/reports" class="navi">Reports</a>
@@ -79,5 +79,4 @@
     </script>
 
 </body>
-
 </html>
