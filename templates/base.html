@@ -43,10 +43,12 @@
         <div class="container">
             <div class="right">
                 {% if user.is_authenticated %}
-                    <a href="/admin/" class="navi">Admin</a>
-                    <span class="logout btn btn-info"><a href="/accounts/signout/">Log Out</a></span>
+                    <div class="area">
+                        <a href="/admin/" class="navi">Admin</a>
+                    </div>
+                    <span class="logout btn btn-info"><a href="/accounts/signout/"><i class="icon-user"></i> Log Out</a></span>
                 {% else %}
-                    <span class="login btn btn-info"><a href="/accounts/signin/">Log In</a></span>
+                    <span class="login btn btn-info"><a href="/accounts/signin/"><i class="icon-user"></i> Log In</a></span>
                 {% endif %}
             </div>
 
