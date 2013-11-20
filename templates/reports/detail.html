@@ -22,7 +22,7 @@
 {% block content %}
     <form class="form-inline">
         <div class="pull-left">
-            <table class="table">
+            <table class="table-condensed">
                 <tr>
                     <th>Crime date:</th>
                     <td>{{ report.crime_date }}</td>
@@ -68,7 +68,8 @@
                     <td>{{ report.update_date }}</td>
                 </tr>
             </table>
-            <a href="/reports/reports" class="btn">Back</a>
+            <hr>
+            <a href="/reports/reports" class="btn btn-default">Back</a>
             {% if user.is_authenticated %}
                 <a href="#delete_report" data-target="#delete_report" data-toggle="modal" class="btn btn-danger">Delete</a>
             {% endif %}

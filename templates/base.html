@@ -42,17 +42,21 @@
     <div class="header-mid">
         <div class="container">
             <div class="right">
-                {% if user.is_authenticated %}
-                    <div class="area">
-                        <a href="/admin/" class="navi">Admin</a>
-                    </div>
-                    <a href="/accounts/signout/"> Log Out</a>
-                {% else %}
-                    <a href="/accounts/signin/"> Log In</a>
-                {% endif %}
+                <div class="area">
+                    {% if user.is_authenticated %}
+                        <a href="/admin/">Admin</a>
+                    {% endif %}
+                </div>
+                <div class="area">
+                    {% if user.is_authenticated %}
+                        <a href="/accounts/signout/">Log Out</a>
+                    {% else %}
+                        <a href="/accounts/signin/">Log In</a>
+                    {% endif %}
+                </div>
             </div>
 
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
                 <div class="area">
                     <a href="/reports/reports" class="navi">Reports</a>
                 </div>
@@ -62,7 +66,6 @@
                 <div class="area">
                     <a href="/accounts/" class="navi">Users</a>
                 </div>
-
             {% endif %}
         </div>
     </div>
@@ -72,10 +75,6 @@
         {% block headermid %}{% endblock %}
         {% block contentdiv %}{% endblock %}
         {% block content %}{% endblock %}
-
-        <div class="footer">
-            <p>&copy; CoastKeeper 2013</p>
-        </div>
     </div>
 
     <script>

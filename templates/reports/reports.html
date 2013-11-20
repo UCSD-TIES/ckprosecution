@@ -21,16 +21,15 @@
 {% endblock %}
 
 {% block content %}
-    
-     <span class="title">Reports</span>
+    <span class="title">Reports</span>
 
     {% block actions %}
         {% if user.is_authenticated %}
         <div class="navbar" role="navigation">
-            <ui class="nav navbar-nav">
+            <ul class="nav navbar-nav">
                 <li>
                     <button data-target="#create_report" data-toggle="modal" class="navbar-btn btn btn-primary">
-                        <i class="glyphicon glyphicon-plus"></i> New Report
+                        <span class="glyphicon glyphicon-plus"></span> New Report
                     </button>
                 </li>
                 <li>
@@ -43,9 +42,9 @@
                             <input name="end_date" size=8 class="form-control" id="datepicker_end" placeholder="To">
                         </div>
                         <button type="submit" value="Submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-filter"></i> Filter by Date
+                            <span class="glyphicon glyphicon-filter"></span> Filter by Date
                         </button>
-                    </form>               
+                    </form>
                 </li>
                 <li>
                     <form action="/reports/search/" method="get" class="navbar-form">
@@ -54,11 +53,11 @@
                             <input name="q" class="form-control" class="input-medium search-query" placeholder="Search reports">
                         </div>
                         <button type="submit" value="Submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-search"></i> Search
+                            <span class="glyphicon glyphicon-search"></span> Search
                         </button>
                     </form>
                 </li>
-            </ui>
+            </ul>
         </div>
         {% endif %}
     {% endblock %}
@@ -142,42 +141,42 @@
                         <table class="createtable">
                             <tr>
                                 <th><label for="id_crime_date">Crime date:</label></th>
-                                <td><input name="crime_date" type="text" id="id_crime_date" /></td>
+                                <td><input class="form-control" name="crime_date" type="text" id="id_crime_date" /></td>
                                 <td><font color="red" id="crime_date"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_resolve_days">Resolve days:</label></th>
-                                <td><input name="resolve_days" type="text" id="id_resolve_days" /></td>
+                                <td><input class="form-control" name="resolve_days" type="text" id="id_resolve_days" /></td>
                                 <td><font color="red" id="resolve_days"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_num_involved">Num involved:</label></th>
-                                <td><input name="num_involved" type="text" id="id_num_involved" /></td>
+                                <td><input class="form-control" name="num_involved" type="text" id="id_num_involved" /></td>
                                 <td><font color="red" id="num_involved"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_creature">Creature:</label></th>
-                                <td><input name="creature" type="text" id="id_creature" maxlength="45" /></td>
+                                <td><input class="form-control" name="creature" type="text" id="id_creature" maxlength="45" /></td>
                                 <td><font color="red" id="creature"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_location">Location:</label></th>
-                                <td><input name="location" type="text" id="id_location" maxlength="45" /></td>
+                                <td><input class="form-control" name="location" type="text" id="id_location" maxlength="45" /></td>
                                 <td><font color="red" id="location"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_trial_location">Trial location:</label></th>
-                                <td><input name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td>
+                                <td><input class="form-control" name="trial_location" type="text" id="id_trial_location" maxlength="45" /></td>
                                 <td><font color="red" id="trial_location"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_violation_description">Violation description:</label></th>
-                                <td><textarea name="violation_description" id="id_violation_description" rows=5 /></textarea></td>
+                                <td><textarea class="form-control" name="violation_description" id="id_violation_description" rows=5 /></textarea></td>
                                 <td><font color="red" id="violation_description"></font></td>
                             </tr>
                             <tr>
                                 <th><label for="id_fine">Fine:</label></th>
-                                <td><input name="fine" type="text" id="id_fine" /></td>
+                                <td><input class="form-control" name="fine" type="text" id="id_fine" /></td>
                                 <td><font color="red" id="fine"></font></td>
                             </tr>
                             <tr>
@@ -194,7 +193,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" disabled="disabled" id="create_button">Create Report</button>
-                    <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
@@ -355,39 +354,39 @@
                 <table class="edittable" style ="text-align:left">
                     <tr>
                         <th><label for="id_crime_date">Crime date:</label></th>
-                        <td><input id="id_crime_date" name="crime_date" type="text"></td>
+                        <td><input class="form-control" id="id_crime_date" name="crime_date" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_resolve_days">Resolve days:</label></th>
-                        <td><input id="id_resolve_days" name="resolve_days" type="text"></td>
+                        <td><input class="form-control" id="id_resolve_days" name="resolve_days" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_num_involved">Num involved:</label></th>
-                        <td><input id="id_num_involved" name="num_involved" type="text"></td>
+                        <td><input class="form-control" id="id_num_involved" name="num_involved" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_creature">Creature:</label></th>
-                        <td><input id="id_creature" maxlength="45" name="creature" type="text"></td>
+                        <td><input class="form-control" id="id_creature" maxlength="45" name="creature" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_location">Location:</label></th>
-                        <td><input id="id_location" maxlength="45" name="location" type="text"></td>
+                        <td><input class="form-control" id="id_location" maxlength="45" name="location" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_trial_location">Trial location:</label></th>
-                        <td><input id="id_trial_location" maxlength="45" name="trial_location" type="text"></td>
+                        <td><input class="form-control" id="id_trial_location" maxlength="45" name="trial_location" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_violation_description">Violation description:</label></th>
-                        <td><textarea id="id_violation_description" name="violation_description" type="text"></td>
+                        <td><textarea class="form-control" id="id_violation_description" name="violation_description" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_fine">Fine:</label></th>
-                        <td><input id="id_fine" name="fine" type="text"></td>
+                        <td><input class="form-control" id="id_fine" name="fine" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_update_date">Update date:</label></th>
-                        <td><input id="id_update_date" name="update_date" type="text"></td>
+                        <td><input class="form-control" id="id_update_date" name="update_date" type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_jail_time">Jail time:</label></th>
