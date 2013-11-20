@@ -231,7 +231,7 @@
                 }
                 $('input').change();
             });
-            $('#id_resolve_days').keyup(function() {
+            $('#id_resolve_days').change(function() {
                 reg = /^[0-9]+$/;
                 if(!$('input[id=id_resolve_days]').val()){
                     $('#resolve_days').empty();
@@ -244,7 +244,7 @@
                 }
                 $('input').change();
             });
-            $('#id_num_involved').keyup(function() {
+            $('#id_num_involved').change(function() {
                 reg = /^[0-9]+$/;
                 if(!$('input[id=id_num_involved]').val()){
                     $('#num_involved').empty();
@@ -257,7 +257,7 @@
                 }
                 $('input').change();
             });
-            $('#id_creature').keyup(function() {
+            $('#id_creature').change(function() {
                 reg = /^([a-zA-Z]\s?)+$/;
                 if(!$('input[id=id_creature]').val()){
                     $('#creature').empty();
@@ -270,7 +270,7 @@
                 }
                 $('input').change();
             });
-            $('#id_location').keyup(function() {
+            $('#id_location').change(function() {
                 reg = /^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/;
                 if(!$('input[id=id_location]').val()){
                     $('#location').empty();
@@ -283,7 +283,7 @@
                 }
                 $('input').change();
             });
-            $('#id_trial_location').keyup(function() {
+            $('#id_trial_location').change(function() {
                 reg = /^([a-zA-Z]\s?)+$/;
                 if(!$('input[id=id_trial_location]').val()){
                     $('#trial_location').empty();
@@ -296,7 +296,7 @@
                 }
                 $('input').change();
             });
-            $('#id_violation_description').keyup(function() {
+            $('#id_violation_description').change(function() {
                 reg = /^.*$/;
                 if(!$('textarea[id=id_violation_description]').val()){
                     $('#violation_description').empty();
@@ -309,7 +309,7 @@
                 }
                 $('input').change();
             });
-            $('#id_fine').keyup(function() {
+            $('#id_fine').change(function() {
                 reg = /^\d+$/;
                 if(!$('input[id=id_fine]').val()){
                     $('#fine').empty();
