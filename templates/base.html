@@ -47,16 +47,15 @@
                 <li><a href="/reports/statistics">Statistics</a></li>
                 <li><a href="/accounts/">Users</a></li>
             </ul>
-            {% endif %}
-            
-            {% if user.is_authenticated %}
-            <ul class="nav navbar-nav navbar-right">     
+            <ul class="nav navbar-nav navbar-right">
                 <li><a href="/admin/">Admin</a></li>
                 <li><a href="/accounts/signout/"> Log Out</a></li>
-            {% else %}
-                <li><a href="/accounts/signin/"> Log In</a></li>
-            {% endif %}
             </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/accounts/signin/"> Log In</a></li>
+            </ul>
+            {% endif %}
         </div>
     </div>
     {% block header %}{% endblock %}
