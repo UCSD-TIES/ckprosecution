@@ -23,7 +23,7 @@
 {% block content %}
     <div class="navbar">
         <span class="title">Reports</span>
-        <button data-target="#create_report" data-toggle="modal" class="btn btn-primary">
+        <button data-target="#create_report" data-toggle="modal" class="btn-xs btn-primary">
             <i class="icon-plus-sign"></i> New Report
         </button>
     </div>
@@ -62,44 +62,44 @@
             <thead>
                 <tr>
                     <th>
-                        Crime Date<a href="{% url rank rank_by='crime_date' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='crime_date' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Crime Date<a href="{% url rank rank_by='crime_date' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='crime_date' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Resolve Days<a href="{% url rank rank_by='resolve_days' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='resolve_days' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Resolve Days<a href="{% url rank rank_by='resolve_days' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='resolve_days' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Suspects<a href="{% url rank rank_by='num_involved' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='num_involved' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Suspects<a href="{% url rank rank_by='num_involved' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='num_involved' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Creature<a href="{% url rank rank_by='creature' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='creature' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Creature<a href="{% url rank rank_by='creature' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='creature' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Location<a href="{% url rank rank_by='location' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='location' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Location<a href="{% url rank rank_by='location' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='location' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Trial Location<a href="{% url rank rank_by='trial_location' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='trial_location' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Trial Location<a href="{% url rank rank_by='trial_location' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='trial_location' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Fine<a href="{% url rank rank_by='fine' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='fine' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Fine<a href="{% url rank rank_by='fine' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='fine' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Jail<a href="{% url rank rank_by='jail_time' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='jail_time' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Jail<a href="{% url rank rank_by='jail_time' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='jail_time' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        MPA<a href="{% url rank rank_by='mpa' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='mpa' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        MPA<a href="{% url rank rank_by='mpa' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='mpa' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th>
-                        Update Date<a href="{% url rank rank_by='update_date' reverse='true' %}"><i class="icon-arrow-up"></i></a>
-                            <a href="{% url rank rank_by='update_date' reverse='false' %}"><i class="icon-arrow-down"></i></a>
+                        Update Date<a href="{% url rank rank_by='update_date' reverse='true' %}"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a href="{% url rank rank_by='update_date' reverse='false' %}"><i class="glyphicon glyphicon-arrow-down"></i></a>
                     </th>
                     <th> </th>
                 </tr>
