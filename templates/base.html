@@ -39,34 +39,24 @@
         </div>
     </div>
 
-    <div class="header-mid">
-        <div class="container">
-            <div class="right">
-                <div class="area">
-                    {% if user.is_authenticated %}
-                        <a href="/admin/">Admin</a>
-                    {% endif %}
-                </div>
-                <div class="area">
-                    {% if user.is_authenticated %}
-                        <a href="/accounts/signout/">Log Out</a>
-                    {% else %}
-                        <a href="/accounts/signin/">Log In</a>
-                    {% endif %}
-                </div>
-            </div>
-
+    <div class="navbar navbar-default">
+        <div class="container">                
             {% if user.is_authenticated %}
-                <div class="area">
-                    <a href="/reports/reports" class="navi">Reports</a>
-                </div>
-                <div class="area">
-                    <a href="/reports/statistics" class="navi">Statistics</a>
-                </div>
-                <div class="area">
-                    <a href="/accounts/" class="navi">Users</a>
-                </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/reports/reports">Reports</a></li>
+                <li><a href="/reports/statistics">Statistics</a></li>
+                <li><a href="/accounts/">Users</a></li>
+            </ul>
             {% endif %}
+            
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">     
+                <li><a href="/admin/">Admin</a></li>
+                <li><a href="/accounts/signout/"> Log Out</a></li>
+            {% else %}
+                <li><a href="/accounts/signin/"> Log In</a></li>
+            {% endif %}
+            </ul>
         </div>
     </div>
     {% block header %}{% endblock %}
