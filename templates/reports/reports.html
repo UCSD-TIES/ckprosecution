@@ -58,6 +58,16 @@
                         </button>
                     </form>
                 </li>
+
+                <li>
+                    <form action="/reports/export_csv/" method="get" class="navbar-form">
+                    {% csrf_token %}
+                        <button type="submit" value="Submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-export"></span> Export 
+                        </button>
+                    </form>
+                </li>
+
             </ul>
         </div>
         {% endif %}

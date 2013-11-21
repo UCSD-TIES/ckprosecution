@@ -1,4 +1,6 @@
 import os
+import csv
+from datetime import datetime 
 from django.utils import simplejson
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden, HttpResponseServerError
 from django.template import RequestContext
@@ -13,6 +15,33 @@ from reports.forms import ReportForm
 from reports.search import *
 
 from GChartWrapper import *
+
+
+@login_required
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    i = datetime.now()
+    filename = i.strftime('%Y%m%d%H%M') + '.csv'
+    response['Content-Disposition'] = 'attachment; filename="'+ filename +'"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Crime Date', 'Resolve Days', 'Suspects', 'Creature', 'Location', 'Trial Location', 'Violation Description' , 'Fine', 'Jail', 'MPA', 'Update Date'])
+
+    for row in Report.objects.all():
+        rcrime_date = '' + str(row.crime_date)
+	rresolve_days = ''+str(row.resolve_days) 
+	rnum_involved = ''+str(row.num_involved) 
+	rcreature = ''+str(row.creature) 
+	rlocation = ''+str(row.location) 
+	rtrial_location = ''+str(row.trial_location) 
+	rviolation_description = ''+str(row.violation_description) 
+	rfine = ''+str(row.fine) 
+	rupdate_date = ''+str(row.update_date) 
+	rjail_time = ''+str(row.jail_time) 
+	rmpa = ''+str(row.mpa) 
+        writer.writerow([rcrime_date, rresolve_days, rnum_involved, rcreature, rlocation, rtrial_location, rviolation_description, rfine, rjail_time, rmpa, rupdate_date])
+
+    return response	
 
 @login_required
 def compute_statistics(request):

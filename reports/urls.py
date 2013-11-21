@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *  # 404, 500, patterns, include, url
 
 urlpatterns = patterns('',
+    url(r'^export_csv', 'reports.views.export_csv'),
     url(r'^statistics', 'reports.views.compute_statistics'),
     url(r'^reports', 'reports.views.view_reports'),
     url(r'^search/$','reports.views.search'),
