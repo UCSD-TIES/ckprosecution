@@ -10,6 +10,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/datatables.js"></script>
+    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs8QAOKEV5PHe-rvjkJwk-aBHOdiN5Sy4&sensor=false"></script>
     <style>
         .createtable {text-align:left;}
         .button { margin: 4px 10px; }
@@ -121,7 +122,6 @@
 		              <h3>Map</h3>
                 </div>
                 <div class="modal-body">
-                    <body onload="initialize()" onunload="GUnload()">
                         <p>
                         Enter an address, and then drag the marker to tweak the location.
                         <br/>
@@ -132,7 +132,6 @@
                             <button type="submit" class='btn btn-default'>Go</button>
                         </form>
                         <div id="map_canvas" style="width: 540px; height: 400px"></div>
-                    </body>
                 </div>            
                 <div class="modal-footer">
                     <button class='btn btn-default' data-dismiss="modal">Close</button>
@@ -178,7 +177,7 @@
                             <label for="id_location" class="col-sm-3 control-label" >Location</label>
                             <div class="col-sm-9 input-group"> 
                                 <input class="form-control" name="location" type="text" id="id_location"/>
-                                <span class="input-group-btn"><button data-target="#map" data-toggle="modal" class='btn btn-default'>
+                                <span class="input-group-btn"><button data-target="#map" id='map_button' data-toggle="modal" class='btn btn-default'>
                                 <span class="glyphicon glyphicon-map-marker"></span></button></span>
                             </div>
                         </div>
@@ -225,42 +224,50 @@
     </div>
 
 
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
-      type="text/javascript"></script>
+<!--    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
+      type="text/javascript"></script>-->
     <script type="text/javascript">
-
-    var map = null;
-    var geocoder = null;
-
+    var geocoder = null
+    var map = null
+    
     function initialize() {
-      if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map_canvas"));
-        map.setCenter(new GLatLng(37.4419, -122.1419), 1);
-        map.setUIToDefault();
-        geocoder = new GClientGeocoder();
-      }
+        var mapOptions = {
+            center: new google.maps.LatLng(37.4419, -122.1419),
+            zoom: 10
+        };
+        map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
+        geocoder = new google.maps.Geocoder();
     }
 
     function showAddress(address) {
       if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status != google.maps.GeocoderStatus.OK) {
               alert(address + " not found");
             } else {
-              map.setCenter(point, 15);
-              var marker = new GMarker(point, {draggable: true});
-              map.addOverlay(marker);
-              $('#id_location').val(point.toUrlValue(6))
-              GEvent.addListener(marker, "dragend", function() {
-                marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
-                $('#id_location').val(marker.getLatLng().toUrlValue(6));
+              coordinates = results[0].geometry.location.toUrlValue(6)
+              map.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map:map, 
+                position: results[0].geometry.location,
+                draggable: true
               });
-              GEvent.addListener(marker, "click", function() {
-                marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
+              var infowindow = new google.maps.InfoWindow({
+                content: coordinates
               });
-	      GEvent.trigger(marker, "click");
+              
+              $('#id_location').val(coordinates)
+              google.maps.event.addListener(marker, "dragend", function() {
+                infowindow.setContent(marker.getPosition().toUrlValue(6))
+                infowindow.open(map,marker)
+                $('#id_location').val(marker.getPosition().toUrlValue(6));
+              });
+              google.maps.event.addListener(marker, "click", function() {
+                infowindow.setContent(marker.getPosition().toUrlValue(6))
+                infowindow.open(map,marker)
+                $('#id_location').val(marker.getPosition().toUrlValue(6));
+              });
+	      google.maps.event.trigger(marker, "click");
             }
           }
         );
@@ -297,6 +304,9 @@
         );
 
         $(document).ready(function(){
+             $('#map').on('shown.bs.modal', function () {
+                 initialize();
+             });
             $( "#datepicker_start, #datepicker_end, #id_crime_date" ).datepicker({format: "yyyy-mm-dd"});
             $("#expenselist").dataTable({
                 "bFilter": false,
