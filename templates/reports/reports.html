@@ -62,7 +62,8 @@
                         </button>
                     </form>
                 </li>
-
+		<!-- export report feature button is made here and the export_csv python function is in
+		ckprosecution/reports/views.py file and is triggered from here -->
                 <li>
                     <form action="/reports/export_csv/" method="get" class="navbar-form">
                     {% csrf_token %}
@@ -114,6 +115,8 @@
         </table>
     </div>
 
+
+<!-- modal that shows the google maps for geocode lookup -->
     <div id="map" class="modal fade" style="z-index:10000">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -125,7 +128,7 @@
                         <p>
                         Enter an address, and then drag the marker to tweak the location.
                         <br/>
-                        The latitude/longitude will appear in the infowindow after each geocode/drag.
+                        The latitude/longitude will appear in the info window after each geocode/drag.
                         </p>
                         <form class='form-inline' action="#" onsubmit="showAddress(this.address.value); return false">
                             <input style="width:350px" type="text" class='form-control' name="address" value="1600 Amphitheatre Pky, Mountain View, CA">
@@ -177,6 +180,7 @@
                             <label for="id_location" class="col-sm-3 control-label" >Location</label>
                             <div class="col-sm-9 input-group"> 
                                 <input class="form-control" name="location" type="text" id="id_location"/>
+				<!--Create map marker button next to location button for geocode function-->
                                 <span class="input-group-btn"><button data-target="#map" id='map_button' data-toggle="modal" class='btn btn-default'>
                                 <span class="glyphicon glyphicon-map-marker"></span></button></span>
                             </div>

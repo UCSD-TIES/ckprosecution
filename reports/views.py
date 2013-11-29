@@ -16,17 +16,21 @@ from reports.search import *
 
 from GChartWrapper import *
 
-
+"""This function exports all the data to a csv file titled with the timestamp"""
 @login_required
 def export_csv(request):
     response = HttpResponse(content_type='text/csv')
+#get the timestamp
     i = datetime.now()
+#format the timestamp and string append to filename
     filename = i.strftime('%Y%m%d%H%M') + '.csv'
     response['Content-Disposition'] = 'attachment; filename="'+ filename +'"'
 
     writer = csv.writer(response)
+#write the row of all the fields
     writer.writerow(['Crime Date', 'Resolve Days', 'Suspects', 'Creature', 'Location', 'Trial Location', 'Violation Description' , 'Fine', 'Jail', 'MPA', 'Update Date'])
 
+#write all rows in database using loop
     for row in Report.objects.all():
         rcrime_date = '' + str(row.crime_date)
 	rresolve_days = ''+str(row.resolve_days) 
