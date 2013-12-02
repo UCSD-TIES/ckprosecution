@@ -24,47 +24,59 @@
         <div class="pull-left">
             <table class="table-condensed">
                 <tr>
-                    <th>Crime date:</th>
+                    <th>Crime Date</th>
                     <td>{{ report.crime_date }}</td>
                 </tr>
                 <tr>
-                    <th>Resolve days:</th>
+                    <th>Resolve Days</th>
                     <td>{{ report.resolve_days }}</td>
                 </tr>
                 <tr>
-                    <th>Num involved:</th>
+                    <th>Number of Suspects</th>
                     <td>{{ report.num_involved }}</td>
                 </tr>
                 <tr>
-                    <th>Creature:</th>
+                    <th>Creature</th>
                     <td>{{ report.creature }}</td>
                 </tr>
                 <tr>
-                    <th>Location:</th>
+                    <th>Location</th>
                     <td>{{ report.location }}</td>
                 </tr>
                 <tr>
-                    <th>Trial location:</th>
+                    <th>Trial Location</th>
                     <td>{{ report.trial_location }}</td>
                 </tr>
                 <tr>
-                    <th>Fine:</th>
+                    <th>Fine</th>
                     <td>{{ report.fine }}</td>
                 </tr>
                 <tr>
-                    <th>Jail time:</th>
-                    <td>{{ report.jail_time }}</td>
+                    <th>Jail Time</th>
+                    <td>
+                        {% if report.jail_time %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
-                    <th>Mpa:</th>
-                    <td>{{ report.mpa }}</td>
+                    <th>MPA</th>
+                    <td>
+                        {% if report.mpa %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
-                    <th>Violation description:</th>
+                    <th>Violation Description</th>
                     <td>{{ report.violation_description }}</td>
                 </tr>
                 <tr>
-                    <th>Update date:</th>
+                    <th>Update Date</th>
                     <td>{{ report.update_date }}</td>
                 </tr>
             </table>

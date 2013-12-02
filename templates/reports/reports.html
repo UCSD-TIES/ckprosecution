@@ -10,7 +10,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/datatables.js"></script>
-    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs8QAOKEV5PHe-rvjkJwk-aBHOdiN5Sy4&sensor=false"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs8QAOKEV5PHe-rvjkJwk-aBHOdiN5Sy4&sensor=false"></script>
     <style>
         .createtable {text-align:left;}
         .button { margin: 4px 10px; }
@@ -68,7 +68,7 @@
                     <form action="/reports/export_csv/" method="get" class="navbar-form">
                     {% csrf_token %}
                         <button type="submit" value="Submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-export"></span> Export 
+                            <span class="glyphicon glyphicon-export"></span> Export
                         </button>
                     </form>
                 </li>
@@ -84,7 +84,7 @@
                 <tr>
                     <th>Crime Date</th>
                     <th>Resolve Days</th>
-                    <th>Suspects</th>
+                    <th># of Suspects</th>
                     <th>Creature</th>
                     <th>Location</th>
                     <th>Trial Location</th>
@@ -105,8 +105,24 @@
                         <td>{{ item.location }}</td>
                         <td>{{ item.trial_location }}</td>
                         <td>{{ item.fine }}</td>
-                        <td>{{ item.jail_time }}</td>
-                        <td>{{ item.mpa }}</td>
+                        <td>
+                            {% if item.jail_time %}
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <span style="color:white">Y</span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-remove"></span>
+                                <span style="color:white">N</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.mpa %}
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <span style="color:white">Y</span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-remove"></span>
+                                <span style="color:white">N</span>
+                            {% endif %}
+                        </td>
                         <td>{{ item.update_date }}</td>
                         <td><a href="{% url detail report_id=item.id %}">Details</a></td>
                     </tr>
@@ -153,19 +169,19 @@
                 <div class="modal-body">
                     <form id="create_report_form" class="form-horizontal" method="POST">{% csrf_token %}
                         <div class="form-group">
-                            <label for="id_crime_date" class="col-sm-3 control-label" >Crime date</label>
+                            <label for="id_crime_date" class="col-sm-3 control-label" >Crime Date</label>
                             <div class="col-sm-9">
                                 <input class="form-control" name="crime_date" type="text" id="id_crime_date"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_resolve_days" class="col-sm-3 control-label" >Resolve day</label>
+                            <label for="id_resolve_days" class="col-sm-3 control-label" >Resolve Days</label>
                             <div class="col-sm-9">
                                 <input class="form-control" name="resolve_days" type="text" id="id_resolve_days"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_num_involved" class="col-sm-3 control-label" >Num involved:</label>
+                            <label for="id_num_involved" class="col-sm-3 control-label" ># of Suspects</label>
                             <div class="col-sm-9">
                                 <input class="form-control" name="num_involved" type="text" id="id_num_involved"/>
                             </div>
@@ -178,7 +194,7 @@
                         </div>
                         <div class="form-group">
                             <label for="id_location" class="col-sm-3 control-label" >Location</label>
-                            <div class="col-sm-9 input-group"> 
+                            <div class="col-sm-9 input-group">
                                 <input class="form-control" name="location" type="text" id="id_location"/>
 				<!--Create map marker button next to location button for geocode function-->
                                 <span class="input-group-btn"><button data-target="#map" id='map_button' data-toggle="modal" class='btn btn-default'>
@@ -186,13 +202,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_trial_location" class="col-sm-3 control-label" >Trial location</label>
+                            <label for="id_trial_location" class="col-sm-3 control-label" >Trial Location</label>
                             <div class="col-sm-9">
                                 <input class="form-control" name="trial_location" type="text" id="id_trial_location"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_violation_description" class="col-sm-3 control-label" >Violation description</label>
+                            <label for="id_violation_description" class="col-sm-3 control-label" >Violation Description</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="violation_description" rows=5 id="id_violation_description"/></textarea>
                             </div>
@@ -206,14 +222,14 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <label for="id_jail_time" class="checkbox">
-                                    <input name="jail_time" type="checkbox" id="id_jail_time"> Jail Time
+                                    <input name="jail_time" type="checkbox" id="id_jail_time">Jail Time
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <label for="id_mpa" class="checkbox">
-                                    <input name="mpa" type="checkbox" id="id_mpa"> MPA
+                                    <input name="mpa" type="checkbox" id="id_mpa">MPA
                                 </label>
                             </div>
                         </div>
