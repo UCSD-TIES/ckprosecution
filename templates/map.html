@@ -51,7 +51,7 @@
                     '<b>Crime Date: </b>{{ item.crime_date }} <br>' +
                     '<b>Number of Suspects: </b>{{ item.num_involved }} <br>' +
                     '<b>Creature Involved: </b>{{ item.creature }} <br>' +
-                    '<a href="{% url detail report_id=item.id %}">More Info</a></p>' +
+                    '<a href="{% url detail report_id=item.id %}">Detail</a></p>' +
                     '</div>' +
                     '</div>';
 
@@ -76,16 +76,11 @@
         <div class="row" id="map-canvas" />
     </div>
 
+    <br>
     <div class="row-fluid marketing">
         <div class="span6">
-            <h3>Marine Related Prosections in California</h3>
-            <p>Historically, prosecutions in San Diego are low compared to other beach communities, such as Orange Counties. Those who do get prosecuted in San Diego are usually given a fine, merely a slap-on-the-wrist, while consequences in Orange County involve jail time.  Coastkeeper needs a tool that allows them to easily record, compare, and visualize data from marine-related prosecutions throughout California. </p>
-
-        </div>
-
-        <div class="span6">
             <h3>How to read the Map</h3>
-            <p>Each icon represents a prosection, click on it for more details</p>
+            <p>Each icon represents a prosecution, click on it for more details.</p>
         </div>
     </div>
 {% endblock %}
