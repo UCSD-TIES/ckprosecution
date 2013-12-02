@@ -1,6 +1,6 @@
 import os
 import csv
-from datetime import datetime 
+from datetime import datetime
 from django.utils import simplejson
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden, HttpResponseServerError
 from django.template import RequestContext
@@ -33,19 +33,19 @@ def export_csv(request):
 #write all rows in database using loop
     for row in Report.objects.all():
         rcrime_date = '' + str(row.crime_date)
-	rresolve_days = ''+str(row.resolve_days) 
-	rnum_involved = ''+str(row.num_involved) 
-	rcreature = ''+str(row.creature) 
-	rlocation = ''+str(row.location) 
-	rtrial_location = ''+str(row.trial_location) 
-	rviolation_description = ''+str(row.violation_description) 
-	rfine = ''+str(row.fine) 
-	rupdate_date = ''+str(row.update_date) 
-	rjail_time = ''+str(row.jail_time) 
-	rmpa = ''+str(row.mpa) 
+	rresolve_days = ''+str(row.resolve_days)
+	rnum_involved = ''+str(row.num_involved)
+	rcreature = ''+str(row.creature)
+	rlocation = ''+str(row.location)
+	rtrial_location = ''+str(row.trial_location)
+	rviolation_description = ''+str(row.violation_description)
+	rfine = ''+str(row.fine)
+	rupdate_date = ''+str(row.update_date)
+	rjail_time = ''+str(row.jail_time)
+	rmpa = ''+str(row.mpa)
         writer.writerow([rcrime_date, rresolve_days, rnum_involved, rcreature, rlocation, rtrial_location, rviolation_description, rfine, rjail_time, rmpa, rupdate_date])
 
-    return response	
+    return response
 
 @login_required
 def compute_statistics(request):
@@ -58,7 +58,7 @@ def compute_statistics(request):
     count_stats_label = ""
     days_stats_data = []
     for resolve_days in Report.objects.all().distinct('resolve_days').values('resolve_days'):
-        c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}") 
+        c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}")
         count = float(Report.objects.filter(resolve_days=c_string).count())
         count_stats_label += str(Report.objects.filter(resolve_days=c_string).count())
         days_stats_label += str(c_string) + "|"
@@ -229,18 +229,6 @@ def date_filter(request):
     found_entires = Report.objects.filter(crime_date__range=[start_date,end_date]).order_by('crime_date')
     return render_to_response('reports/results.html',{
                               'found_entries': found_entires },
-                              context_instance=RequestContext(request))
-
-@login_required
-def rank(request,rank_by,reverse):
-    if(reverse == 'true'):
-        rank_by = '-'+rank_by
-        result = Report.objects.all().order_by(rank_by)
-    else:
-        result = Report.objects.all().order_by(rank_by)
-
-    return render_to_response('reports/reports.html',{
-                              'reports': result },
                               context_instance=RequestContext(request))
 
 @login_required
