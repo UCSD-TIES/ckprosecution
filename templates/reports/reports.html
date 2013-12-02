@@ -51,7 +51,7 @@
                         </button>
                     </form>
                 </li>
-                <li>
+<!--                <li>
                     <form action="/reports/search/" method="get" class="navbar-form">
                     {% csrf_token %}
                         <div class="form-group">
@@ -61,7 +61,7 @@
                             <span class="glyphicon glyphicon-search"></span> Search
                         </button>
                     </form>
-                </li>
+                </li>-->
 		<!-- export report feature button is made here and the export_csv python function is in
 		ckprosecution/reports/views.py file and is triggered from here -->
                 <li>
@@ -325,12 +325,16 @@
              });
             $( "#datepicker_start, #datepicker_end, #id_crime_date" ).datepicker({format: "yyyy-mm-dd"});
             $("#expenselist").dataTable({
-                "bFilter": false,
-                "bLengthChange": false,
-                "iDisplayLength": 15,
                 "aoColumnDefs": [
                     { "bSortable": false, "aTargets": [ 10 ] }
-                ]
+                ],
+                "iDisplayLength": 15,
+                "aLengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                "fnPreDrawCallback": function(oSettings, json) {
+                $('.dataTables_filter input').addClass('form-control');
+                $('.dataTables_length select').addClass('form-control');
+                $('.dataTables_filter input').attr('placeholder', 'Search');
+          }
             });
 
             $("#create_report_form").validate({
