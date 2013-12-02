@@ -10,7 +10,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/datatables.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs8QAOKEV5PHe-rvjkJwk-aBHOdiN5Sy4&sensor=false"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <style>
         .createtable {text-align:left;}
         .button { margin: 4px 10px; }
@@ -108,19 +108,15 @@
                         <td>
                             {% if item.jail_time %}
                                 <span class="glyphicon glyphicon-ok"></span>
-                                <span style="color:white">Y</span>
                             {% else %}
                                 <span class="glyphicon glyphicon-remove"></span>
-                                <span style="color:white">N</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if item.mpa %}
                                 <span class="glyphicon glyphicon-ok"></span>
-                                <span style="color:white">Y</span>
                             {% else %}
                                 <span class="glyphicon glyphicon-remove"></span>
-                                <span style="color:white">N</span>
                             {% endif %}
                         </td>
                         <td>{{ item.update_date }}</td>
