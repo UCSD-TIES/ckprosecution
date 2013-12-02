@@ -135,7 +135,7 @@
                             <button type="submit" class='btn btn-default'>Go</button>
                         </form>
                         <div id="map_canvas" style="width: 540px; height: 400px"></div>
-                </div>            
+                </div>
                 <div class="modal-footer">
                     <button class='btn btn-default' data-dismiss="modal">Close</button>
                 </div>
@@ -233,7 +233,7 @@
     <script type="text/javascript">
     var geocoder = null
     var map = null
-    
+
     function initialize() {
         var mapOptions = {
             center: new google.maps.LatLng(37.4419, -122.1419),
@@ -259,7 +259,7 @@
               var infowindow = new google.maps.InfoWindow({
                 content: coordinates
               });
-              
+
               $('#id_location').val(coordinates)
               google.maps.event.addListener(marker, "dragend", function() {
                 infowindow.setContent(marker.getPosition().toUrlValue(6))
@@ -297,7 +297,7 @@
                 }
             }
         });
-        
+
         $.validator.addMethod(
             "regex",
             function(value, element, regexp) {
@@ -318,7 +318,7 @@
                 "iDisplayLength": 15,
                 "aoColumnDefs": [
                     { "bSortable": false, "aTargets": [ 10 ] }
-                ] 
+                ]
             });
 
             $("#create_report_form").validate({

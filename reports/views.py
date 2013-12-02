@@ -243,3 +243,9 @@ def delete_report(request,report_id):
     return render_to_response('reports/reports.html',{
                               'reports': Report.objects.all() },
                               context_instance=RequestContext(request))
+
+@login_required
+def plot_map(request):
+    return render_to_response('map.html',{
+                              'reports': Report.objects.all() },
+                              context_instance=RequestContext(request))

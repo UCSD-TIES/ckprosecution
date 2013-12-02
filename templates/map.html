@@ -16,38 +16,53 @@
     </style>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
+        var map;
+        var infowindow =  new google.maps.InfoWindow({
+            content: ''
+        });
+
         function initialize() {
-            var myLatlng = new google.maps.LatLng(32.819667,-117.276049);
+            var california = new google.maps.LatLng(37.0,-120.0);
+
             var mapOptions = {
-                zoom: 16,
-                center: myLatlng,
-                disableDefaultUI: true,
+                zoom: 6,
+                center: california,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
-            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-            var contentString = '<div id="content">'+
-                '<div id="siteNotice">'+
-                '</div>'+
-                '<h4 id="firstHeading" class="firstHeading">Poaching</h4>'+
-                '<div id="bodyContent">'+
-                '<p><b>Crime Commited</b>, Lobsters Stolen <br><b>Date Commited</b>, 06/03/2013 <br>' +
-                '<a href="#">More Info.</a></p>'+
-                '</div>'+
-                '</div>';
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                maxWidth: 300
-            });
+            {% for item in reports %}
+                var latlngStr = '{{ item.location }}'.split(",");
+                var myLatlng = new google.maps.LatLng(latlngStr[0], latlngStr[1]);
 
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                title: 'Illegal Activity'
-            });
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: 'Illegal Activity'
+                });
+
+                var contentStr = '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h4 id="firstHeading" class="firstHeading">Illegal Activity</h4>' +
+                    '<div id="bodyContent">' +
+                    '<p>' +
+                    '<b>Crime Date: </b>{{ item.crime_date }} <br>' +
+                    '<b>Number of Suspects: </b>{{ item.num_involved }} <br>' +
+                    '<b>Creature Involved: </b>{{ item.creature }} <br>' +
+                    '<a href="{% url detail report_id=item.id %}">More Info</a></p>' +
+                    '</div>' +
+                    '</div>';
+
+                display_info(marker, contentStr);
+            {% endfor %}
+        }
+
+        function display_info(marker, contentStr) {
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                infowindow.setContent(contentStr);
+                infowindow.open(marker.get('map'), marker);
             });
         }
 
