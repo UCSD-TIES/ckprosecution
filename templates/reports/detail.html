@@ -229,15 +229,6 @@
             </div>
         </div>
     </div>
-    <script>
-        
-        $(document).ready(function(){
-            $( "#crime_date" ).datepicker({format: "yyyy-mm-dd"});
-            $('#map').on('shown.bs.modal', function () {
-                 initialize();
-             });
-        });
-    </script>
 
     <!--<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
       type="text/javascript"></script> -->
@@ -246,7 +237,7 @@
     var map = null;
     var geocoder = null;
 
-    function initialize() {
+function initialize() {
         var mapOptions = {
             center: new google.maps.LatLng(37.4419, -122.1419),
             zoom: 10
@@ -283,13 +274,13 @@
                 infowindow.open(map,marker)
                 $('#id_location').val(marker.getPosition().toUrlValue(6));
               });
-          google.maps.event.trigger(marker, "click");
+         google.maps.event.trigger(marker, "click");
             }
           }
         );
       }
     }
-
+    
     $("#edit_report_form").validate({
                 rules: {
                     crime_date: {
@@ -330,7 +321,14 @@
                     violation_description: "Enter Violation Description"
                 },
             });
+
+        $(document).ready(function(){
+            $( "#crime_date" ).datepicker({format: "yyyy-mm-dd"});
+            $('#map').on('shown.bs.modal', function () {
+                 initialize();
+             });
         });
+
     </script>
 
     {% if success %}
