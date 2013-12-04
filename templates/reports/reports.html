@@ -51,17 +51,6 @@
                         </button>
                     </form>
                 </li>
-<!--                <li>
-                    <form action="/reports/search/" method="get" class="navbar-form">
-                    {% csrf_token %}
-                        <div class="form-group">
-                            <input name="q" class="form-control" class="input-medium search-query" placeholder="Search reports">
-                        </div>
-                        <button type="submit" value="Submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-search"></span> Search
-                        </button>
-                    </form>
-                </li>-->
 		<!-- export report feature button is made here and the export_csv python function is in
 		ckprosecution/reports/views.py file and is triggered from here -->
                 <li>
@@ -289,6 +278,24 @@
         );
       }
     }
+    
+    jQuery.fn.dataTableExt.oSort['bool-asc']  = function(a,b) {
+        if ($(a).hasClass('glyphicon-ok') && $(b).hasClass('glyphicon-remove')) {
+            return -1
+        } else if ($(a).hasClass('glyphicon-remove') && $(b).hasClass('glyphicon-ok')) {
+            return 1
+        }
+        else return 0
+    };
+    
+    jQuery.fn.dataTableExt.oSort['bool-desc']  = function(a,b) {
+        if ($(a).hasClass('glyphicon-ok') && $(b).hasClass('glyphicon-remove')) {
+            return 1
+        } else if ($(a).hasClass('glyphicon-remove') && $(b).hasClass('glyphicon-ok')) {
+            return -1
+        }
+        else return 0
+    };
     </script>
 
     <script>
@@ -326,7 +333,8 @@
             $( "#datepicker_start, #datepicker_end, #id_crime_date" ).datepicker({format: "yyyy-mm-dd"});
             $("#expenselist").dataTable({
                 "aoColumnDefs": [
-                    { "bSortable": false, "aTargets": [ 10 ] }
+                    { "bSortable": false, "aTargets": [ 10 ] },
+                    { "sType": "bool", "aTargets":[ 7,8 ] }
                 ],
                 "iDisplayLength": 15,
                 "aLengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
