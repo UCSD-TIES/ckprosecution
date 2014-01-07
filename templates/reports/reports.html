@@ -109,7 +109,7 @@
                             {% endif %}
                         </td>
                         <td>{{ item.update_date }}</td>
-                        <td><a href="{% url detail report_id=item.id %}">Details</a></td>
+                        <td><a href="{% url "detail" report_id=item.id %}">Details</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

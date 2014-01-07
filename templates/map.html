@@ -51,7 +51,7 @@
                     '<b>Crime Date: </b>{{ item.crime_date }} <br>' +
                     '<b>Number of Suspects: </b>{{ item.num_involved }} <br>' +
                     '<b>Creature Involved: </b>{{ item.creature }} <br>' +
-                    '<a href="{% url detail report_id=item.id %}">Detail</a></p>' +
+                    '<a href="{% url "detail" report_id=item.id %}">Detail</a></p>' +
                     '</div>' +
                     '</div>';
 

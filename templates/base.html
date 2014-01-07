@@ -9,7 +9,6 @@
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery-1.10.2.min.js"></script>
     {% block htmlhead %}{% endblock %}
     <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
-<!--     <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"> -->
     <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
 
     <style>
@@ -49,11 +48,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/admin/">Admin</a></li>
-                <li><a href="/accounts/signout/">Log Out</a></li>
+                <li><a href={% url "logout"%}?next=/>Log Out</a></li>
             </ul>
             {% else %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/accounts/signin/">Log In</a></li>
+                <li><a href="/accounts/login/">Log In</a></li>
             </ul>
             {% endif %}
         </div>

@@ -74,8 +74,6 @@ def project(*args):
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = '/www'
 
-USERENA_REDIRECT_ON_SIGNOUT = '/accounts/signin'
-
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
@@ -117,6 +115,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'ckprosecution.urls'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ckprosecution.wsgi.application'
@@ -135,31 +134,18 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'userena',
-    'guardian',
-    'easy_thumbnails',
     'accounts',
     'south',
     'reports',
     'GChartWrapper.charts',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'crispy_forms',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'userena.backends.UserenaAuthenticationBackend',
-    'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
-
-ANONYMOUS_USER_ID = -1
-
-LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
-LOGIN_URL = '/accounts/signin/'
-LOGOUT_URL = '/accounts/signout/'
-
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include, url
+import django.contrib.auth.urls
 from django.contrib.auth.decorators import login_required
 from ckprosecution import settings
 from reports import *
-from userena import views
 
 
 # Uncomment the next two lines to enable the admin:
@@ -10,8 +10,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^accounts/signup/', login_required(views.signup)),
-    url(r'^accounts/', include('userena.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^reports/', include('reports.urls')),
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),

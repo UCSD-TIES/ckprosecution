@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *  # 404, 500, patterns, include, url
+from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     url(r'^export_csv', 'reports.views.export_csv'),
