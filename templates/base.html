@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <META NAME="Title" CONTENT="Coastkeeper: Report Database and Analytics">
     <title>{% block title %}Coastkeeper: Report Database and Analytics{% endblock %}</title>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/js/jquery-1.10.2.min.js"></script>
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "vendor/js/jquery-1.10.2.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "coastkeeper/css/base.css" %}" rel="stylesheet">
     {% block htmlhead %}{% endblock %}
-    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}coastkeeper/css/base.css" rel="stylesheet">
-    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
     <div class="header-top">
         <div class="container">
-            <a href="/"><img src="{{ STATIC_URL }}coastkeeper/imgs/logo.gif" border="0"/></a>
+            <a href="/"><img src="{% static "coastkeeper/imgs/logo.gif" %}" border="0"/></a>
         </div>
     </div>
 
@@ -48,9 +50,7 @@
     </div>
 
     <script>
-        $('body').css('background-image', "url({{ STATIC_URL }}coastkeeper/imgs/furley_bg.png)");
-        $('.area').hover(function(){$(this).find("a").toggleClass("hovered");});
-        $('.area').click(function(){window.location=$(this).find("a").attr("href"); return false;});
+       $('body').css('background-image', "url({{ STATIC_URL }}coastkeeper/imgs/furley_bg.png)");
     </script>
 
 </body>

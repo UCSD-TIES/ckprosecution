@@ -156,14 +156,6 @@ class ReportList(ListView):
     model = Report
     context_object_name = 'reports'
 
-    def get_queryset(self):
-        if self.request.GET.get('start_date') and self.request.GET.get('end_date'):
-            start_date = self.request.GET.get('start_date')
-            end_date = self.request.GET.get('end_date')
-            return Report.objects.filter(crime_date__range=[start_date, end_date])
-
-        return Report.objects.all()
-
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ReportList, self).dispatch(*args, **kwargs)

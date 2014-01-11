@@ -3,14 +3,15 @@
 {% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
 
 {% block htmlhead %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}vendor/css/datepicker.css"/>
-    <link rel="stylesheet" href="{{ STATIC_URL }}vendor/css/datatables.css"/>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/js/datatables.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/google_map.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/report_validate.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/report_table.js"></script>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "vendor/css/datepicker.css" %}"/>
+    <link rel="stylesheet" href="{% static "vendor/css/datatables.css" %}"/>
+    <script type="text/javascript" src="{% static "vendor/js/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendor/js/jquery.validate.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendor/js/datatables.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "coastkeeper/JS/google_map.js" %}"></script>
+    <script type="text/javascript" src="{% static "coastkeeper/JS/report_validate.js" %}"></script>
+    <script type="text/javascript" src="{% static "coastkeeper/JS/report_table.js" %}"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 {% endblock %}
 
@@ -22,7 +23,7 @@
             <div class="navbar" role="navigation">
                 <ul class="nav navbar-nav">
                     <li>
-                        <button data-target="#create_report" data-toggle="modal" class="navbar-btn btn btn-default">
+                        <button data-target="#report_modal" data-toggle="modal" class="navbar-btn btn btn-default">
                             <span class="glyphicon glyphicon-plus"></span> New Report
                         </button>
                     </li>
@@ -109,128 +110,9 @@
 
 
     <!-- modal that shows the google maps for geocode lookup -->
-    <div id="map" class="modal fade" style="z-index:10000">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3>Map</h3>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Enter an address, and then drag the marker to tweak the location.
-                        <br/>
-                        The latitude/longitude will appear in the info window after each geocode/drag.
-                    </p>
+    {% include "reports/_map_modal.html" %}
 
-                    <form class='form-inline' action="#" onsubmit="showAddress(this.address.value); return false">
-                        <input style="width:350px" type="text" class='form-control' name="address"
-                               value="1600 Amphitheatre Pky, Mountain View, CA">
-                        <button type="submit" class='btn btn-default'>Go</button>
-                    </form>
-                    <div id="map_canvas" style="width: 540px; height: 400px"></div>
-                </div>
-                <div class="modal-footer">
-                    <button class='btn btn-default' data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="create_report" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3>Create New Report</h3>
-                </div>
-                <div class="modal-body">
-                    <form action="add/" id="create_report_form" class="form-horizontal" method="POST">{% csrf_token %}
-                        <div class="form-group">
-                            <label for="id_crime_date" class="col-sm-3 control-label">Crime Date</label>
-
-                            <div class="col-sm-9">
-                                <input class="form-control" name="crime_date" type="text" id="id_crime_date"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_resolve_days" class="col-sm-3 control-label">Resolve Days</label>
-
-                            <div class="col-sm-9">
-                                <input class="form-control" name="resolve_days" type="text" id="id_resolve_days"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_num_involved" class="col-sm-3 control-label"># of Suspects</label>
-
-                            <div class="col-sm-9">
-                                <input class="form-control" name="num_involved" type="text" id="id_num_involved"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_creature" class="col-sm-3 control-label">Creature</label>
-
-                            <div class="col-sm-9">
-                                <input class="form-control" name="creature" type="text" id="id_creature"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_location" class="col-sm-3 control-label">Location</label>
-
-                            <div class="col-sm-9 input-group">
-                                <input class="form-control" name="location" type="text" id="id_location"/>
-                                <!--Create map marker button next to location button for geocode function-->
-                                <span class="input-group-btn"><button data-target="#map" id='map_button'
-                                                                      data-toggle="modal" class='btn btn-default'>
-                                    <span class="glyphicon glyphicon-map-marker"></span></button></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_trial_location" class="col-sm-3 control-label">Trial Location</label>
-
-                            <div class="col-sm-9">
-                                <input class="form-control" name="trial_location" type="text" id="id_trial_location"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_violation_description" class="col-sm-3 control-label">Violation
-                                Description</label>
-
-                            <div class="col-sm-9">
-                                <textarea class="form-control" name="violation_description" rows=5
-                                          id="id_violation_description"/></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_fine" class="col-sm-3 control-label">Fine</label>
-
-                            <div class="col-sm-9">
-                                <input class="form-control" name="fine" type="text" id="id_fine"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <label for="id_jail_time" class="checkbox">
-                                    <input name="jail_time" type="checkbox" id="id_jail_time">Jail Time
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <label for="id_mpa" class="checkbox">
-                                    <input name="mpa" type="checkbox" id="id_mpa">MPA
-                                </label>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default" id="create_button">Create Report</button>
-                    <button class="btn btn-warning" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'reports/_report_modal_form.html' with title='Create Report' action='add/'%}
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -251,7 +133,7 @@
                 oTable.fnDraw();
             });
 
-            $("#create_report_form").validate({
+            $("#report_form").validate({
                 rules: report_rules,
                 messages: report_messages
             });
@@ -277,72 +159,4 @@
         </script>
     {% endif %}
 
-    <div id="edit_report" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Edit Report</h3>
-        </div>
-        <div class="modal-body">
-            <form action="" class="form-inline" method="POST">{% csrf_token %}
-                <table class="edittable" style="text-align:left">
-                    <tr>
-                        <th><label for="id_crime_date">Crime date:</label></th>
-                        <td><input class="form-control" id="id_crime_date" name="crime_date" type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_resolve_days">Resolve days:</label></th>
-                        <td><input class="form-control" id="id_resolve_days" name="resolve_days" type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_num_involved">Num involved:</label></th>
-                        <td><input class="form-control" id="id_num_involved" name="num_involved" type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_creature">Creature:</label></th>
-                        <td><input class="form-control" id="id_creature" maxlength="45" name="creature" type="text">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_location">Location:</label></th>
-                        <td><input class="form-control" id="id_location" maxlength="45" name="location" type="text">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_trial_location">Trial location:</label></th>
-                        <td><input class="form-control" id="id_trial_location" maxlength="45" name="trial_location"
-                                   type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_violation_description">Violation description:</label></th>
-                        <td><textarea class="form-control" id="id_violation_description" name="violation_description"
-                                      type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_fine">Fine:</label></th>
-                        <td><input class="form-control" id="id_fine" name="fine" type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_update_date">Update date:</label></th>
-                        <td><input class="form-control" id="id_update_date" name="update_date" type="text"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_jail_time">Jail time:</label></th>
-                        <td><input id="id_jail_time" name="jail_time" type="checkbox"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="id_mpa">Mpa:</label></th>
-                        <td><input id="id_mpa" name="mpa" type="checkbox"></td>
-                    </tr>
-                    <tr style="display:none">
-                        <th><label for="id_report">Mpa:</label></th>
-                        <td><input id="id_report" name="report" type="text"></td>
-                    </tr>
-                </table>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
-            <button type="submit" class="btn btn-primary">Update Report</button>
-            </form>
-        </div>
-    </div>
 {% endblock %}
