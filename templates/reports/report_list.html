@@ -152,7 +152,7 @@
                     <h3>Create New Report</h3>
                 </div>
                 <div class="modal-body">
-                    <form id="create_report_form" class="form-horizontal" method="POST">{% csrf_token %}
+                    <form action="add/" id="create_report_form" class="form-horizontal" method="POST">{% csrf_token %}
                         <div class="form-group">
                             <label for="id_crime_date" class="col-sm-3 control-label" >Crime Date</label>
                             <div class="col-sm-9">
@@ -383,7 +383,7 @@
                     location: "Coordinates (ex 123.456, -189.012)",
                     trial_location: "Enter Trial Location",
                     violation_description: "Enter Violation Description"
-                },
+                }
             });
         });
     </script>

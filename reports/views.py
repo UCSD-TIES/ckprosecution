@@ -1,6 +1,7 @@
 import os
 import csv
 from datetime import datetime
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils import simplejson
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden, HttpResponseServerError
 from django.template import RequestContext
@@ -8,8 +9,10 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.core.context_processors import csrf
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import requires_csrf_token
-
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from reports.models import Report
 from reports.forms import ReportForm
 from reports.search import *
@@ -156,48 +159,21 @@ def compute_statistics(request):
 from reports.forms import ReportForm
 
 
-@login_required
-def view_reports(request):
-    formset = ReportForm()
-    if request.method == 'POST':
-        if request.POST.get('report'):
-            report = get_object_or_404(Report, pk=request.POST.get('report'))
-            form = ReportForm(request.POST, instance=report)
-            if form.is_valid():
-                report = form.save()
-                report.save()
-                return render_to_response('reports/reports.html', {
-                    'success': "success",
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-            else:
-                return render_to_response('reports/reports.html', {
-                    'error': form.errors,
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-        else:
-            form = ReportForm(request.POST)
-            if form.is_valid():
-                new_report = form.save()
-                return render_to_response('reports/reports.html', {
-                    'success': "success",
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-            else:
-                return render_to_response('reports/reports.html', {
-                    'error': form.errors,
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-    else:
-        return render_to_response('reports/reports.html', {
-            'form': formset,
-            'reports': Report.objects.all()},
-                                  context_instance=RequestContext(request))
+class ReportList(ListView):
+    model = Report
+    context_object_name = 'reports'
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReportList, self).dispatch(*args, **kwargs)
+
+class ReportCreate(CreateView):
+    model = Report
+    success_url = reverse_lazy('report_list')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReportCreate, self).dispatch(*args, **kwargs)
 
 @login_required
 @requires_csrf_token
@@ -253,13 +229,13 @@ def detail(request, report_id):
             if form.is_valid():
                 report = form.save()
                 report.save()
-                return render_to_response('reports/reports.html', {
+                return render_to_response('reports/report_list.html', {
                     'success': "success",
                     'form': formset,
                     'reports': Report.objects.all()},
                                           context_instance=RequestContext(request))
             else:
-                return render_to_response('reports/reports.html', {
+                return render_to_response('reports/report_list.html', {
                     'error': form.errors,
                     'form': formset,
                     'reports': Report.objects.all()},
@@ -268,13 +244,13 @@ def detail(request, report_id):
             form = ReportForm(request.POST)
             if form.is_valid():
                 new_report = form.save()
-                return render_to_response('reports/reports.html', {
+                return render_to_response('reports/report_list.html', {
                     'success': "success",
                     'form': formset,
                     'reports': Report.objects.all()},
                                           context_instance=RequestContext(request))
             else:
-                return render_to_response('reports/reports.html', {
+                return render_to_response('reports/report_list.html', {
                     'error': form.errors,
                     'form': formset,
                     'reports': Report.objects.all()},
@@ -288,7 +264,7 @@ def detail(request, report_id):
 @login_required
 def delete_report(request, report_id):
     Report.objects.get(pk=report_id).delete()
-    return render_to_response('reports/reports.html', {
+    return render_to_response('reports/report_list.html', {
         'reports': Report.objects.all()},
                               context_instance=RequestContext(request))
 
