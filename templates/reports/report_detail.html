@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+
+{% block title %}Report Detail{% endblock %}
+
+{% block htmlhead %}
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.js?version=20120318"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css" />
+    <style>
+        .createtable {text-align:left;}
+        .button { margin: 4px 10px; }
+        .line { border-bottom: 1px solid black; }
+        .close { float: right; }
+        .notice { color: #F4811F; padding-top: 25px; }
+        .newlook {background-color:white;}
+        .actions {margin-left:10px;}
+        .actions { margin-bottom: 15px; }
+        .title {margin-left: 10px;margin-top: 25px;margin-bottom:25px; font-size:2em;}
+        .form-horizontal .form-group { margin-bottom: 2px;}
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form class="form-inline">
+        <div class="pull-left">
+            <table class="table-condensed">
+                <tr>
+                    <th>Crime Date</th>
+                    <td>{{ report.crime_date }}</td>
+                </tr>
+                <tr>
+                    <th>Resolve Days</th>
+                    <td>{{ report.resolve_days }}</td>
+                </tr>
+                <tr>
+                    <th>Number of Suspects</th>
+                    <td>{{ report.num_involved }}</td>
+                </tr>
+                <tr>
+                    <th>Creature</th>
+                    <td>{{ report.creature }}</td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>{{ report.location }}</td>
+                </tr>
+                <tr>
+                    <th>Trial Location</th>
+                    <td>{{ report.trial_location }}</td>
+                </tr>
+                <tr>
+                    <th>Fine</th>
+                    <td>{{ report.fine }}</td>
+                </tr>
+                <tr>
+                    <th>Jail Time</th>
+                    <td>
+                        {% if report.jail_time %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>MPA</th>
+                    <td>
+                        {% if report.mpa %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Violation Description</th>
+                    <td>{{ report.violation_description }}</td>
+                </tr>
+                <tr>
+                    <th>Update Date</th>
+                    <td>{{ report.update_date }}</td>
+                </tr>
+            </table>
+            <hr>
+            <a href="{% url "report_list" %}" class="btn btn-default">Back</a>
+            {% if user.is_authenticated %}
+                <a href="#edit_report" data-target="#edit_report" data-toggle="modal" class="btn btn-default">Edit</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="#delete_report" data-target="#delete_report" data-toggle="modal" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
+    </form>
+
+    <div id="edit_report" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                 <div class="modal-header">
+                    <h3>Edit Report</h3>
+                </div>
+                <div class="modal-body">
+                    <form action="edit/{{report.id }} }}" id="edit_report_form" class="form-horizontal" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input class="form-control" name="report" type="hidden" value="{{report.id}}"/>
+                            <label for="id_crime_date" class="col-sm-3 control-label" >Crime date</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="crime_date" type="text" id="id_crime_date" value="{{report.crime_date}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_resolve_days" class="col-sm-3 control-label" >Resolve day</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="resolve_days" type="text" id="id_resolve_days" value="{{report.resolve_days}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_num_involved" class="col-sm-3 control-label" >Num involved:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="num_involved" type="text" id="id_num_involved" value="{{report.num_involved}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_creature" class="col-sm-3 control-label" >Creature</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="creature" type="text" id="id_creature" value ="{{report.creature}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location" class="col-sm-3 control-label" >Location</label>
+                            <div class="col-sm-9 input-group">
+                                <input class="form-control" name="location" type="text" id="id_location" value="{{report.location}}" />
+                <!--Create map marker button next to location button for geocode function-->
+                                <span class="input-group-btn"><button data-target="#map" id='map_button' data-toggle="modal" class='btn btn-default'>
+                                <span class="glyphicon glyphicon-map-marker"></span></button></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_trial_location" class="col-sm-3 control-label" >Trial location</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="trial_location" type="text" id="id_trial_location" value ="{{report.trial_location}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_violation_description" class="col-sm-3 control-label" >Violation description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="violation_description" rows=5 id="id_violation_description"/>{{report.violation_description}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_fine" class="col-sm-3 control-label" >Fine</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="fine" type="text" id="id_fine" value="{{report.fine}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <label for="id_jail_time" class="checkbox">
+                                    {% if report.jail_time %}<input name="jail_time" type="checkbox" id="id_jail_time" checked="yes">{%endif%}
+                                {% if not report.jail_time %} <input name="jail_time" type="checkbox" id="id_jail_time">{%endif%}
+                             Jail Time
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <label for="id_mpa" class="checkbox">
+                                    {% if report.mpa %}<input name="mpa" type="checkbox" id="id_mpa" checked="yes">{%endif%}
+                                {% if not report.mpa %} <input name="mpa" type="checkbox" id="id_mpa">
+                                {%endif%}
+                                     MPA
+                                </label>
+                            </div>
+                        </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Confirm</button>
+                </form>
+                    <button class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="map" class="modal fade" style="z-index:10000">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h3>Map</h3>
+                </div>
+                <div class="modal-body">
+                        <p>
+                        Enter an address, and then drag the marker to tweak the location.
+                        <br/>
+                        The latitude/longitude will appear in the info window after each geocode/drag.
+                        </p>
+                        <form class='form-inline' action="#" onsubmit="showAddress(this.address.value); return false">
+                            <input style="width:350px" type="text" class='form-control' name="address" value="1600 Amphitheatre Pky, Mountain View, CA">
+                            <button type="submit" class='btn btn-default'>Go</button>
+                        </form>
+                        <div id="map_canvas" style="width: 540px; height: 400px"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class='btn btn-default' data-dismiss="modal">Close</button>
+                </div>
+            </div>
+       </div>
+    </div>
+
+    <div id="delete_report" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Warning!</h3>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url "report_delete" pk=report.id %}" class="form-inline" method="POST">
+                        {% csrf_token %}
+                        Are you sure you want to delete this report? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
+      type="text/javascript"></script> -->
+    <script type="text/javascript">
+
+    var map = null;
+    var geocoder = null;
+
+function initialize() {
+        var mapOptions = {
+            center: new google.maps.LatLng(37.4419, -122.1419),
+            zoom: 10
+        };
+        map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
+        geocoder = new google.maps.Geocoder();
+    }
+
+    function showAddress(address) {
+      if (geocoder) {
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status != google.maps.GeocoderStatus.OK) {
+              alert(address + " not found");
+            } else {
+              coordinates = results[0].geometry.location.toUrlValue(6)
+              map.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map:map, 
+                position: results[0].geometry.location,
+                draggable: true
+              });
+              var infowindow = new google.maps.InfoWindow({
+                content: coordinates
+              });
+
+              $('#id_location').val(coordinates)
+              google.maps.event.addListener(marker, "dragend", function() {
+                infowindow.setContent(marker.getPosition().toUrlValue(6))
+                infowindow.open(map,marker)
+                $('#id_location').val(marker.getPosition().toUrlValue(6));
+              });
+              google.maps.event.addListener(marker, "click", function() {
+                infowindow.setContent(marker.getPosition().toUrlValue(6))
+                infowindow.open(map,marker)
+                $('#id_location').val(marker.getPosition().toUrlValue(6));
+              });
+         google.maps.event.trigger(marker, "click");
+            }
+          }
+        );
+      }
+    }
+    
+    $("#edit_report_form").validate({
+                rules: {
+                    crime_date: {
+                        required: true
+                    },
+                    resolve_days: {
+                        required: true,
+                        digits: true
+                    },
+                    creature: {
+                        required: true,
+                        regex: /^([a-zA-Z]\s?)+$/
+                    },
+                    num_involved: {
+                        required: true,
+                        digits: true
+                    },
+                    location: {
+                        required: true,
+                        regex: /^\-?[0-9]{1,3}(\.[0-9]{1,3})?,\s?\-?[0-9]{1,3}(\.[0-9]{1,3})?$/
+                    },
+                    trial_location: {
+                        required: true,
+                        regex: /^([a-zA-Z]\s?)+$/
+                    },
+                    violation_description: {
+                        required: true
+                    },
+                    fine: {
+                        required: true,
+                        number: true
+                    }
+                },
+                messages: {
+                    creature: "Enter Creature",
+                    location: "Coordinates (ex 123.456, -189.012)",
+                    trial_location: "Enter Trial Location",
+                    violation_description: "Enter Violation Description"
+                },
+            });
+
+        $(document).ready(function(){
+            $( "#crime_date" ).datepicker({format: "yyyy-mm-dd"});
+            $('#map').on('shown.bs.modal', function () {
+                 initialize();
+             });
+        });
+
+    </script>
+
+    {% if success %}
+        <div id="create_success" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Success!</h3>
+            </div>
+            <div class="modal-body">
+                Successfully created Report.
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $('#create_success').modal({backdrop:false});
+        </script>
+    {% endif %}
+
+{% endblock %}
+
+{% if error %}
+        <div id="create_success" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Success!</h3>
+            </div>
+            <div class="modal-body">
+                Successfully created Report.
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal">Okay</a>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $('#create_success').modal({backdrop:false});
+        </script>
+    {% endif %}
+

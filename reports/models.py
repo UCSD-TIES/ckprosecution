@@ -14,3 +14,6 @@ class Report(models.Model):
     update_date = models.DateField(auto_now=True)
     jail_time = models.BooleanField(default = False)
     mpa = models.BooleanField(default = False)
+
+    def get_absolute_url(self):
+        return "/reports/report_%i" % self.id

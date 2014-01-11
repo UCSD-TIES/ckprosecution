@@ -11,7 +11,7 @@ from datetime import datetime
 from django.core.context_processors import csrf
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import requires_csrf_token
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from reports.models import Report
 from reports.forms import ReportForm
@@ -156,9 +156,6 @@ def compute_statistics(request):
                               context_instance=RequestContext(request))
 
 
-from reports.forms import ReportForm
-
-
 class ReportList(ListView):
     model = Report
     context_object_name = 'reports'
@@ -167,6 +164,7 @@ class ReportList(ListView):
     def dispatch(self, *args, **kwargs):
         return super(ReportList, self).dispatch(*args, **kwargs)
 
+
 class ReportCreate(CreateView):
     model = Report
     success_url = reverse_lazy('report_list')
@@ -174,6 +172,32 @@ class ReportCreate(CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ReportCreate, self).dispatch(*args, **kwargs)
+
+
+class ReportDetail(DetailView):
+    model = Report
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReportDetail, self).dispatch(*args, **kwargs)
+
+
+class ReportUpdate(UpdateView):
+    model = Report
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReportUpdate, self).dispatch(*args, **kwargs)
+
+
+class ReportDelete(DeleteView):
+    model = Report
+    success_url = reverse_lazy('report_list')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReportDelete, self).dispatch(*args, **kwargs)
+
 
 @login_required
 @requires_csrf_token
@@ -213,59 +237,9 @@ def date_filter(request):
         start_date = request.GET['start_date']
     if ('end_date' in request.GET):
         end_date = request.GET['end_date']
-    found_entires = Report.objects.filter(crime_date__range=[start_date, end_date]).order_by('crime_date')
+    found_entries = Report.objects.filter(crime_date__range=[start_date, end_date]).order_by('crime_date')
     return render_to_response('reports/results.html', {
-        'found_entries': found_entires},
-                              context_instance=RequestContext(request))
-
-
-@login_required
-def detail(request, report_id):
-    formset = ReportForm()
-    if request.method == 'POST':
-        if request.POST.get('report'):
-            report = get_object_or_404(Report, pk=request.POST.get('report'))
-            form = ReportForm(request.POST, instance=report)
-            if form.is_valid():
-                report = form.save()
-                report.save()
-                return render_to_response('reports/report_list.html', {
-                    'success': "success",
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-            else:
-                return render_to_response('reports/report_list.html', {
-                    'error': form.errors,
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-        else:
-            form = ReportForm(request.POST)
-            if form.is_valid():
-                new_report = form.save()
-                return render_to_response('reports/report_list.html', {
-                    'success': "success",
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-            else:
-                return render_to_response('reports/report_list.html', {
-                    'error': form.errors,
-                    'form': formset,
-                    'reports': Report.objects.all()},
-                                          context_instance=RequestContext(request))
-    if request.method == 'GET':
-        return render_to_response('reports/detail.html', {
-            'report': Report.objects.get(pk=report_id)},
-                                  context_instance=RequestContext(request))
-
-
-@login_required
-def delete_report(request, report_id):
-    Report.objects.get(pk=report_id).delete()
-    return render_to_response('reports/report_list.html', {
-        'reports': Report.objects.all()},
+        'found_entries': found_entries},
                               context_instance=RequestContext(request))
 
 
