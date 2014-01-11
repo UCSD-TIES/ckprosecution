@@ -3,12 +3,12 @@
 {% block title %}Report Detail{% endblock %}
 
 {% block htmlhead %}
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/google_map.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/report_validate.js"></script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}vendor/css/datepicker.css" />
 {% endblock %}
 
 {% block content %}
@@ -87,6 +87,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3>Edit Report</h3>
                 </div>
                 <div class="modal-body">
