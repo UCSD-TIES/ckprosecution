@@ -161,9 +161,8 @@ class ReportList(ListView):
     context_object_name = 'reports'
 
     def get_queryset(self):
-        if self.request.GET.get('start_date'):
+        if self.request.GET.get('start_date') and self.request.GET.get('end_date'):
             start_date = self.request.GET.get('start_date')
-        if self.request.GET.get('end_date'):
             end_date = self.request.GET.get('end_date')
             return Report.objects.filter(crime_date__range=[start_date, end_date])
 

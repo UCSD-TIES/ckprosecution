@@ -3,25 +3,59 @@
 {% block title %}Coastkeeper: Report Database and Analytics{% endblock %}
 
 {% block htmlhead %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datatables.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datatables.css"/>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/datatables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/report_table.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <style>
-        .createtable {text-align:left;}
-        .button { margin: 4px 10px; }
-        .line { border-bottom: 1px solid black; }
-        .close { float: right; }
-        .notice { color: #F4811F; padding-top: 25px; }
-        .newlook {background-color:white;}
-        .actions {margin-left:10px;}
-        .actions { margin-bottom: 15px; }
-        .title {margin-left: 10px;margin-top: 25px;margin-bottom:0px; font-size:2em;}
-        .form-horizontal .form-group { margin-bottom: 2px;}
+        .createtable {
+            text-align: left;
+        }
+
+        .button {
+            margin: 4px 10px;
+        }
+
+        .line {
+            border-bottom: 1px solid black;
+        }
+
+        .close {
+            float: right;
+        }
+
+        .notice {
+            color: #F4811F;
+            padding-top: 25px;
+        }
+
+        .newlook {
+            background-color: white;
+        }
+
+        .actions {
+            margin-left: 10px;
+        }
+
+        .actions {
+            margin-bottom: 15px;
+        }
+
+        .title {
+            margin-left: 10px;
+            margin-top: 25px;
+            margin-bottom: 0px;
+            font-size: 2em;
+        }
+
+        .form-horizontal .form-group {
+            margin-bottom: 2px;
+        }
     </style>
 {% endblock %}
 
@@ -30,118 +64,122 @@
 
     {% block actions %}
         {% if user.is_authenticated %}
-        <div class="navbar" role="navigation">
-            <ul class="nav navbar-nav">
-                <li>
-                    <button data-target="#create_report" data-toggle="modal" class="navbar-btn btn btn-default">
-                        <span class="glyphicon glyphicon-plus"></span> New Report
-                    </button>
-                </li>
-                <li>
-                    <form action="{% url "report_list" %}" method="get" class="navbar-form">
-                    {% csrf_token %}
-                        <div class="form-group">
-                            <input name="start_date" size=9 class="form-control" id="datepicker_start" placeholder="From" required>
-                        </div>
-                        <div class="form-group">
-                            <input name="end_date" size=9 class="form-control" id="datepicker_end" placeholder="To" required>
-                        </div>
-                        <button type="submit" value="Submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-filter"></span> Filter by Date
+            <div class="navbar" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <button data-target="#create_report" data-toggle="modal" class="navbar-btn btn btn-default">
+                            <span class="glyphicon glyphicon-plus"></span> New Report
                         </button>
-                    </form>
-                </li>
-		<!-- export report feature button is made here and the export_csv python function is in
-		ckprosecution/reports/views.py file and is triggered from here -->
-                <li>
-                    <form action="/reports/export_csv/" method="get" class="navbar-form">
-                    {% csrf_token %}
-                        <button type="submit" value="Submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-export"></span> Export
-                        </button>
-                    </form>
-                </li>
+                    </li>
+                    <li>
+                        <form action="{% url "report_list" %}" method="get" class="navbar-form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input name="start_date" size=9 class="form-control" id="datepicker_start"
+                                       placeholder="From" required>
+                            </div>
+                            <div class="form-group">
+                                <input name="end_date" size=9 class="form-control" id="datepicker_end" placeholder="To"
+                                       required>
+                            </div>
+                            <span id='clear_date' class="btn btn-default">
+                                <span class="glyphicon glyphicon-remove"></span> Clear
+                            </span>
+                        </form>
+                    </li>
+                    <!-- export report feature button is made here and the export_csv python function is in
+                    ckprosecution/reports/views.py file and is triggered from here -->
+                    <li>
+                        <form action="/reports/export_csv/" method="get" class="navbar-form">
+                            {% csrf_token %}
+                            <button type="submit" value="Submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-export"></span> Export
+                            </button>
+                        </form>
+                    </li>
 
-            </ul>
-        </div>
+                </ul>
+            </div>
         {% endif %}
     {% endblock %}
 
     <div class="reporttable table-responsive">
-	    <table class="table  table-hover" id="expenselist">
+        <table class="table  table-hover" id="expenselist">
             <thead>
-                <tr>
-                    <th>Crime Date</th>
-                    <th>Resolve Days</th>
-                    <th># of Suspects</th>
-                    <th>Creature</th>
-                    <th>Location</th>
-                    <th>Trial Location</th>
-                    <th>Fine</th>
-                    <th>Jail</th>
-                    <th>MPA</th>
-                    <th>Update Date</th>
-                    <th> </th>
-                </tr>
+            <tr>
+                <th>Crime Date</th>
+                <th>Resolve Days</th>
+                <th># of Suspects</th>
+                <th>Creature</th>
+                <th>Location</th>
+                <th>Trial Location</th>
+                <th>Fine</th>
+                <th>Jail</th>
+                <th>MPA</th>
+                <th>Update Date</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody id="table_body">
-                {% for item in reports %}
-                    <tr id="{{ item.id }}">
-                        <td>{{ item.crime_date }}</td>
-                        <td>{{ item.resolve_days }}</td>
-                        <td>{{ item.num_involved }}</td>
-                        <td>{{ item.creature }}</td>
-                        <td>{{ item.location }}</td>
-                        <td>{{ item.trial_location }}</td>
-                        <td>{{ item.fine }}</td>
-                        <td>
-                            {% if item.jail_time %}
-                                <span class="glyphicon glyphicon-ok"></span>
-                            {% else %}
-                                <span class="glyphicon glyphicon-remove"></span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if item.mpa %}
-                                <span class="glyphicon glyphicon-ok"></span>
-                            {% else %}
-                                <span class="glyphicon glyphicon-remove"></span>
-                            {% endif %}
-                        </td>
-                        <td>{{ item.update_date }}</td>
-                        <td><a href="{% url "report_detail" pk=item.id %}">Details</a></td>
-                    </tr>
-                {% endfor %}
+            {% for item in reports %}
+                <tr id="{{ item.id }}">
+                    <td>{{ item.crime_date }}</td>
+                    <td>{{ item.resolve_days }}</td>
+                    <td>{{ item.num_involved }}</td>
+                    <td>{{ item.creature }}</td>
+                    <td>{{ item.location }}</td>
+                    <td>{{ item.trial_location }}</td>
+                    <td>{{ item.fine }}</td>
+                    <td>
+                        {% if item.jail_time %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.mpa %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.update_date }}</td>
+                    <td><a href="{% url "report_detail" pk=item.id %}">Details</a></td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
 
 
-<!-- modal that shows the google maps for geocode lookup -->
+    <!-- modal that shows the google maps for geocode lookup -->
     <div id="map" class="modal fade" style="z-index:10000">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		              <h3>Map</h3>
+                    <h3>Map</h3>
                 </div>
                 <div class="modal-body">
-                        <p>
+                    <p>
                         Enter an address, and then drag the marker to tweak the location.
                         <br/>
                         The latitude/longitude will appear in the info window after each geocode/drag.
-                        </p>
-                        <form class='form-inline' action="#" onsubmit="showAddress(this.address.value); return false">
-                            <input style="width:350px" type="text" class='form-control' name="address" value="1600 Amphitheatre Pky, Mountain View, CA">
-                            <button type="submit" class='btn btn-default'>Go</button>
-                        </form>
-                        <div id="map_canvas" style="width: 540px; height: 400px"></div>
+                    </p>
+
+                    <form class='form-inline' action="#" onsubmit="showAddress(this.address.value); return false">
+                        <input style="width:350px" type="text" class='form-control' name="address"
+                               value="1600 Amphitheatre Pky, Mountain View, CA">
+                        <button type="submit" class='btn btn-default'>Go</button>
+                    </form>
+                    <div id="map_canvas" style="width: 540px; height: 400px"></div>
                 </div>
                 <div class="modal-footer">
                     <button class='btn btn-default' data-dismiss="modal">Close</button>
                 </div>
             </div>
-       </div>
+        </div>
     </div>
 
     <div id="create_report" class="modal fade">
@@ -154,52 +192,63 @@
                 <div class="modal-body">
                     <form action="add/" id="create_report_form" class="form-horizontal" method="POST">{% csrf_token %}
                         <div class="form-group">
-                            <label for="id_crime_date" class="col-sm-3 control-label" >Crime Date</label>
+                            <label for="id_crime_date" class="col-sm-3 control-label">Crime Date</label>
+
                             <div class="col-sm-9">
                                 <input class="form-control" name="crime_date" type="text" id="id_crime_date"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_resolve_days" class="col-sm-3 control-label" >Resolve Days</label>
+                            <label for="id_resolve_days" class="col-sm-3 control-label">Resolve Days</label>
+
                             <div class="col-sm-9">
                                 <input class="form-control" name="resolve_days" type="text" id="id_resolve_days"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_num_involved" class="col-sm-3 control-label" ># of Suspects</label>
+                            <label for="id_num_involved" class="col-sm-3 control-label"># of Suspects</label>
+
                             <div class="col-sm-9">
                                 <input class="form-control" name="num_involved" type="text" id="id_num_involved"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_creature" class="col-sm-3 control-label" >Creature</label>
+                            <label for="id_creature" class="col-sm-3 control-label">Creature</label>
+
                             <div class="col-sm-9">
                                 <input class="form-control" name="creature" type="text" id="id_creature"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_location" class="col-sm-3 control-label" >Location</label>
+                            <label for="id_location" class="col-sm-3 control-label">Location</label>
+
                             <div class="col-sm-9 input-group">
                                 <input class="form-control" name="location" type="text" id="id_location"/>
-				<!--Create map marker button next to location button for geocode function-->
-                                <span class="input-group-btn"><button data-target="#map" id='map_button' data-toggle="modal" class='btn btn-default'>
-                                <span class="glyphicon glyphicon-map-marker"></span></button></span>
+                                <!--Create map marker button next to location button for geocode function-->
+                                <span class="input-group-btn"><button data-target="#map" id='map_button'
+                                                                      data-toggle="modal" class='btn btn-default'>
+                                    <span class="glyphicon glyphicon-map-marker"></span></button></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_trial_location" class="col-sm-3 control-label" >Trial Location</label>
+                            <label for="id_trial_location" class="col-sm-3 control-label">Trial Location</label>
+
                             <div class="col-sm-9">
                                 <input class="form-control" name="trial_location" type="text" id="id_trial_location"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_violation_description" class="col-sm-3 control-label" >Violation Description</label>
+                            <label for="id_violation_description" class="col-sm-3 control-label">Violation
+                                Description</label>
+
                             <div class="col-sm-9">
-                                <textarea class="form-control" name="violation_description" rows=5 id="id_violation_description"/></textarea>
+                                <textarea class="form-control" name="violation_description" rows=5
+                                          id="id_violation_description"/></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="id_fine" class="col-sm-3 control-label" >Fine</label>
+                            <label for="id_fine" class="col-sm-3 control-label">Fine</label>
+
                             <div class="col-sm-9">
                                 <input class="form-control" name="fine" type="text" id="id_fine"/>
                             </div>
@@ -229,76 +278,55 @@
     </div>
 
 
-<!--    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
-      type="text/javascript"></script>-->
+    <!--    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
+          type="text/javascript"></script>-->
     <script type="text/javascript">
-    var geocoder = null
-    var map = null
+        var geocoder = null
+        var map = null
 
-    function initialize() {
-        var mapOptions = {
-            center: new google.maps.LatLng(37.4419, -122.1419),
-            zoom: 10
-        };
-        map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
-        geocoder = new google.maps.Geocoder();
-    }
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng(37.4419, -122.1419),
+                zoom: 10
+            };
+            map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
+            geocoder = new google.maps.Geocoder();
+        }
 
-    function showAddress(address) {
-      if (geocoder) {
-        geocoder.geocode( { 'address': address}, function(results, status) {
-            if (status != google.maps.GeocoderStatus.OK) {
-              alert(address + " not found");
-            } else {
-              coordinates = results[0].geometry.location.toUrlValue(6)
-              map.setCenter(results[0].geometry.location);
-              var marker = new google.maps.Marker({
-                map:map, 
-                position: results[0].geometry.location,
-                draggable: true
-              });
-              var infowindow = new google.maps.InfoWindow({
-                content: coordinates
-              });
+        function showAddress(address) {
+            if (geocoder) {
+                geocoder.geocode({ 'address': address}, function (results, status) {
+                            if (status != google.maps.GeocoderStatus.OK) {
+                                alert(address + " not found");
+                            } else {
+                                coordinates = results[0].geometry.location.toUrlValue(6)
+                                map.setCenter(results[0].geometry.location);
+                                var marker = new google.maps.Marker({
+                                    map: map,
+                                    position: results[0].geometry.location,
+                                    draggable: true
+                                });
+                                var infowindow = new google.maps.InfoWindow({
+                                    content: coordinates
+                                });
 
-              $('#id_location').val(coordinates)
-              google.maps.event.addListener(marker, "dragend", function() {
-                infowindow.setContent(marker.getPosition().toUrlValue(6))
-                infowindow.open(map,marker)
-                $('#id_location').val(marker.getPosition().toUrlValue(6));
-              });
-              google.maps.event.addListener(marker, "click", function() {
-                infowindow.setContent(marker.getPosition().toUrlValue(6))
-                infowindow.open(map,marker)
-                $('#id_location').val(marker.getPosition().toUrlValue(6));
-              });
-	      google.maps.event.trigger(marker, "click");
+                                $('#id_location').val(coordinates)
+                                google.maps.event.addListener(marker, "dragend", function () {
+                                    infowindow.setContent(marker.getPosition().toUrlValue(6))
+                                    infowindow.open(map, marker)
+                                    $('#id_location').val(marker.getPosition().toUrlValue(6));
+                                });
+                                google.maps.event.addListener(marker, "click", function () {
+                                    infowindow.setContent(marker.getPosition().toUrlValue(6))
+                                    infowindow.open(map, marker)
+                                    $('#id_location').val(marker.getPosition().toUrlValue(6));
+                                });
+                                google.maps.event.trigger(marker, "click");
+                            }
+                        }
+                );
             }
-          }
-        );
-      }
-    }
-    
-    jQuery.fn.dataTableExt.oSort['bool-asc']  = function(a,b) {
-        if ($(a).hasClass('glyphicon-ok') && $(b).hasClass('glyphicon-remove')) {
-            return -1
-        } else if ($(a).hasClass('glyphicon-remove') && $(b).hasClass('glyphicon-ok')) {
-            return 1
         }
-        else return 0
-    };
-    
-    jQuery.fn.dataTableExt.oSort['bool-desc']  = function(a,b) {
-        if ($(a).hasClass('glyphicon-ok') && $(b).hasClass('glyphicon-remove')) {
-            return 1
-        } else if ($(a).hasClass('glyphicon-remove') && $(b).hasClass('glyphicon-ok')) {
-            return -1
-        }
-        else return 0
-    };
-    </script>
-
-    <script>
         $.validator.setDefaults({
             errorElement: "span",
             errorClass: "help-block",
@@ -318,32 +346,48 @@
         });
 
         $.validator.addMethod(
-            "regex",
-            function(value, element, regexp) {
-                var re = new RegExp(regexp);
-                return this.optional(element) || re.test(value);
-            },
-            "Please check your input."
+                "regex",
+                function (value, element, regexp) {
+                    var re = new RegExp(regexp);
+                    return this.optional(element) || re.test(value);
+                },
+                "Please check your input."
         );
 
-        $(document).ready(function(){
-             $('#map').on('shown.bs.modal', function () {
-                 initialize();
-             });
-            $( "#datepicker_start, #datepicker_end, #id_crime_date" ).datepicker({format: "yyyy-mm-dd"});
-            $("#expenselist").dataTable({
+        $(document).ready(function () {
+            $('#map').on('shown.bs.modal', function () {
+                initialize();
+            });
+            $("#datepicker_start, #datepicker_end, #id_crime_date").datepicker({format: "yyyy-mm-dd"});
+
+            var oTable = $("#expenselist").dataTable({
                 "aoColumnDefs": [
                     { "bSortable": false, "aTargets": [ 10 ] },
-                    { "sType": "bool", "aTargets":[ 7,8 ] }
+                    { "sType": "bool", "aTargets": [ 7, 8 ] }
                 ],
                 "iDisplayLength": 15,
-                "aLengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
-                "fnPreDrawCallback": function(oSettings, json) {
-                $('.dataTables_filter input').addClass('form-control');
-                $('.dataTables_length select').addClass('form-control');
-                $('.dataTables_filter input').attr('placeholder', 'Search');
+                "aLengthMenu": [
+                    [15, 30, 50, -1],
+                    [15, 30, 50, "All"]
+                ],
+                "fnPreDrawCallback": function (oSettings, json) {
+                    $('.dataTables_filter input').addClass('form-control');
+                    $('.dataTables_length select').addClass('form-control');
+                    $('.dataTables_filter input').attr('placeholder', 'Search');
                 }
             });
+
+            $('#datepicker_start, #datepicker_end').change(function () {
+                oTable.fnDraw();
+            });
+
+
+            $('#clear_date').click(function(){
+                $('#datepicker_start').val('')
+                $('#datepicker_end').val('')
+                oTable.fnDraw();
+            });
+
 
             $("#create_report_form").validate({
                 rules: {
@@ -403,7 +447,7 @@
         </div>
 
         <script type="text/javascript">
-            $('#create_success').modal({backdrop:false});
+            $('#create_success').modal({backdrop: false});
         </script>
     {% endif %}
 
@@ -414,7 +458,7 @@
         </div>
         <div class="modal-body">
             <form action="" class="form-inline" method="POST">{% csrf_token %}
-                <table class="edittable" style ="text-align:left">
+                <table class="edittable" style="text-align:left">
                     <tr>
                         <th><label for="id_crime_date">Crime date:</label></th>
                         <td><input class="form-control" id="id_crime_date" name="crime_date" type="text"></td>
@@ -429,19 +473,23 @@
                     </tr>
                     <tr>
                         <th><label for="id_creature">Creature:</label></th>
-                        <td><input class="form-control" id="id_creature" maxlength="45" name="creature" type="text"></td>
+                        <td><input class="form-control" id="id_creature" maxlength="45" name="creature" type="text">
+                        </td>
                     </tr>
                     <tr>
                         <th><label for="id_location">Location:</label></th>
-                        <td><input class="form-control" id="id_location" maxlength="45" name="location" type="text"></td>
+                        <td><input class="form-control" id="id_location" maxlength="45" name="location" type="text">
+                        </td>
                     </tr>
                     <tr>
                         <th><label for="id_trial_location">Trial location:</label></th>
-                        <td><input class="form-control" id="id_trial_location" maxlength="45" name="trial_location" type="text"></td>
+                        <td><input class="form-control" id="id_trial_location" maxlength="45" name="trial_location"
+                                   type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_violation_description">Violation description:</label></th>
-                        <td><textarea class="form-control" id="id_violation_description" name="violation_description" type="text"></td>
+                        <td><textarea class="form-control" id="id_violation_description" name="violation_description"
+                                      type="text"></td>
                     </tr>
                     <tr>
                         <th><label for="id_fine">Fine:</label></th>
@@ -472,7 +520,7 @@
         </div>
     </div>
 
-<!--<script type="text/javascript">
+    <!--<script type="text/javascript">
 
         {% block main_javascript %}
 
