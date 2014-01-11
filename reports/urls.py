@@ -7,7 +7,6 @@ urlpatterns = patterns('',
     url(r'^statistics', 'reports.views.compute_statistics'),
     url(r'^$', ReportList.as_view(), name='report_list'),
     url(r'^add/$', ReportCreate.as_view(), name='report_add'),
-    url(r'^filter_by_date/$','reports.views.date_filter'),
     url(r'^report_(?P<pk>\w+)', ReportDetail.as_view(), name="report_detail"),
     url(r'^edit/(?P<pk>\d+)', ReportUpdate.as_view(), name='report_update'),
     url(r'^delete/(?P<pk>\w+)', ReportDelete.as_view(), name="report_delete")
