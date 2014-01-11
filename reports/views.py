@@ -200,35 +200,6 @@ class ReportDelete(DeleteView):
 
 
 @login_required
-@requires_csrf_token
-def search(request):
-    query_string = ''
-    found_entries = None
-    #q from button in html
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        #currently manually need to input the model fields to search through
-        entry_query = get_query(query_string, [
-            'crime_date',
-            'resolve_days',
-            'jail_time',
-            'num_involved',
-            'creature',
-            'location',
-            'trial_location',
-            'violation_description',
-            'mpa',
-            'fine',
-            'update_date'])
-        found_entries = Report.objects.filter(entry_query).order_by('crime_date')
-
-    return render_to_response('reports/results.html', {
-        'query_string': query_string,
-        'found_entries': found_entries},
-                              context_instance=RequestContext(request))
-
-
-@login_required
 def date_filter(request):
     start_date = ''
     end_date = ''
