@@ -1,23 +1,19 @@
-import os
 import csv
 from datetime import datetime
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.utils import simplejson
-from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden, HttpResponseServerError
+
+from django.core.urlresolvers import reverse_lazy
+
+from django.http import HttpResponse
 from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
-from django.core.context_processors import csrf
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from reports.models import Report
-from reports.forms import ReportForm
-from reports.search import *
-
 from GChartWrapper import *
+
+from reports.models import Report
+
 
 """This function exports all the data to a csv file titled with the timestamp"""
 

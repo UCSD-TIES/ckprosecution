@@ -5,62 +5,17 @@
 {% block htmlhead %}
     <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datepicker.css"/>
     <link rel="stylesheet" href="{{ STATIC_URL }}coastkeeper/css/datatables.css"/>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/json2.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/datatables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/datatables.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/google_map.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/report_validate.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}coastkeeper/JS/report_table.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <style>
-        .createtable {
-            text-align: left;
-        }
-
-        .button {
-            margin: 4px 10px;
-        }
-
-        .line {
-            border-bottom: 1px solid black;
-        }
-
-        .close {
-            float: right;
-        }
-
-        .notice {
-            color: #F4811F;
-            padding-top: 25px;
-        }
-
-        .newlook {
-            background-color: white;
-        }
-
-        .actions {
-            margin-left: 10px;
-        }
-
-        .actions {
-            margin-bottom: 15px;
-        }
-
-        .title {
-            margin-left: 10px;
-            margin-top: 25px;
-            margin-bottom: 0px;
-            font-size: 2em;
-        }
-
-        .form-horizontal .form-group {
-            margin-bottom: 2px;
-        }
-    </style>
 {% endblock %}
 
 {% block content %}
-    <span class="title">Reports</span>
+    <h1>Reports</h1>
 
     {% block actions %}
         {% if user.is_authenticated %}
@@ -277,157 +232,28 @@
         </div>
     </div>
 
-
-    <!--    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
-          type="text/javascript"></script>-->
     <script type="text/javascript">
-        var geocoder = null
-        var map = null
-
-        function initialize() {
-            var mapOptions = {
-                center: new google.maps.LatLng(37.4419, -122.1419),
-                zoom: 10
-            };
-            map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
-            geocoder = new google.maps.Geocoder();
-        }
-
-        function showAddress(address) {
-            if (geocoder) {
-                geocoder.geocode({ 'address': address}, function (results, status) {
-                            if (status != google.maps.GeocoderStatus.OK) {
-                                alert(address + " not found");
-                            } else {
-                                coordinates = results[0].geometry.location.toUrlValue(6)
-                                map.setCenter(results[0].geometry.location);
-                                var marker = new google.maps.Marker({
-                                    map: map,
-                                    position: results[0].geometry.location,
-                                    draggable: true
-                                });
-                                var infowindow = new google.maps.InfoWindow({
-                                    content: coordinates
-                                });
-
-                                $('#id_location').val(coordinates)
-                                google.maps.event.addListener(marker, "dragend", function () {
-                                    infowindow.setContent(marker.getPosition().toUrlValue(6))
-                                    infowindow.open(map, marker)
-                                    $('#id_location').val(marker.getPosition().toUrlValue(6));
-                                });
-                                google.maps.event.addListener(marker, "click", function () {
-                                    infowindow.setContent(marker.getPosition().toUrlValue(6))
-                                    infowindow.open(map, marker)
-                                    $('#id_location').val(marker.getPosition().toUrlValue(6));
-                                });
-                                google.maps.event.trigger(marker, "click");
-                            }
-                        }
-                );
-            }
-        }
-        $.validator.setDefaults({
-            errorElement: "span",
-            errorClass: "help-block",
-            highlight: function (element, errorClass, validClass) {
-                $(element).closest('.form-group').addClass('has-error');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).closest('.form-group').removeClass('has-error');
-            },
-            errorPlacement: function (error, element) {
-                if (element.parent('.input-group').length || element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-            }
-        });
-
-        $.validator.addMethod(
-                "regex",
-                function (value, element, regexp) {
-                    var re = new RegExp(regexp);
-                    return this.optional(element) || re.test(value);
-                },
-                "Please check your input."
-        );
-
         $(document).ready(function () {
             $('#map').on('shown.bs.modal', function () {
                 initialize();
             });
             $("#datepicker_start, #datepicker_end, #id_crime_date").datepicker({format: "yyyy-mm-dd"});
 
-            var oTable = $("#expenselist").dataTable({
-                "aoColumnDefs": [
-                    { "bSortable": false, "aTargets": [ 10 ] },
-                    { "sType": "bool", "aTargets": [ 7, 8 ] }
-                ],
-                "iDisplayLength": 15,
-                "aLengthMenu": [
-                    [15, 30, 50, -1],
-                    [15, 30, 50, "All"]
-                ],
-                "fnPreDrawCallback": function (oSettings, json) {
-                    $('.dataTables_filter input').addClass('form-control');
-                    $('.dataTables_length select').addClass('form-control');
-                    $('.dataTables_filter input').attr('placeholder', 'Search');
-                }
-            });
+            var oTable = $("#expenselist").dataTable(table_default);
 
             $('#datepicker_start, #datepicker_end').change(function () {
                 oTable.fnDraw();
             });
 
-
-            $('#clear_date').click(function(){
+            $('#clear_date').click(function () {
                 $('#datepicker_start').val('')
                 $('#datepicker_end').val('')
                 oTable.fnDraw();
             });
 
-
             $("#create_report_form").validate({
-                rules: {
-                    crime_date: {
-                        required: true
-                    },
-                    resolve_days: {
-                        required: true,
-                        digits: true
-                    },
-                    creature: {
-                        required: true,
-                        regex: /^([a-zA-Z]\s?)+$/
-                    },
-                    num_involved: {
-                        required: true,
-                        digits: true
-                    },
-                    location: {
-                        required: true,
-                        regex: /^\-?[0-9]{1,6}(\.[0-9]{1,6})?,\s?\-?[0-9]{1,6}(\.[0-9]{1,6})?$/
-                    },
-                    trial_location: {
-                        required: true,
-                        regex: /^([a-zA-Z]\s?)+$/
-                    },
-                    violation_description: {
-                        required: true
-                    },
-                    fine: {
-                        required: true,
-                        number: true
-                    }
-                },
-                messages: {
-                    creature: "Enter Creature",
-                    location: "Coordinates (ex 123.456, -189.012)",
-                    trial_location: "Enter Trial Location",
-                    violation_description: "Enter Violation Description"
-                }
+                rules: report_rules,
+                messages: report_messages
             });
         });
     </script>
@@ -519,39 +345,4 @@
             </form>
         </div>
     </div>
-
-    <!--<script type="text/javascript">
-
-        {% block main_javascript %}
-
-        $('.table tr').click(function(){
-            $(this);
-            $('#edit_report').modal({backdrop:false});
-            $('.edittable input#id_report').val($(this).attr('id'));
-            $('.edittable input#id_crime_date').val($($(this).find('td')[0]).text());
-            $('.edittable input#id_resolve_days').val($($(this).find('td')[1]).text());
-            $('.edittable input#id_num_involved').val($($(this).find('td')[2]).text());
-            $('.edittable input#id_creature').val($($(this).find('td')[3]).text());
-            $('.edittable input#id_location').val($($(this).find('td')[4]).text());
-            $('.edittable input#id_trial_location').val($($(this).find('td')[5]).text());
-            $('.edittable input#id_violation_description').val($($(this).find('td')[6]).text());
-            $('.edittable input#id_fine').val($($(this).find('td')[7]).text());
-            $('.edittable input#id_update_date').val($($(this).find('td')[8]).text());
-            if($($(this).find('td')[9]).text() == 'True') {
-                $(".edittable input#id_jail_time").attr('checked', true);
-            }
-            else {
-                $(".edittable input#id_jail_time").attr('checked', false);
-            }
-            $('.edittable input#id_jail_time').val($($(this).find('td')[0]).text());
-            $('.edittable input#id_mpa').val($($(this).find('td')[0]).text());
-        });
-
-        $('#create_report').modal({backdrop:false});
-        $('#create_submit').click(function(){$('#invis').submit();});
-        $('#create_report').modal('hide');
-
-        {% endblock %}
-    </script>
--->
 {% endblock %}

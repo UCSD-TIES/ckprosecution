@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, include, url
-from reports import views
 from reports.views import ReportList, ReportCreate, ReportDetail, ReportUpdate, ReportDelete
 
 urlpatterns = patterns('',

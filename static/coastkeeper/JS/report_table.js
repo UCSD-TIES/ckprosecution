@@ -53,3 +53,20 @@ $.fn.dataTableExt.afnFiltering.push(
             return true
     }
 );
+
+table_default = {
+    "aoColumnDefs": [
+        { "bSortable": false, "aTargets": [ 10 ] },
+        { "sType": "bool", "aTargets": [ 7, 8 ] }
+    ],
+    "iDisplayLength": 15,
+    "aLengthMenu": [
+        [15, 30, 50, -1],
+        [15, 30, 50, "All"]
+    ],
+    "fnPreDrawCallback": function (oSettings, json) {
+        $('.dataTables_filter input').addClass('form-control');
+        $('.dataTables_length select').addClass('form-control');
+        $('.dataTables_filter input').attr('placeholder', 'Search');
+    }
+};

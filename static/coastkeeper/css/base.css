@@ -1,0 +1,22 @@
+.header-top {
+    background-color: white;
+    height: 90px;
+    line-height: 90px;
+    color: white;
+}
+.header-mid a, .header-mid a:visited {
+    text-decoration: none;
+    color: white;
+    height: 50px;
+}
+.expense-sheet {
+    box-shadow: 8px 8px 8px #BCBCBC;
+    border: 1px solid #CCC;
+    background-color: white;
+}
+.close {
+    float: right;
+}
+.form-horizontal .form-group {
+    margin-bottom: 2px;
+}
