@@ -3,7 +3,17 @@
 {% block title %}Statistics{% endblock %}
 
 {% block content %}
-
+    <style>
+        .center-block {
+            float: none !important
+        }
+    </style>
+    {% load static %}
+    <link href="{% static 'vendor/css/nv.d3.min.css' %}" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src='{% static 'vendor/js/d3.min.js' %}'></script>
+    <script type="text/javascript" src='{% static 'vendor/js/nv.d3.min.js' %}'></script>
+    {% load nvd3_tags %}
+    {% load_chart creature_graph_d3.charttype creature_graph_d3.chartdata creature_graph_d3.chartcontainer creature_graph_d3.extra %}
     {% if date_graph %}
         <p>
             <center>
@@ -27,5 +37,10 @@
             </center>
         </p>
     {% endif %}
+
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3 class="text-center">Creature Graph d3</h3>
+        {% include_container creature_graph_d3.chartcontainer 400 600 %}
+    </div>
 
 {% endblock %}

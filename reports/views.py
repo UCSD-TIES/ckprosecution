@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from GChartWrapper import *
-
+from nvd3 import *
 from reports.models import Report
 
 
@@ -132,7 +132,7 @@ def compute_statistics(request):
     creature_stats_data = []
 
     for creature in Report.objects.all().distinct('creature').values('creature'):
-        c_string = '' + str(creature).lstrip("{'creature': u'").rstrip("'}")
+        c_string = creature['creature']
         percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
         creature_stats_label += str(c_string) + " " + str(round(percentage, 2)) + "%|"
         creature_stats_data.append(percentage)
@@ -143,12 +143,37 @@ def compute_statistics(request):
     creature_graph.label(creature_stats_label.rstrip("|"))
     creature_graph.color('0000aa')
 
+    # d3 version of above graph
+    xdata = []
+    ydata = []
+    for creature in Report.objects.all().distinct('creature').values('creature'):
+        c_string = creature['creature']
+        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
+        xdata.append(c_string)
+        ydata.append(percentage)
+
+    chartdata = {'x': xdata, 'y': ydata}
+    charttype = "pieChart"
+    chartcontainer = 'piechart_container'
+    data = {
+        'charttype': charttype,
+        'chartdata': chartdata,
+        'chartcontainer': chartcontainer,
+        'extra': {
+            'x_is_date': False,
+            'x_axis_format': '',
+            'tag_script_js': True,
+            'jquery_on_ready': False,
+        }
+    }
+
     #End of graphs
 
     return render_to_response('reports/statistics.html', {
         'date_graph': date_graph,
         'creature_graph': creature_graph,
-        'days_graph': days_graph},
+        'days_graph': days_graph,
+        'creature_graph_d3': data},
                               context_instance=RequestContext(request))
 
 
@@ -200,3 +225,29 @@ def plot_map(request):
     return render_to_response('map.html', {
         'reports': Report.objects.all()},
                               context_instance=RequestContext(request))
+
+def test_chart(request):
+    total_reports = Report.objects.all().count()
+    xdata = []
+    ydata = []
+    for creature in Report.objects.all().distinct('creature').values('creature'):
+        c_string = creature['creature']
+        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
+        xdata.append(c_string)
+        ydata.append(percentage)
+
+    chartdata = {'x': xdata, 'y': ydata}
+    charttype = "pieChart"
+    chartcontainer = 'piechart_container'
+    data = {
+        'charttype': charttype,
+        'chartdata': chartdata,
+        'chartcontainer': chartcontainer,
+        'extra': {
+            'x_is_date': False,
+            'x_axis_format': '',
+            'tag_script_js': True,
+            'jquery_on_ready': False,
+        }
+    }
+    return render_to_response('reports/piechart.html', data)
