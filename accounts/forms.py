@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms import ModelForm
 from accounts.models import Account
 from django import forms
 from crispy_forms.helper import FormHelper
@@ -20,7 +21,7 @@ class NewAccountForm(UserCreationForm):
         super(NewAccountForm, self).__init__(*args, **kwargs)
 
 
-class EditAccountForm(UserChangeForm):
+class EditAccountForm(ModelForm):
     class Meta:
         model = Account
         fields = ("username", "first_name", "last_name", "email")
