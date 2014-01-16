@@ -31,12 +31,12 @@
                 <li><a href="/reports/statistics">Statistics</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/admin/">Admin</a></li>
+                <li><a href={% url "account_list" %}>Accounts</a></li>
                 <li><a href={% url "logout"%}?next=/>Log Out</a></li>
             </ul>
             {% else %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/accounts/login/">Log In</a></li>
+                <li><a href={% url "login" %}>Log In</a></li>
             </ul>
             {% endif %}
         </div>

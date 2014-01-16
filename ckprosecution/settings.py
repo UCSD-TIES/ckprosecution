@@ -115,7 +115,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'ckprosecution.urls'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/users/%s/" % u.username,
+}
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ckprosecution.wsgi.application'
 

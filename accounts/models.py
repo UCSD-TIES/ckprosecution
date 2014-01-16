@@ -1,8 +1,13 @@
-from django.db import models
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
+
+class Account(User):
+    class Meta:
+        proxy = True
+
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('account_detail', args=[str(self.username)])
 
 
-# Create your models here.
 
 

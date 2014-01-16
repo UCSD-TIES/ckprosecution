@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Accounts{% endblock %}
+
+{% block content %}
+
+    <ul>
+        {% for account in accounts %}
+            <li>
+                {{ account }}
+                <a href="{{ account.get_absolute_url }}">Detail</a>
+                <a href="{% url "account_edit" account.username %}">Edit</a>
+                <a href="{% url "account_delete" account.username %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'new_account' %}">Add New Account </a>
+{% endblock %}

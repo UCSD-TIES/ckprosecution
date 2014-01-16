@@ -10,7 +10,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^reports/', include('reports.urls')),
     # Examples:
     # url(r'^$', 'ckprosecution.views.home', name='home'),
