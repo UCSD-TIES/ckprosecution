@@ -10,16 +10,16 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
+          ['Creature', '# of times poached'],
+          ['Sea Lion',     5],
+          ['Seahorse',      3],
+          ['Krab',  1],
+          ['Sea otter', 3],
+          ['Whale',    10]
         ]);
 
         var options = {
-          title: 'My Daily Activities',
+          title: 'Creatures Poached',
           is3D: true,
         };
 
