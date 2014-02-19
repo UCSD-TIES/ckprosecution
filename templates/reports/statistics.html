@@ -27,49 +27,71 @@
         chart.draw(data, options);
       }
     </script>
-{% endblock %}
 <!-----End Google Visualization------------>
 
-{% block content %}
-    <style>
+    <style type="text/css">
         .center-block {
             float: none !important
         }
+
+        .btn-input {
+            display: block;
+        }
+
+        .btn-input .btn.form-control {
+            text-align: left;
+        }
+
+        .btn-input .btn.form-control span:first-child {
+            left: 10px;
+            overflow: hidden;
+            position: absolute;
+            right: 25px;
+        }
+
+        .btn-input .btn.form-control .caret {
+            margin-top: -1px;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+        }
+
+        /* Sidebar navigation */
+        .nav-sidebar {
+            margin-left: -20px;
+            margin-right: -21px; /* 20px padding + 1px border */
+            margin-bottom: 20px;
+        }
+        .nav-sidebar > li > a {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .nav-sidebar > .active > a {
+            color: #fff;
+            background-color: #428bca;
+        }
     </style>
-    {% load static %}
-    <link href="{% static 'vendor/css/nv.d3.min.css' %}" type="text/css" rel="stylesheet"/>
-    <script type="text/javascript" src='{% static 'vendor/js/d3.min.js' %}'></script>
-    <script type="text/javascript" src='{% static 'vendor/js/nv.d3.min.js' %}'></script>
-    {% load nvd3_tags %}
-    {% load_chart creature_graph_d3.charttype creature_graph_d3.chartdata creature_graph_d3.chartcontainer creature_graph_d3.extra %}
-    {% if date_graph %}
-        <p>
-            <center>
-                <img src = {{ date_graph }}>
-            </center>
-        </p>
-    {% endif %}
+{% endblock %}
 
-    {% if days_graph %}
-        <p>
-            <center>
-                <img src = {{ days_graph }}>
-            </center>
-        </p>
-    {% endif %}
-
-    {% if creature_graph %}
-        <p>
-            <center>
-                <img src = {{ creature_graph }}>
-            </center>
-        </p>
-    {% endif %}
-   
-    <div class="col-sm-6 col-sm-offset-3">
-        <h3 class="text-center">Creature Graph d3</h3>
-        {% include_container creature_graph_d3.chartcontainer 400 600 %}
+{% block content %}
+    <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li class="active"><a href=""><h3>Statistics</h3></a></li>
+            <li><a href="">Incidents Anually</a></li>
+            <li><a href="">Resolve Days Distribution</a></li>
+            <li><a href="">Number of Suspects Anually</a></li>
+            <li><a href="">Creatures Distribution</a></li>
+            <li><a href="">Location Distribution</a></li>
+            <li><a href="">Trial Location Distribution</a></li>
+            <li><a href="">Fine Amount Distribution</a></li>
+        </ul>
     </div>
-	
-    <div class="col-sm-6 col-sm-offset-3" id="piechart_3d" style="width: 900px; height: 500px;"></div>
+
+    <div class="col-sm-6 col-sm-offset-1">
+        <h1 class="page-header">Welcome to the Statistics Page</h1>
+        <br>
+        <h4>Choose one of the options from the left to display the corresponding graph.</h4>
+    </div>
+
+    <div class="col-sm-6 col-sm-offset-1" id="piechart_3d" style="width: 750px; height: 500px;"></div>
 {% endblock %}
