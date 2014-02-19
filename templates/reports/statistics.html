@@ -5,29 +5,6 @@
 {% block htmlhead %}
     <!-------Google Visualization---------->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Creature', '# of times poached'],
-                ['Sea Lion',     5],
-                ['Seahorse',      3],
-                ['Krab',  1],
-                ['Sea otter', 3],
-                ['Whale',    10]
-            ]);
-
-            var options = {
-                title: 'Creatures Poached',
-                is3D: true,
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-            chart.draw(data, options);
-        }
-    </script>
-
     <style type="text/css">
         .center-block {
             float: none !important
@@ -75,18 +52,18 @@
 {% block content %}
     <div class="col-sm-3 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
-            <li class="active"><a href=#><h3>Statistics</h3></a></li>
+            <li class="active"><a class="ajax_link" gtype="default" href=#><h3>Statistics</h3></a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a href=#>Incidents Anually</a></li>
-            <li><a href=#>Number of Suspects Anually</a></li>
+            <li><a class="ajax_link" gtype="incidents" href=#>Incidents Anually</a></li>
+            <li><a class="ajax_link" gtype="num_suspects" href=#>Number of Suspects Anually</a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a href=#>Resolve Days Distribution</a></li>
-            <li><a href=#>Creatures Distribution</a></li>
-            <li><a href=#>Location Distribution</a></li>
-            <li><a href=#>Trial Location Distribution</a></li>
-            <li><a href=#>Fine Amount Distribution</a></li>
+            <li><a class="ajax_link" gtype="resolve_days" href=#>Resolve Days Distribution</a></li>
+            <li><a class="ajax_link" gtype="creature" href=#>Creatures Distribution</a></li>
+            <li><a class="ajax_link" gtype="location" href=#>Location Distribution</a></li>
+            <li><a class="ajax_link" gtype="t_location" href=#>Trial Location Distribution</a></li>
+            <li><a class="ajax_link" gtype="fine" href=#>Fine Amount Distribution</a></li>
         </ul>
     </div>
 
@@ -99,11 +76,46 @@
     <div class="col-sm-8 col-sm-offset-1" id="piechart_3d" style="width: 750px; height: 500px;"></div>
 
     <script>
-        $(document).ready(function() {
-            $("li").click(function() {
-                $("li").removeClass("active");
-                $(this).addClass("active");
-            });
+        google.load("visualization", "1", {packages:["corechart"]});
+        var gtype;
+
+        $("li").click(function() {
+            $("li").removeClass("active");
+            $(this).addClass("active");
         });
+
+        drawChart = function(data) {
+            var table_data = google.visualization.arrayToDataTable([
+                ['Creature', '# of times poached'],
+                ['Sea Lion',     5],
+                ['Seahorse',      3],
+                ['Krab',  1],
+                ['Sea otter', 3],
+                ['Whale',    10]
+            ]);
+
+            var options = {
+                title: 'Creatures Poached',
+                is3D: true,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            chart.draw(table_data, options);
+        }
+
+        ajax_func = function() {
+            gtype = $(this).attr("gtype");
+
+            $.ajax({
+                type: "GET",
+                url: "/reports/statistics",
+                data: gtype,
+                dataType: "json",
+                success: drawChart,
+                error: drawChart
+            });
+        }
+
+        $(".ajax_link").click(ajax_func);
     </script>
 {% endblock %}
