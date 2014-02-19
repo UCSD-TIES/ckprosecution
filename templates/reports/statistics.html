@@ -2,32 +2,31 @@
 
 {% block title %}Statistics{% endblock %}
 
-<!-------Google Visualization---------->
 {% block htmlhead %}
+    <!-------Google Visualization---------->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Creature', '# of times poached'],
-          ['Sea Lion',     5],
-          ['Seahorse',      3],
-          ['Krab',  1],
-          ['Sea otter', 3],
-          ['Whale',    10]
-        ]);
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Creature', '# of times poached'],
+                ['Sea Lion',     5],
+                ['Seahorse',      3],
+                ['Krab',  1],
+                ['Sea otter', 3],
+                ['Whale',    10]
+            ]);
 
-        var options = {
-          title: 'Creatures Poached',
-          is3D: true,
-        };
+            var options = {
+                title: 'Creatures Poached',
+                is3D: true,
+            };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-        chart.draw(data, options);
-      }
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            chart.draw(data, options);
+        }
     </script>
-<!-----End Google Visualization------------>
 
     <style type="text/css">
         .center-block {
@@ -87,11 +86,20 @@
         </ul>
     </div>
 
-    <div class="col-sm-6 col-sm-offset-1">
+    <div class="col-sm-8 col-sm-offset-1">
         <h1 class="page-header">Welcome to the Statistics Page</h1>
         <br>
         <h4>Choose one of the options from the left to display the corresponding graph.</h4>
     </div>
 
-    <div class="col-sm-6 col-sm-offset-1" id="piechart_3d" style="width: 750px; height: 500px;"></div>
+    <div class="col-sm-8 col-sm-offset-1" id="piechart_3d" style="width: 750px; height: 500px;"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("li").click(function() {
+                $("li").removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+    </script>
 {% endblock %}
