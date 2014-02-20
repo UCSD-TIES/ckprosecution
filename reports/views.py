@@ -1,4 +1,6 @@
 import csv
+import json
+
 from datetime import datetime
 
 from django.core.urlresolvers import reverse_lazy
@@ -130,7 +132,8 @@ def compute_statistics(request):
     ## Creatures Affected by Violations ##
     creature_stats_label = ""
     creature_stats_data = []
-
+    
+    # Interacts with database
     for creature in Report.objects.all().distinct('creature').values('creature'):
         c_string = creature['creature']
         percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
@@ -142,6 +145,14 @@ def compute_statistics(request):
     creature_graph.size(600, 300)
     creature_graph.label(creature_stats_label.rstrip("|"))
     creature_graph.color('0000aa')
+
+    response = []
+    for creature in Report.objects.all().distinct('creature').values('creature'):
+        c_string = creature['creature']
+        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
+        response.append({'creature': creature['creature'], 'percentage' : percentage})
+    return json.dumps(response)
+
 
     # d3 version of above graph
     xdata = []

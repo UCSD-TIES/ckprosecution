@@ -3,7 +3,6 @@
 {% block title %}Statistics{% endblock %}
 
 {% block htmlhead %}
-    <!-------Google Visualization---------->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <style type="text/css">
         .center-block {
@@ -111,7 +110,9 @@
                 url: "/reports/statistics",
                 data: gtype,
                 dataType: "json",
-                success: drawChart,
+                success: function() {
+		    console.log(data);
+		},
                 error: drawChart
             });
         }

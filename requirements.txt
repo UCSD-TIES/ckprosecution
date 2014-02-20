@@ -1,5 +1,5 @@
 Django==1.6.1
-GChartWrapper==0.9
+GChartWrapper==0.8
 South==0.8.4
 dj-database-url==0.2.2
 django-crispy-forms==1.4.0
