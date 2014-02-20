@@ -1,9 +1,7 @@
 Django==1.6.1
-GChartWrapper==0.8
 South==0.8.4
 dj-database-url==0.2.2
 django-crispy-forms==1.4.0
-django-nvd3==0.6.0
 html2text==3.200.3
 psycopg2==2.5.2
 six==1.5.2

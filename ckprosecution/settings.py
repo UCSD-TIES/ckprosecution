@@ -136,8 +136,6 @@ INSTALLED_APPS = (
     'accounts',
     'south',
     'reports',
-    'GChartWrapper.charts',
-    'django_nvd3',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'crispy_forms',

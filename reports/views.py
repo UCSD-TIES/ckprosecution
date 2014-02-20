@@ -12,14 +12,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from GChartWrapper import *
-from nvd3 import *
 from reports.models import Report
 
-
 """This function exports all the data to a csv file titled with the timestamp"""
-
-
 @login_required
 def export_csv(request):
     response = HttpResponse(content_type='text/csv')
@@ -59,132 +54,17 @@ def export_csv(request):
 def compute_statistics(request):
     total_reports = Report.objects.all().count()
 
-    # Start of Graph
-
-    ## Resolve days graph ##
-    days_stats_label = ""
-    count_stats_label = ""
-    days_stats_data = []
-    for resolve_days in Report.objects.all().distinct('resolve_days').values('resolve_days'):
-        c_string = '' + str(resolve_days).lstrip("{'resolve_days': u'").rstrip("'{}")
-        count = float(Report.objects.filter(resolve_days=c_string).count())
-        count_stats_label += str(Report.objects.filter(resolve_days=c_string).count())
-        days_stats_label += str(c_string) + "|"
-        days_stats_data.append(count)
-    roof = max(list(map(int, count_stats_label)))
-    days_graph = VerticalBarStack(days_stats_data)
-    days_graph.title('Frequency of Resolve Days')
-    days_graph.bar(500 / days_stats_label.count("|"), 100 / days_stats_label.count("|"), 0)
-    days_graph.size(600, 300)
-    days_graph.axes.type('xyx')
-    {}
-    days_graph.axes.range(1, 0, roof, 1)
-    days_graph.axes.label(2, 'Number of Days to Resolve')
-    days_graph.axes.position(2, 50)
-    ##days_graph.axes.label(1,'Occurrence')
-    days_graph.scale(0, roof)
-    days_graph.label(days_stats_label.rstrip("|"))
-    days_graph.color('0000aa')
-
-    ##Date Graph
-    ## code to replace place-holder when report format for crime_date is fixed
-    ## need to extract just the year from the data
-    ## Date Line Graph##
-    ##date_stats_label = ""
-    ##count_stats_label = ""
-    ##date_stats_data = []
-    ##for crime_date in Report.objects.all().distinct('crime_date').values('crime_date'):
-    ##c_string = '' + str(crime_date).lstrip("{'update_date': u'").rstrip("'{}}")
-    ##count = float(Report.objects.filter(crime_date=c_string).count())
-    ##count_stats_label += str(Report.objects.filer(resolve_Days=c_string).count())
-    ##date_stats_label += str(c_string) + "|"
-    ##date_stats_data.append(count)
-    ##roof = max(list(map(int, count_stats_label)))
-    ##date_graph = Line(date_stats_data)
-    date_graph = Line([0, 4, 2, 9, 1, 2])
-    date_graph.title('Violations by Year')
-    date_graph.size(600, 300)
-    date_graph.axes.type('xyx')
-    {}
-    ##date_graph.label(date_stats_label).rstrip("|")
-    date_graph.axes.range(1, 0, 9, 1)
-    date_graph.axes.label(2, 'Year')
-    date_graph.axes.position(2, 50)
-    date_graph.scale(0, 9)
-    date_graph.label(2008, 2009, 2010, 2011, 2012, 2013)
-    date_graph.color('0000aa')
-    ## Location of Violations##
-    location_stats_label = ""
-    location_stats_data = []
-
-    for location in Report.objects.all().distinct('location').values('location'):
-        c_string = '' + str(location).lstrip("{'location': u'").rstrip("'}")
-        percentage = (float(Report.objects.filter(location=c_string).count()) / total_reports) * 100
-        location_stats_label += str(c_string) + " " + str(round(percentage, 2)) + "%|"
-        location_stats_data.append(percentage)
-
-    location_graph = Pie(location_stats_data)
-    location_graph.title('Total Violations by Location XXXXX')
-    location_graph.size(600, 300)
-    location_graph.label(location_stats_label.rstrip("|"))
-    location_graph.color('0000aa')
-
-    ## Creatures Affected by Violations ##
-    creature_stats_label = ""
-    creature_stats_data = []
-    
-    # Interacts with database
-    for creature in Report.objects.all().distinct('creature').values('creature'):
-        c_string = creature['creature']
-        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
-        creature_stats_label += str(c_string) + " " + str(round(percentage, 2)) + "%|"
-        creature_stats_data.append(percentage)
-
-    creature_graph = Pie(creature_stats_data)
-    creature_graph.title('Creatures Affected by Violations')
-    creature_graph.size(600, 300)
-    creature_graph.label(creature_stats_label.rstrip("|"))
-    creature_graph.color('0000aa')
-
     response = []
     for creature in Report.objects.all().distinct('creature').values('creature'):
         c_string = creature['creature']
         percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
         response.append({'creature': creature['creature'], 'percentage' : percentage})
-    return json.dumps(response)
-
-
-    # d3 version of above graph
-    xdata = []
-    ydata = []
-    for creature in Report.objects.all().distinct('creature').values('creature'):
-        c_string = creature['creature']
-        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
-        xdata.append(c_string)
-        ydata.append(percentage)
-
-    chartdata = {'x': xdata, 'y': ydata}
-    charttype = "pieChart"
-    chartcontainer = 'piechart_container'
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-        'chartcontainer': chartcontainer,
-        'extra': {
-            'x_is_date': False,
-            'x_axis_format': '',
-            'tag_script_js': True,
-            'jquery_on_ready': False,
-        }
-    }
-
-    #End of graphs
-
-    return render_to_response('reports/statistics.html', {
-        'date_graph': date_graph,
-        'creature_graph': creature_graph,
-        'days_graph': days_graph,
-        'creature_graph_d3': data},
+    #return json.dumps(response)
+    return render_to_response('reports/statistics.html',
+        #'date_graph': date_graph,
+        #'creature_graph': creature_graph,
+        #'days_graph': days_graph,
+        #'creature_graph_d3': data},
                               context_instance=RequestContext(request))
 
 
@@ -236,29 +116,3 @@ def plot_map(request):
     return render_to_response('map.html', {
         'reports': Report.objects.all()},
                               context_instance=RequestContext(request))
-
-def test_chart(request):
-    total_reports = Report.objects.all().count()
-    xdata = []
-    ydata = []
-    for creature in Report.objects.all().distinct('creature').values('creature'):
-        c_string = creature['creature']
-        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
-        xdata.append(c_string)
-        ydata.append(percentage)
-
-    chartdata = {'x': xdata, 'y': ydata}
-    charttype = "pieChart"
-    chartcontainer = 'piechart_container'
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-        'chartcontainer': chartcontainer,
-        'extra': {
-            'x_is_date': False,
-            'x_axis_format': '',
-            'tag_script_js': True,
-            'jquery_on_ready': False,
-        }
-    }
-    return render_to_response('reports/piechart.html', data)
