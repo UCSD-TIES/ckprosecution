@@ -51,24 +51,23 @@
 {% block content %}
     <div class="col-sm-3 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
-            <li class="active"><a class="ajax_link" gtype="default" href=#><h3>Statistics</h3></a></li>
+            <li class="active"><a href=""><h3>Statistics</h3></a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a class="ajax_link" gtype="incidents" href=#>Incidents Anually</a></li>
-            <li><a class="ajax_link" gtype="num_suspects" href=#>Number of Suspects Anually</a></li>
+            <li><a class="ajax_link" gtype="incidents" href=#main_content>Incidents Anually</a></li>
+            <li><a class="ajax_link" gtype="num_suspects" href=#main_content>Number of Suspects Anually</a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a class="ajax_link" gtype="resolve_days" href=#>Resolve Days Distribution</a></li>
-            <li><a class="ajax_link" gtype="creature" href=#>Creatures Distribution</a></li>
-            <li><a class="ajax_link" gtype="location" href=#>Location Distribution</a></li>
-            <li><a class="ajax_link" gtype="t_location" href=#>Trial Location Distribution</a></li>
-            <li><a class="ajax_link" gtype="fine" href=#>Fine Amount Distribution</a></li>
+            <li><a class="ajax_link" gtype="resolve_days" href=#main_content>Resolve Days Distribution</a></li>
+            <li><a class="ajax_link" gtype="creature" href=#main_content>Creatures Distribution</a></li>
+            <li><a class="ajax_link" gtype="location" href=#main_content>Location Distribution</a></li>
+            <li><a class="ajax_link" gtype="t_location" href=#main_content>Trial Location Distribution</a></li>
+            <li><a class="ajax_link" gtype="fine" href=#main_content>Fine Amount Distribution</a></li>
         </ul>
     </div>
 
-    <div class="col-sm-8 col-sm-offset-1">
+    <div class="col-sm-8 col-sm-offset-1" id="main_content">
         <h1 class="page-header">Welcome to the Statistics Page</h1>
-        <br>
         <h4 id="welcome_message">Choose one of the options from the left to display the corresponding graph.</h4>
     </div>
 
