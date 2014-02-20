@@ -52,20 +52,17 @@ def export_csv(request):
 
 @login_required
 def compute_statistics(request):
-    total_reports = Report.objects.all().count()
+    if request.is_ajax():
+        total_reports = Report.objects.all().count()
 
-    response = []
-    for creature in Report.objects.all().distinct('creature').values('creature'):
-        c_string = creature['creature']
-        percentage = (float(Report.objects.filter(creature=c_string).count()) / total_reports) * 100
-        response.append({'creature': creature['creature'], 'percentage' : percentage})
-    #return json.dumps(response)
-    return render_to_response('reports/statistics.html',
-        #'date_graph': date_graph,
-        #'creature_graph': creature_graph,
-        #'days_graph': days_graph,
-        #'creature_graph_d3': data},
-                              context_instance=RequestContext(request))
+        response = []
+        for creature in Report.objects.all().distinct('creature').values('creature'):
+            c_string = creature['creature']
+            response.append({'creature': c_string, 'count': Report.objects.filter(creature=c_string).count()})
+        return HttpResponse(json.dumps(response), mimetype='application/json')
+    else:
+        return render_to_response('reports/statistics.html',
+                                  context_instance=RequestContext(request))
 
 
 class ReportList(ListView):

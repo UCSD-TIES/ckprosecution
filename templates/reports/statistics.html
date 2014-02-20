@@ -69,51 +69,52 @@
     <div class="col-sm-8 col-sm-offset-1">
         <h1 class="page-header">Welcome to the Statistics Page</h1>
         <br>
-        <h4>Choose one of the options from the left to display the corresponding graph.</h4>
+        <h4 id="welcome_message">Choose one of the options from the left to display the corresponding graph.</h4>
     </div>
 
-    <div class="col-sm-8 col-sm-offset-1" id="piechart_3d" style="width: 750px; height: 500px;"></div>
+    <div class="col-sm-8 col-sm-offset-1" id="chart_div" style="width: 750px; height: 500px;"></div>
 
     <script>
-        google.load("visualization", "1", {packages:["corechart"]});
-        var gtype;
-
         $("li").click(function() {
             $("li").removeClass("active");
             $(this).addClass("active");
         });
 
+        google.load("visualization", "1", {packages:["corechart"]});
+        var gtitle, gtype;
+
         drawChart = function(data) {
-            var table_data = google.visualization.arrayToDataTable([
-                ['Creature', '# of times poached'],
-                ['Sea Lion',     5],
-                ['Seahorse',      3],
-                ['Krab',  1],
-                ['Sea otter', 3],
-                ['Whale',    10]
-            ]);
+            var data_array = new Array();
+            data_array[0] = ['Name', 'Count'];
+            for(var i = 0; i < data.length; i++)
+                data_array[i+1] = [data[i].creature, data[i].count];
+
+            var table_data = google.visualization.arrayToDataTable(data_array);
 
             var options = {
-                title: 'Creatures Poached',
+                title: gtitle,
                 is3D: true,
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
             chart.draw(table_data, options);
         }
 
         ajax_func = function() {
             gtype = $(this).attr("gtype");
+            gtitle = $(this).text();
+            $(".page-header").text(gtitle);
+            $("#welcome_message").empty();
 
             $.ajax({
                 type: "GET",
                 url: "/reports/statistics",
                 data: gtype,
                 dataType: "json",
-                success: function() {
-		    console.log(data);
-		},
-                error: drawChart
+                success: drawChart,
+                error: function() {
+                    console.log("ajax error");
+                }
             });
         }
 
