@@ -54,15 +54,15 @@
             <li class="active"><a href=""><h3>Statistics</h3></a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a class="ajax_link" gtype="incidents" href=#main_content>Incidents Anually</a></li>
-            <li><a class="ajax_link" gtype="num_suspects" href=#main_content>Number of Suspects Anually</a></li>
+            <li><a class="ajax_link" gtype="line" gcat="incidents" href=#main_content>Incidents Anually</a></li>
+            <li><a class="ajax_link" gtype="line" gcat="num_suspects" href=#main_content>Number of Suspects Anually</a></li>
         </ul>
         <ul class="nav nav-sidebar">
-            <li><a class="ajax_link" gtype="resolve_days" href=#main_content>Resolve Days Distribution</a></li>
-            <li><a class="ajax_link" gtype="creature" href=#main_content>Creatures Distribution</a></li>
-            <li><a class="ajax_link" gtype="location" href=#main_content>Location Distribution</a></li>
-            <li><a class="ajax_link" gtype="t_location" href=#main_content>Trial Location Distribution</a></li>
-            <li><a class="ajax_link" gtype="fine" href=#main_content>Fine Amount Distribution</a></li>
+            <li><a class="ajax_link" gtype="pie" gcat="resolve_days" href=#main_content>Resolve Days Distribution</a></li>
+            <li><a class="ajax_link" gtype="pie" gcat="creature" href=#main_content>Creatures Distribution</a></li>
+            <li><a class="ajax_link" gtype="pie" gcat="location" href=#main_content>Location Distribution</a></li>
+            <li><a class="ajax_link" gtype="pie" gcat="t_location" href=#main_content>Trial Location Distribution</a></li>
+            <li><a class="ajax_link" gtype="pie" gcat="fine" href=#main_content>Fine Amount Distribution</a></li>
         </ul>
     </div>
 
@@ -80,7 +80,7 @@
         });
 
         google.load("visualization", "1", {packages:["corechart"]});
-        var gtitle, gtype;
+        var gtitle, gtype, gcat;
 
         drawChart = function(data) {
             var data_array = new Array();
@@ -90,17 +90,29 @@
 
             var table_data = google.visualization.arrayToDataTable(data_array);
 
-            var options = {
-                title: gtitle,
-                is3D: true,
-            };
+            if(gtype == "pie") {
+                var options = {
+                    is3D: true
+                };
+            }
 
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            else {
+                var options = {
+                    animation: {duration: 2},
+                    curveType: 'function'
+                };
+            }
+
+            if(gtype == "pie")
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            else
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(table_data, options);
         }
 
         ajax_func = function() {
             gtype = $(this).attr("gtype");
+            gcat = $(this).attr("gcat");
             gtitle = $(this).text();
             $(".page-header").text(gtitle);
             $("#welcome_message").empty();
@@ -108,7 +120,7 @@
             $.ajax({
                 type: "GET",
                 url: "/reports/statistics",
-                data: gtype,
+                data: gcat,
                 dataType: "json",
                 success: drawChart,
                 error: function() {
