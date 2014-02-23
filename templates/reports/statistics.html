@@ -3,49 +3,9 @@
 {% block title %}Statistics{% endblock %}
 
 {% block htmlhead %}
+    {% load staticfiles %}
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <style type="text/css">
-        .center-block {
-            float: none !important
-        }
-
-        .btn-input {
-            display: block;
-        }
-
-        .btn-input .btn.form-control {
-            text-align: left;
-        }
-
-        .btn-input .btn.form-control span:first-child {
-            left: 10px;
-            overflow: hidden;
-            position: absolute;
-            right: 25px;
-        }
-
-        .btn-input .btn.form-control .caret {
-            margin-top: -1px;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-        }
-
-        /* Sidebar navigation */
-        .nav-sidebar {
-            margin-left: -20px;
-            margin-right: -21px; /* 20px padding + 1px border */
-            margin-bottom: 20px;
-        }
-        .nav-sidebar > li > a {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .nav-sidebar > .active > a {
-            color: #fff;
-            background-color: #428bca;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static "coastkeeper/css/statistics.css" %}"/>
 {% endblock %}
 
 {% block content %}
