@@ -7,7 +7,7 @@
         #map-canvas {
             background: transparent no-repeat 1 1;
             width: 100%;
-            height: 600px;
+            height: 1100px;
             float: left;
             -moz-opacity: 1;
             -khtml-opacity: 1;
@@ -17,24 +17,24 @@
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
         var map;
-        var infowindow =  new google.maps.InfoWindow({
+        var infowindow = new google.maps.InfoWindow({
             content: ''
         });
 
         function initialize() {
-            var SAN_DIEGO = new google.maps.LatLng(32.715329,-117.157255);
+            var SAN_DIEGO = new google.maps.LatLng(32.799636,-117.253385);
 
             var mapOptions = {
-                zoom: 7,
+                zoom: 11,
                 center: SAN_DIEGO,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
+            };
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
             //draw MPA polygons on map
             drawMPA();
-
+/*
             {% for item in reports %}
                 var latlngStr = '{{ item.location }}'.split(",");
                 var myLatlng = new google.maps.LatLng(latlngStr[0], latlngStr[1]);
@@ -60,10 +60,10 @@
 
                 display_info(marker, contentStr);
             {% endfor %}
+*/
         }
 
-        function drawMPA()
-        {
+        function drawMPA() {
             /* Baquitos Lagoon */
             var coords1 = [
                 new google.maps.LatLng(33.090667, -117.302000),
@@ -73,8 +73,8 @@
                 new google.maps.LatLng(33.090647,-117.291956),
                 new google.maps.LatLng(33.091, -117.302167),
                 new google.maps.LatLng(33.091000, -117.302167),
-                new google.maps.LatLng(33.090667, -117.302000)];
-                
+                new google.maps.LatLng(33.090667, -117.302000)
+            ];
             var baquitos = new google.maps.Polygon({
                 paths: coords1,
                 strokeColor: '#E60000',
@@ -84,6 +84,8 @@
                 fillOpacity: 0.35
             });
 
+            baquitos.setMap(map);
+
             /* Swami's State */
             var coords2 = [
                 new google.maps.LatLng(33.048333, -117.298783),
@@ -91,9 +93,10 @@
                 new google.maps.LatLng(33.000000, -117.339967),
                 new google.maps.LatLng(33.000000, -117.2783),
                 new google.maps.LatLng(33.016333, -117.28095),
-                new google.maps.LatLng(33.048333, -117.298783)];
+                new google.maps.LatLng(33.048333, -117.298783)
+            ];
             var swami = new google.maps.Polygon({
-                paths: coords2.
+                paths: coords2,
                 strokeColor: '#E60000',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -101,13 +104,16 @@
                 fillOpacity: 0.35
             });
 
+            swami.setMap(map);
+
             /* San Elijo Lagoon */
             var coords3 = [
                 new google.maps.LatLng(33.015938,-117.281298),
                 new google.maps.LatLng(33.009461,-117.264733),
                 new google.maps.LatLng(33.007301,-117.262544),
                 new google.maps.LatLng(33.002947,-117.277865),
-                new google.maps.LatLng(33.015938,-117.281298)];
+                new google.maps.LatLng(33.015938,-117.281298)
+            ];
             var elijo = new google.maps.Polygon({
                 paths: coords3,
                 strokeColor: '#E60000',
@@ -117,13 +123,16 @@
                 fillOpacity: 0.35
             });
 
+            elijo.setMap(map);
+
             /* San Dieguito Lagoon */
             var coords4 = [
                 new google.maps.LatLng(32.967565, -117.258939),
                 new google.maps.LatLng(32.967385, -117.250228),
                 new google.maps.LatLng(32.964928, -117.2507),
                 new google.maps.LatLng(32.963244, -117.254605),
-                new google.maps.LatLng(32.967565, -117.258939)];
+                new google.maps.LatLng(32.967565, -117.258939)
+            ];
             var dieguito = new google.maps.Polygon({
                 paths: coords4,
                 strokeColor: '#E60000',
@@ -133,6 +142,8 @@
                 fillOpacity: 0.35
             });
 
+            dieguito.setMap(map);
+
             /* San Diego-Scripps */
             var coords5 = [
                 new google.maps.LatLng(32.883333, -117.252767),
@@ -140,7 +151,8 @@
                 new google.maps.LatLng(32.866067, -117.273333),
                 new google.maps.LatLng(32.866067, -117.253883),
                 new google.maps.LatLng(32.876242, -117.2511),
-                new google.maps.LatLng(32.883333, -117.252767)];
+                new google.maps.LatLng(32.883333, -117.252767)
+            ];
             var scripps = new google.maps.Polygon({
                 paths: coords5,
                 strokeColor: '#E60000',
@@ -150,6 +162,8 @@
                 fillOpacity: 0.35
             });
 
+            scripps.setMap(map);
+
             /* Matlahuayl */
             var coords6 = [
                 new google.maps.LatLng(32.866067, -117.253883),
@@ -157,7 +171,8 @@
                 new google.maps.LatLng(32.851117, -117.273333),
                 new google.maps.LatLng(32.848325, -117.265348),
                 new google.maps.LatLng(32.859469, -117.256421),
-                new google.maps.LatLng(32.866067, -117.253883)];
+                new google.maps.LatLng(32.866067, -117.253883)
+            ];
             var matty = new google.maps.Polygon({
                 paths: coords6,
                 strokeColor: '#E60000',
@@ -167,14 +182,17 @@
                 fillOpacity: 0.35
             });
 
+            matty.setMap(map);
+
             /* South La Jolla SMR */
             var coords7 = [
                 new google.maps.LatLng(32.826217, -117.279683),
                 new google.maps.LatLng(32.826217, -117.316667),
                 new google.maps.LatLng(32.799083, -117.316667),
                 new google.maps.LatLng(32.799083, -117.25825),
-                new google.maps.LatLng(32.826217, -117.279683)];
-            var jolla_smr = new google.maps.Polygon({
+                new google.maps.LatLng(32.826217, -117.279683)
+            ];
+            var smr = new google.maps.Polygon({
                 paths: coords7,
                 strokeColor: '#E60000',
                 strokeOpacity: 0.8,
@@ -183,14 +201,17 @@
                 fillOpacity: 0.35
             });
 
+            smr.setMap(map);
+
             /* South La Jolla SMCA */
             var coords8 = [
                 new google.maps.LatLng(32.826217, -117.316667),
                 new google.maps.LatLng(32.826217, -117.342133),
                 new google.maps.LatLng(32.799083, -117.334467),
                 new google.maps.LatLng(32.799083, -117.316667),
-                new google.maps.LatLng(32.826217, -117.316667)];
-            var jolla_smca = new google.maps.Polygon({
+                new google.maps.LatLng(32.826217, -117.316667)
+            ];
+            var smca = new google.maps.Polygon({
                 paths: coords8,
                 strokeColor: '#E60000',
                 strokeOpacity: 0.8,
@@ -198,6 +219,8 @@
                 fillColor: '#FF3333',
                 fillOpacity: 0.35
             });
+
+            smca.setMap(map);
 
             /* Famosa Slough */
             var coords9 = [
@@ -212,7 +235,8 @@
                 new google.maps.LatLng(32.75268, -117.229038),
                 new google.maps.LatLng(32.754187, -117.229371),
                 new google.maps.LatLng(32.755685, -117.228513),
-                new google.maps.LatLng(32.826217, -117.316667)];
+                new google.maps.LatLng(32.826217, -117.316667)
+            ];
             var famosa = new google.maps.Polygon({
                 paths: coords9,
                 strokeColor: '#E60000',
@@ -221,6 +245,8 @@
                 fillColor: '#FF3333',
                 fillOpacity: 0.35
             });
+
+            famosa.setMap(map);
 
             /* Cabrillo */
             var coords10 = [
@@ -233,7 +259,8 @@
                 new google.maps.LatLng(32.666568, -117.245378),
                 new google.maps.LatLng(32.668808, -117.245035),
                 new google.maps.LatLng(32.673938, -117.245679),
-                new google.maps.LatLng(32.676667, -117.247)];
+                new google.maps.LatLng(32.676667, -117.247)
+            ];
             var cabrillo = new google.maps.Polygon({
                 paths: coords10,
                 strokeColor: '#E60000',
@@ -243,6 +270,8 @@
                 fillOpacity: 0.35
             });
 
+            cabrillo.setMap(map);
+
             /* Tijuana River */
             var coords11 = [
                 new google.maps.LatLng(32.566667,-117.133),
@@ -251,7 +280,8 @@
                 new google.maps.LatLng(32.534333,-117.124667),
                 new google.maps.LatLng(32.553121,-117.128047),
                 new google.maps.LatLng(32.557751,-117.132167),
-                new google.maps.LatLng(32.566667,-117.133)];
+                new google.maps.LatLng(32.566667,-117.133)
+            ];
             var tijuana = new google.maps.Polygon({
                 paths: coords11,
                 strokeColor: '#E60000',
@@ -260,6 +290,8 @@
                 fillColor: '#FF3333',
                 fillOpacity: 0.35
             });
+
+            tijuana.setMap(map);
         }
 
         function display_info(marker, contentStr) {
@@ -276,17 +308,16 @@
 {% block content %}
     <br>
     <div class="container">
-        <div class="row" id="map-canvas" />
+        <div class="row" id="map-canvas"></div>
     </div>
 
-    <br>
-    <hr>
-
-    <div class="row-fluid marketing">
+    <div class="constainer">
         <div class="span6">
-            <h3>How to read the Map</h3>
-            <p>Each icon represents a prosecution, click on it for more details.</p>
+            <hr>
+            <h3>How to Read the Map</h3>
+            <p>Each shaded region represents a mpa.</p>
         </div>
     </div>
+
     <br>
 {% endblock %}
