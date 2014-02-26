@@ -75,16 +75,6 @@
                 new google.maps.LatLng(33.091000, -117.302167),
                 new google.maps.LatLng(33.090667, -117.302000)
             ];
-            var baquitos = new google.maps.Polygon({
-                paths: coords1,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            baquitos.setMap(map);
 
             /* Swami's State */
             var coords2 = [
@@ -95,16 +85,6 @@
                 new google.maps.LatLng(33.016333, -117.28095),
                 new google.maps.LatLng(33.048333, -117.298783)
             ];
-            var swami = new google.maps.Polygon({
-                paths: coords2,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            swami.setMap(map);
 
             /* San Elijo Lagoon */
             var coords3 = [
@@ -114,16 +94,6 @@
                 new google.maps.LatLng(33.002947,-117.277865),
                 new google.maps.LatLng(33.015938,-117.281298)
             ];
-            var elijo = new google.maps.Polygon({
-                paths: coords3,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            elijo.setMap(map);
 
             /* San Dieguito Lagoon */
             var coords4 = [
@@ -133,16 +103,6 @@
                 new google.maps.LatLng(32.963244, -117.254605),
                 new google.maps.LatLng(32.967565, -117.258939)
             ];
-            var dieguito = new google.maps.Polygon({
-                paths: coords4,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            dieguito.setMap(map);
 
             /* San Diego-Scripps */
             var coords5 = [
@@ -153,16 +113,6 @@
                 new google.maps.LatLng(32.876242, -117.2511),
                 new google.maps.LatLng(32.883333, -117.252767)
             ];
-            var scripps = new google.maps.Polygon({
-                paths: coords5,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            scripps.setMap(map);
 
             /* Matlahuayl */
             var coords6 = [
@@ -173,16 +123,6 @@
                 new google.maps.LatLng(32.859469, -117.256421),
                 new google.maps.LatLng(32.866067, -117.253883)
             ];
-            var matty = new google.maps.Polygon({
-                paths: coords6,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            matty.setMap(map);
 
             /* South La Jolla SMR */
             var coords7 = [
@@ -192,16 +132,6 @@
                 new google.maps.LatLng(32.799083, -117.25825),
                 new google.maps.LatLng(32.826217, -117.279683)
             ];
-            var smr = new google.maps.Polygon({
-                paths: coords7,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            smr.setMap(map);
 
             /* South La Jolla SMCA */
             var coords8 = [
@@ -211,16 +141,6 @@
                 new google.maps.LatLng(32.799083, -117.316667),
                 new google.maps.LatLng(32.826217, -117.316667)
             ];
-            var smca = new google.maps.Polygon({
-                paths: coords8,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            smca.setMap(map);
 
             /* Famosa Slough */
             var coords9 = [
@@ -237,16 +157,6 @@
                 new google.maps.LatLng(32.755685, -117.228513),
                 new google.maps.LatLng(32.826217, -117.316667)
             ];
-            var famosa = new google.maps.Polygon({
-                paths: coords9,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            famosa.setMap(map);
 
             /* Cabrillo */
             var coords10 = [
@@ -261,16 +171,6 @@
                 new google.maps.LatLng(32.673938, -117.245679),
                 new google.maps.LatLng(32.676667, -117.247)
             ];
-            var cabrillo = new google.maps.Polygon({
-                paths: coords10,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
-
-            cabrillo.setMap(map);
 
             /* Tijuana River */
             var coords11 = [
@@ -282,16 +182,22 @@
                 new google.maps.LatLng(32.557751,-117.132167),
                 new google.maps.LatLng(32.566667,-117.133)
             ];
-            var tijuana = new google.maps.Polygon({
-                paths: coords11,
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
 
-            tijuana.setMap(map);
+            var coords = [coords1, coords2, coords3, coords4, coords5, coords6,
+                          coords7, coords8, coords9, coords10, coords11];
+
+            for(var i = 0; i < coords.length; i++) {
+                var polygon = new google.maps.Polygon({
+                    paths: coords[i],
+                    strokeColor: '#E60000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF3333',
+                    fillOpacity: 0.35
+                });
+
+                polygon.setMap(map);
+            }
         }
 
         function display_info(marker, contentStr) {
