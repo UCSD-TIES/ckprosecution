@@ -23,6 +23,12 @@
 
             //draw MPA polygons on map
             drawMPA();
+
+            //plot prosecutions on map
+            {% for item in reports %}
+                var latlngStr = '{{ item.location }}'.split(",");
+                var myLatlng = new google.maps.LatLng(latlngStr[0], latlngStr[1]);
+            {% endfor %}
         }
 
         function drawMPA() {
