@@ -9,6 +9,9 @@
     <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.5/src/markerwithlabel_packed.js"></script>
     <script type="text/javascript">
         var map;
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
 
         function initialize() {
             var SAN_DIEGO = new google.maps.LatLng(32.799636,-117.253385);
@@ -28,6 +31,27 @@
             {% for item in reports %}
                 var latlngStr = '{{ item.location }}'.split(",");
                 var myLatlng = new google.maps.LatLng(latlngStr[0], latlngStr[1]);
+
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: 'Illegal Activity'
+                 });
+ 
+                 var contentStr = '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h4 id="firstHeading" class="firstHeading">Illegal Activity</h4>' +
+                    '<div id="bodyContent">' +
+                    '<p>' +
+                    '<b>Crime Date: </b>{{ item.crime_date }} <br>' +
+                    '<b>Number of Suspects: </b>{{ item.num_involved }} <br>' +
+                    '<b>Creature Involved: </b>{{ item.creature }} <br>' +
+                    '<a href="{% url "report_detail" pk=item.id %}">Detail</a></p>' +
+                    '</div>' +
+                    '</div>';
+
+                display_info(marker, contentStr);
             {% endfor %}
         }
 
@@ -180,6 +204,13 @@
                     display_name(polygon, i);
                 }
             }
+        }
+
+        function display_info(marker, contentStr) {
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(contentStr);
+                infowindow.open(marker.get('map'), marker);
+            });
         }
 
         function display_name(polygon, name) {
