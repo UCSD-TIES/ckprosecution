@@ -17,35 +17,39 @@
         <div class="pull-left">
             <table class="table-condensed">
                 <tr>
-                    <th>Crime Date</th>
+                    <th>Crime Date:</th>
                     <td>{{ report.crime_date }}</td>
                 </tr>
                 <tr>
-                    <th>Resolve Days</th>
+                    <th>Num. of Resolve Days:</th>
                     <td>{{ report.resolve_days }}</td>
                 </tr>
                 <tr>
-                    <th>Number of Suspects</th>
+                    <th>Num. of Suspects Involved:</th>
                     <td>{{ report.num_involved }}</td>
                 </tr>
                 <tr>
-                    <th>Creature</th>
+                    <th>Creature:</th>
                     <td>{{ report.creature }}</td>
                 </tr>
                 <tr>
-                    <th>Location</th>
+                    <th>MPA:</th>
+                    <td>{{ report.mpalocation }}</td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
                     <td>{{ report.location }}</td>
                 </tr>
                 <tr>
-                    <th>Trial Location</th>
+                    <th>Trial Location:</th>
                     <td>{{ report.trial_location }}</td>
                 </tr>
                 <tr>
-                    <th>Fine</th>
+                    <th>Fine: $</th>
                     <td>{{ report.fine }}</td>
                 </tr>
                 <tr>
-                    <th>Jail Time</th>
+                    <th>Jail Time?</th>
                     <td>
                         {% if report.jail_time %}
                             <span class="glyphicon glyphicon-ok"></span>
@@ -55,7 +59,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>MPA</th>
+                    <th>MPA?</th>
                     <td>
                         {% if report.mpa %}
                             <span class="glyphicon glyphicon-ok"></span>
@@ -65,11 +69,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Violation Description</th>
+                    <th>Violation Description:</th>
                     <td>{{ report.violation_description }}</td>
                 </tr>
                 <tr>
-                    <th>Update Date</th>
+                    <th>Update Date:</th>
                     <td>{{ report.update_date }}</td>
                 </tr>
             </table>

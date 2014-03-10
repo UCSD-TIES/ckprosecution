@@ -35,18 +35,18 @@
                 var marker = new google.maps.Marker({
                     position: myLatlng,
                     map: map,
-                    title: 'Illegal Activity'
+                    title: '{{ item.crime_date }}'
                  });
  
                  var contentStr = '<div id="content">' +
                     '<div id="siteNotice">' +
                     '</div>' +
-                    '<h4 id="firstHeading" class="firstHeading">Illegal Activity</h4>' +
+                    '<h4 id="firstHeading" class="firstHeading">{{ item.crime_date }}</h4>' +
                     '<div id="bodyContent">' +
                     '<p>' +
-                    '<b>Crime Date: </b>{{ item.crime_date }} <br>' +
                     '<b>Number of Suspects: </b>{{ item.num_involved }} <br>' +
                     '<b>Creature Involved: </b>{{ item.creature }} <br>' +
+                    '<b>Last Updated: </b>{{ item.update_date }} <br>' +
                     '<a href="{% url "report_detail" pk=item.id %}">Detail</a></p>' +
                     '</div>' +
                     '</div>';
