@@ -1,3 +1,8 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".dropdown-toggle").dropdown();
+});  
+</script>
 <div id="report_modal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -10,7 +15,7 @@
                       method="POST">{% csrf_token %}
                     <div class="form-group">
                         <input class="form-control" name="report" type="hidden" value="{{ report.id }}"/>
-                        <label for="id_crime_date" class="col-sm-3 control-label">Crime date</label>
+                        <label for="id_crime_date" class="col-sm-3 control-label">Crime date:</label>
 
                         <div class="col-sm-9">
                             <input class="form-control" name="crime_date" type="text" id="id_crime_date"
@@ -18,7 +23,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="id_resolve_days" class="col-sm-3 control-label">Resolve day</label>
+                        <label for="id_resolve_days" class="col-sm-3 control-label">Num. of Resolve Days:</label>
 
                         <div class="col-sm-9">
                             <input class="form-control" name="resolve_days" type="text" id="id_resolve_days"
@@ -26,7 +31,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="id_num_involved" class="col-sm-3 control-label">Num involved:</label>
+                        <label for="id_num_involved" class="col-sm-3 control-label">Num. of Suspects Involved:</label>
 
                         <div class="col-sm-9">
                             <input class="form-control" name="num_involved" type="text" id="id_num_involved"
@@ -34,7 +39,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="id_creature" class="col-sm-3 control-label">Creature</label>
+                        <label for="id_creature" class="col-sm-3 control-label">Creature:</label>
 
                         <div class="col-sm-9">
                             <input class="form-control" name="creature" type="text" id="id_creature"
@@ -42,7 +47,27 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="id_location" class="col-sm-3 control-label">Location</label>
+                        <label for="id_mpalocation" class="col-sm-3 control-label">MPA:</label>
+                        <div class="col-sm-9">
+                             <select class="form-control" default="{{report.mpalocation}}" id="id_mpalocation" name="mpalocation">
+                                  <option value="Batiquitos Lagoon SMCA">Batiquitos Lagoon SMCA</option>
+                                  <option value="Swami's SMCA">Swami's SMCA</option>
+                                  <option value="San Elijo Lagoon SMCA">San Elijo Lagoon SMCA</option>
+                                  <option value="San Dieguito Lagoon SMCA">San Dieguito Lagoon SMCA</option>
+                                  <option value="San Diego-Scripps Coastal SMCA">San Diego-Scripps Coastal SMCA</option>
+                                  <option value="Matlahuayl SMR">Matlhuayl SMR"</option>
+                                  <option value="South La Jolla SMCA">South La Jolla SMCA</option>
+                                  <option value="Famosa Slugh SMCA">Famosa Slough SMCA</option>
+                                  <option value="Cabrillo SMR">Cabrillo SMR</option>
+                                  <option value="Tijuana River Mouth SMCA">Tijuana River Mouth SMCA</option>
+                                </select>
+                        </div>
+
+        
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="id_location" class="col-sm-3 control-label">Location:</label>
 
                         <div class="col-sm-9 input-group">
                             <input class="form-control" name="location" type="text" id="id_location"
@@ -54,7 +79,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="id_trial_location" class="col-sm-3 control-label">Trial location</label>
+                        <label for="id_trial_location" class="col-sm-3 control-label">Trial Location:</label>
 
                         <div class="col-sm-9">
                             <input class="form-control" name="trial_location" type="text" id="id_trial_location"
@@ -63,7 +88,7 @@
                     </div>
                     <div class="form-group">
                         <label for="id_violation_description" class="col-sm-3 control-label">Violation
-                            description</label>
+                            Description:</label>
 
                         <div class="col-sm-9">
                             <textarea class="form-control" name="violation_description" rows=5
@@ -71,7 +96,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="id_fine" class="col-sm-3 control-label">Fine</label>
+                        <label for="id_fine" class="col-sm-3 control-label">Fine: $</label>
 
                         <div class="col-sm-9">
                             <input class="form-control" name="fine" type="text" id="id_fine" value="{{ report.fine }}"/>
@@ -84,7 +109,7 @@
                                     <input name="jail_time" type="checkbox" id="id_jail_time" checked="yes">{% endif %}
                                 {% if not report.jail_time %}
                                     <input name="jail_time" type="checkbox" id="id_jail_time">{% endif %}
-                                Jail Time
+                                Jail Time?
                             </label>
                         </div>
                     </div>
@@ -95,10 +120,11 @@
                                     <input name="mpa" type="checkbox" id="id_mpa" checked="yes">{% endif %}
                                 {% if not report.mpa %} <input name="mpa" type="checkbox" id="id_mpa">
                                 {% endif %}
-                                MPA
+                                MPA?
                             </label>
                         </div>
                     </div>
+                    <input type="hidden" name="prosecution" value="false"/>
             </div>
 
             <div class="modal-footer">
