@@ -59,6 +59,7 @@ table_default = {
         { "bSortable": false, "aTargets": [ 10 ] },
         { "sType": "bool", "aTargets": [ 7, 8 ] }
     ],
+    "aaSorting": [[ 0, "desc" ]],
     "iDisplayLength": 15,
     "aLengthMenu": [
         [15, 30, 50, -1],
