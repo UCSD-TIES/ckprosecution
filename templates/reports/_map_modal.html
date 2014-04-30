@@ -14,13 +14,13 @@
 
                 <form class='form-inline' action="#" onsubmit="showAddress(this.address.value); return false">
                     <input style="width:350px" type="text" class='form-control' name="address"
-                           value="1600 Amphitheatre Pky, Mountain View, CA">
-                    <button type="submit" class='btn btn-default'>Go</button>
+                           value=" {{ item.mpalocation }}">
+                    <button type="submit" class='btn btn-default'>Search</button>
                 </form>
                 <div id="map_canvas" style="width: 540px; height: 400px"></div>
             </div>
             <div class="modal-footer">
-                <button class='btn btn-default' data-dismiss="modal">Close</button>
+                <button class='btn btn-default' data-dismiss="modal">Go!</button>
             </div>
         </div>
     </div>
