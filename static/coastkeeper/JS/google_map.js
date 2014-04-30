@@ -183,22 +183,21 @@ function drawMPA()
     };
 
     for(var i in coords) {
-        if(coords.hasOwnProperty(i)) {
-            var polygon = new google.maps.Polygon({
-                paths: coords[i],
-                strokeColor: '#E60000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF3333',
-                fillOpacity: 0.35
-            });
+                if(coords.hasOwnProperty(i)) {
+                    var polygon = new google.maps.Polygon({
+                        paths: coords[i],
+                        strokeColor: '#E60000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF3333',
+                        fillOpacity: 0.35
+                    });
 
-            polygon.setMap(map);
-            //display_name(polygon, i);
-        }
-    }
+                    polygon.setMap(map);
+                    //display_name(polygon, i);
+                }
+            }
 }
-
 
 function display_name(polygon, name) {
     var tooltip = new MarkerWithLabel({
@@ -223,5 +222,3 @@ function display_name(polygon, name) {
         tooltip.setVisible(false);
     });
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);
