@@ -58,7 +58,7 @@ report_rules = {
     },
     trial_location: {
         required: true,
-        regex: /^([a-zA-Z]\s?)+$/
+        //regex: /^([a-zA-Z]\s?)+$/
     },
     violation_description: {
         required: true
