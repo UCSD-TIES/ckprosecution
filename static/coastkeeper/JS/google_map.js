@@ -10,6 +10,7 @@ function initialize() {
     map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
     geocoder = new google.maps.Geocoder();
     drawMPA();
+    console.log("map modal initialize");
 }
 
 function showAddress(address) {
@@ -194,7 +195,7 @@ function drawMPA()
                     });
 
                     polygon.setMap(map);
-                    //display_name(polygon, i);
+                    display_name(polygon, i);
                 }
             }
 }
