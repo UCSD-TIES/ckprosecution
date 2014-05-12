@@ -25,13 +25,23 @@ $.validator.addMethod(
     "Please check your input."
 );
 
+$.validator.addMethod(
+    "regexDecimal",
+    function (value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+    },
+    "Only 9 digits are allowed."
+);
+
 report_rules = {
     crime_date: {
         required: true
     },
     resolve_days: {
         required: true,
-        digits: true
+        digits: true,
+        regexDecimal: /^(\d{0,9})?$/ 
     },
     creature: {
         required: true,
@@ -39,7 +49,8 @@ report_rules = {
     },
     num_involved: {
         required: true,
-        digits: true
+        digits: true,
+        regexDecimal: /^(\d{0,9})?$/ 
     },
     location: {
         required: true,
@@ -54,12 +65,13 @@ report_rules = {
     },
     fine: {
         required: true,
-        number: true
+        regexDecimal: /^(\d{0,9})(\.\d{1,2})?$/
     }
 }
+
 report_messages = {
-    creature: "Enter Creature",
+    creature: "Enter the Creatures Name.",
     location: "Coordinates (ex 123.456, -189.012)",
-    trial_location: "Enter Trial Location",
-    violation_description: "Enter Violation Description"
+    trial_location: "Enter the Court's Name where the Trial will occur.",
+    violation_description: "A Description is needed",
 }

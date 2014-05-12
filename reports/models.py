@@ -10,7 +10,7 @@ class Report(models.Model):
     mpalocation = models.CharField(blank = True, max_length=45)
     location = models.CharField(blank = True, max_length=45)
     trial_location = models.CharField(blank = True, max_length=45) #city where crime was tried
-    violation_description = models.CharField(blank = True, max_length=500)
+    violation_description = models.TextField()
     fine = models.DecimalField(max_digits=11, decimal_places=2, blank = True, max_length=11)
     update_date = models.DateField(auto_now=True)
     jail_time = models.BooleanField(default = False)

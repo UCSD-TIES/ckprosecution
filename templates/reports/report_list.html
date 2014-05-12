@@ -121,7 +121,11 @@
             $('#map').on('shown.bs.modal', function () {
                 initialize();
             });
-            $("#datepicker_start, #datepicker_end, #id_crime_date").datepicker({format: "yyyy-mm-dd"});
+            $("#datepicker_start, #datepicker_end, #id_crime_date").datepicker({
+                format: "yyyy-mm-dd",
+                endDate: '-1d'
+        });
+
 
             var oTable = $("#expenselist").dataTable(table_default);
 
@@ -131,7 +135,7 @@
 
             $('#clear_date').click(function () {
                 $('#datepicker_start').val('')
-                $('#datepicker_end').val('')
+                $('#datepicker_end').val('' )
                 oTable.fnDraw();
             });
 
