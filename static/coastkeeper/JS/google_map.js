@@ -194,7 +194,7 @@ function drawMPA()
                     });
 
                     polygon.setMap(map);
-                    //display_name(polygon, i);
+                    display_name(polygon, i);
                 }
             }
 }
