@@ -10,6 +10,7 @@ function initialize() {
     map = new google.maps.Map($("#map_canvas").get(0), mapOptions);
     geocoder = new google.maps.Geocoder();
     drawMPA();
+    console.log("map modal initialize");
 }
 
 function showAddress(address) {
