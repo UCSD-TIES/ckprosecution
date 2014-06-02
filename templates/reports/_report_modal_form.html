@@ -114,6 +114,7 @@
                             </label>
                         </div>
                     </div>
+<!--
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
                             <label for="id_mpa" class="checkbox">
@@ -122,6 +123,20 @@
                                 {% if not report.mpa %} <input name="mpa" type="checkbox" id="id_mpa">
                                 {% endif %}
                                 MPA?
+                            </label>
+                        </div>
+                    </div>
+-->
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <label for="id_resolved" class="checkbox">
+                                {% if report.resolved %}
+                                    <input name="mpa" type="checkbox" id="id_resolved" checked="yes">
+                                {% endif %}
+                                {% if not report.resolved %} 
+                                    <input name="resolved" type="checkbox" id="id_resolved">
+                                {% endif %}
+                                Resolved?
                             </label>
                         </div>
                     </div>

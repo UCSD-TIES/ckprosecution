@@ -60,7 +60,7 @@
     {% endblock %}
 
     <div class="reporttable table-responsive">
-        <table class="table  table-hover" id="expenselist">
+        <table class="table table-hover" id="expenselist">
             <thead>
             <tr>
                 <th>Crime Date</th>
@@ -72,7 +72,7 @@
                 <th>Trial Location</th>
                 <th>Fine</th>
                 <th>Jail</th>
-                <th>MPA</th>
+                <th>Resolved</th>
                 <th>Update Date</th>
                 <th></th>
             </tr>
@@ -84,7 +84,7 @@
                     <td>{{ item.resolve_days }}</td>
                     <td>{{ item.num_involved }}</td>
                     <td>{{ item.creature }}</td>
-                    <td>{{item.mpalocation}}</td>
+                    <td>{{ item.mpalocation }}</td>
                     <td>{{ item.location }}</td>
                     <td>{{ item.trial_location }}</td>
                     <td>{{ item.fine }}</td>
@@ -96,7 +96,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if item.mpa %}
+                        {% if item.resolved %}
                             <span class="glyphicon glyphicon-ok"></span>
                         {% else %}
                             <span class="glyphicon glyphicon-remove"></span>

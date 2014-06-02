@@ -4,14 +4,14 @@
 
 {% block htmlhead %}
     {% load staticfiles %}
-    <script type="text/javascript" src="{% static "vendor/js/jquery.validate.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "vendor/js/bootstrap-datepicker.js" %}"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script type="text/javascript" src="{% static "coastkeeper/JS/google_map.js" %}"></script>
-    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.5/src/markerwithlabel_packed.js"></script>
-    <script type="text/javascript" src="{% static "coastkeeper/JS/report_validate.js" %}"></script>
     <link rel="stylesheet" href="{% static "vendor/css/datepicker.css" %}"/>
     <link rel="stylesheet" href="{% static "coastkeeper/css/map.css" %}"/>
+    <script type="text/javascript" src="{% static "vendor/js/jquery.validate.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "coastkeeper/JS/report_validate.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendor/js/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "coastkeeper/JS/google_map.js" %}"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.5/src/markerwithlabel_packed.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -60,6 +60,7 @@
                         {% endif %}
                     </td>
                 </tr>
+<!--                
                 <tr>
                     <th>MPA?</th>
                     <td>
@@ -70,6 +71,18 @@
                         {% endif %}
                     </td>
                 </tr>
+-->
+                <tr>
+                    <th>Resolved?</th>
+                    <td>
+                        {% if report.resolved %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
+                </tr>
+                
                 <tr>
                     <th>Violation Description:</th>
                     <td>{{ report.violation_description }}</td>

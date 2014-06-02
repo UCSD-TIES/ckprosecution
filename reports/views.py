@@ -28,15 +28,17 @@ def export_csv(request):
     writer = csv.writer(response)
     #write the row of all the fields
     writer.writerow(
-        ['Crime Date', 'Resolve Days', 'Suspects', 'Creature', 'Location', 'Trial Location', 'Violation Description',
-         'Fine', 'Jail', 'MPA', 'Update Date'])
+        ['Crime Date', 'Resolve Days', 'Suspects', 'Creature', 'MPA Location', 'Location', 'Trial Location', 'Violation Description',
+         'Fine', 'Jail', 'MPA', 'Resolved', 'Update Date'])
 
     #write all rows in database using loop
     for row in Report.objects.all():
         rcrime_date = '' + str(row.crime_date)
         rresolve_days = '' + str(row.resolve_days)
+        rresolved = ' ' + str(row.resolved)
         rnum_involved = '' + str(row.num_involved)
         rcreature = '' + str(row.creature)
+        rmpa_location = ' ' + str(row.mpalocation)
         rlocation = '' + str(row.location)
         rtrial_location = '' + str(row.trial_location)
         rviolation_description = '' + str(row.violation_description)
@@ -45,8 +47,8 @@ def export_csv(request):
         rjail_time = '' + str(row.jail_time)
         rmpa = '' + str(row.mpa)
         writer.writerow(
-            [rcrime_date, rresolve_days, rnum_involved, rcreature, rlocation, rtrial_location, rviolation_description,
-             rfine, rjail_time, rmpa, rupdate_date])
+            [rcrime_date, rresolve_days, rresolved, rnum_involved, rcreature, rmpa_location, rlocation, 
+            rtrial_location, rviolation_description, rfine, rjail_time, rmpa, rupdate_date])
 
     return response
 
@@ -93,15 +95,29 @@ def compute_statistics(request):
             for item in months:
                 response.append({'name': item, 'count': months[item]})
         if(category == 'num_suspects'):
+            qs = {'0 - 4': 0, '05 - 09': 0, '10 - 14': 0, '15 - 19': 0, '20 - 24': 0, '25+': 0}
             for q_result in Report.objects.all().distinct('num_involved').values('num_involved'):
                 item = q_result['num_involved']
-                response.append({'name': item, 'count': Report.objects.filter(num_involved=item).count()})
+                if (item < 5):
+                    qs['0 - 4'] += 1
+                elif(5 <= item and item < 10):
+                    qs['05 - 09'] += 1
+                elif(10 <= item and item < 15):
+                    qs['10 - 14'] += 1
+                elif(15 <= item and item < 20):
+                    qs['15 - 19'] += 1
+                elif(20 <= item and item < 25):
+                    qs['20 - 24'] += 1
+                else:
+                    qs['25+'] += 1
+            for num in qs:
+                response.append({'name': num, 'count': qs[num]})
         if(category == 'resolve_days'):
-            qs = {'0 - 10': 0, '10 - 19': 0, '20 - 29': 0, '30 - 39': 0, '40 - 49': 0, '>= 50': 0}
+            qs = {'0 - 9': 0, '10 - 19': 0, '20 - 29': 0, '30 - 39': 0, '40 - 49': 0, '50+': 0}
             for q_result in Report.objects.all().values('resolve_days'):
                 days = q_result['resolve_days']
                 if(days < 10):
-                    qs['0 - 10'] += 1
+                    qs['0 - 9'] += 1
                 elif(10 <= days and days < 20):
                     qs['10 - 19'] += 1
                 elif(20 <= days and days < 30):
@@ -111,17 +127,21 @@ def compute_statistics(request):
                 elif(40 <= days and days < 50):
                     qs['40 - 49'] += 1
                 else:
-                    qs['>= 50'] += 1
+                    qs['50+'] += 1
             for item in qs:
                 response.append({'name': item, 'count': qs[item]})
+        if(category == 'resolved'):
+            for q_result in Report.objects.all().distinct('resolved').values('resolved'):
+                item = q_result['resolved']
+                response.append({'name': item, 'count': Report.objects.filter(resolved=item).count()})
         if(category == 'creature'):
             for q_result in Report.objects.all().distinct('creature').values('creature'):
                 item = q_result['creature']
                 response.append({'name': item, 'count': Report.objects.filter(creature=item).count()})
         if(category == 'location'):
-            for q_result in Report.objects.all().distinct('location').values('location'):
-                item = q_result['location']
-                response.append({'name': item, 'count': Report.objects.filter(location=item).count()})
+            for q_result in Report.objects.all().distinct('mpalocation').values('mpalocation'):
+                item = q_result['mpalocation']
+                response.append({'name': item, 'count': Report.objects.filter(mpalocation=item).count()})
         if(category == 't_location'):
             for q_result in Report.objects.all().distinct('trial_location').values('trial_location'):
                 item = q_result['trial_location']
