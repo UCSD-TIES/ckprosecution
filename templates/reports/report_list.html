@@ -6,6 +6,7 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static "vendor/css/datepicker.css" %}"/>
     <link rel="stylesheet" href="{% static "vendor/css/datatables.css" %}"/>
+    <link rel="stylesheet" href="{% static "coastkeeper/css/map.css" %}"/>
     <script type="text/javascript" src="{% static "vendor/js/bootstrap-datepicker.js" %}"></script>
     <script type="text/javascript" src="{% static "vendor/js/jquery.validate.min.js" %}"></script>
     <script type="text/javascript" src="{% static "vendor/js/datatables.min.js" %}"></script>
@@ -13,6 +14,7 @@
     <script type="text/javascript" src="{% static "coastkeeper/JS/report_validate.js" %}"></script>
     <script type="text/javascript" src="{% static "coastkeeper/JS/report_table.js" %}"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerwithlabel/1.1.5/src/markerwithlabel_packed.js"></script>
 {% endblock %}
 
 {% block content %}
